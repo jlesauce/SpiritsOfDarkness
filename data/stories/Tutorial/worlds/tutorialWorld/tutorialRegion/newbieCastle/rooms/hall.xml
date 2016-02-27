@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Room id="hall" name="Hall">
+
+	<ShortDescription>Hall du château des noobs.</ShortDescription>
+
+	<LongDescription>Vos entrez dans une très large pièce. La hall est très lumineux et éclairé par de larges fenêtres situées
+		sur les murs derrière et en face de vous. Vous apercevez devant vous un très large escalier qui monte vers les étages
+		supérieurs en se séparant en deux de chaque côté. Plusieurs portes semblent mener vers les pièces principales de la
+		bâtisse.
+	</LongDescription>
+
+	<Directions>
+		<north id="hall_escaliers">Monter l'escalier.</north>
+		<north_east id="jardins">Vers les jardins.</north_east>
+		<east id="bibliotheque">Vers la bibliothèque.</east>
+		<south_east></south_east>
+		<south></south>
+		<south_west></south_west>
+		<west id="couloir_classes">Vers le couloir menant aux salles de classe.</west>
+		<north_west id="cuisines">Vers les cuisines de l'école.</north_west>
+	</Directions>
+
+	<Senses>
+		<inspect>Rien de particulier ne semble attirer votre oeil expert.</inspect>
+		<feel>Une sentation de sécurité se dégage de ce lieu.</feel>
+		<touch></touch>
+		<smell>Vous sentez une odeur de vieux livres et de bois brut typique des vieilles écoles.</smell>
+		<taste></taste>
+		<listen>Vous entendez des voix provenant des couloirs adjacents mais elles sont trop lointaines pour entendre de quoi il
+			s'agit.
+		</listen>
+	</Senses>
+
+</Room>

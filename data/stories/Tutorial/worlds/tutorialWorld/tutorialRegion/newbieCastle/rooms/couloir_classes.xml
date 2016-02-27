@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Room id="couloir_classes" name="Couloir des salles de classe">
+
+	<ShortDescription>Couloir permettant d'accéder aux salles de classes.</ShortDescription>
+
+	<LongDescription>Vous entrez dans un large et long couloir. Sur le côté gauche vous apercevez une rangée de portes
+		menant
+		sûrement aux salles de classes.
+	</LongDescription>
+
+	<Directions>
+		<north></north>
+		<north_east></north_east>
+		<east></east>
+		<south_east></south_east>
+		<south id="hall">Revenir dans le hall.</south>
+		<south_west></south_west>
+		<west></west>
+		<north_west></north_west>
+	</Directions>
+
+	<Senses>
+		<inspect>Mis à part un sac à dos oublié au fond du couloir, vous ne repérez pas grand chose.</inspect>
+		<feel></feel>
+		<touch></touch>
+		<smell>Vous sentez la peinture fraîche, il semble que le couloir a été rénové il y a peu.</smell>
+		<taste></taste>
+		<listen>Vous entendez des voix provenant des salles de classes, visiblement des cours sont actuellement dispensés.</listen>
+	</Senses>
+
+</Room>

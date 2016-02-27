@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Zone id="newbieCastle" name="Newbie Castle">
+
+	<Description>Le Newbie Castle est une zone réservée aux débutants, elle leur permet d'apprendre les commandes de
+		base de Spirits of Darkness.
+	</Description>
+
+	<EntryPoint id="hall" />
+</Zone>

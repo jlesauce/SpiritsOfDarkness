@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Room id="bibliotheque" name="Bibliothèque">
+
+	<ShortDescription>Bibliothèque de l'école.</ShortDescription>
+
+	<LongDescription>Vous entrez dans une belle et grande bibliothèque au parquet vernis et remplie de milliers de livres
+		rangés
+		soigneusement sur leur étagères. Il faudrait très certainement plus d'une vie pour tous les lire. Pourquoi ne pas profiter
+		de l'ambiance calme et studieuse pour commencer dès maintenant.
+	</LongDescription>
+
+	<Directions>
+		<north></north>
+		<north_east></north_east>
+		<east></east>
+		<south_east></south_east>
+		<south></south>
+		<south_west></south_west>
+		<west id="hall">Revenir dans le hall.</west>
+		<north_west></north_west>
+	</Directions>
+
+	<Senses>
+		<inspect>En regardant derrière une étagère vous trouvez un restant de sandwich abandonné.</inspect>
+		<feel>L'atmosphère calme et silencieuse de ces lieux vous font vous sentir calme et détendu.</feel>
+		<touch></touch>
+		<smell>Vous sentez l'odeur des vieux livres et du bois vernis.</smell>
+		<taste></taste>
+		<listen>Vous entendez des étudiants chuchoter, le bruit des pages qui se tournent et du crayon gratter le papier.</listen>
+	</Senses>
+
+	<Items>
+		<Item id="pain" quantity="3"/>
+	</Items>
+
+</Room>

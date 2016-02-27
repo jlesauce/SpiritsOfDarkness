@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Region id="tutorialRegion" name="Tutorial">
+
+	<Description>Description complète de la région.</Description>
+
+	<EntryPoint id="newbieCastle" />
+</Region>

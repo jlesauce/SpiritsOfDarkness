@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Room id="cuisines" name="Cuisines">
+
+	<ShortDescription>Ce sont les cuisines du bâtiment. C'est ici que sont préparés les repas destinés aux élèves.
+	</ShortDescription>
+
+	<LongDescription>Vous entrez dans une grande cuisine. Autour de vous s'étalent de grands plans de travail en métal bien
+		rangés. Il semblerait que le tenant des lieux maîtrise son affaire car tout est étincelant de propreté et chaque
+		objet est
+		correctement rangé à sa place.
+	</LongDescription>
+
+	<Directions>
+		<north></north>
+		<north_east></north_east>
+		<east></east>
+		<south_east></south_east>
+		<south id="hall">Revenir dans le hall.</south>
+		<south_west></south_west>
+		<west></west>
+		<north_west></north_west>
+	</Directions>
+
+	<Senses>
+		<inspect>Tout compte fait vous repérez de la saleté sous un plan de travail, rien n'échappe à votre oeil expert !</inspect>
+		<feel>A part un gargouilli dans le ventre vous ne ressentez rien de particulier.</feel>
+		<touch>A votre place j'éviterais de laisser des traces de doigts un peu partout.</touch>
+		<smell>En vous concentrant un petit peu vous arrivez à deviner le repas d'hier : un filet mignon sauce moutarde aux petits
+			oignons et pommes de terre grenaille, servi avec... Mmh... un Saint Julien 1989 ! Ca donne faim !
+		</smell>
+		<taste>Ne vous avisez pas de goûter dans les plats où vous pourriez avoir des petits problèmes.</taste>
+		<listen>A part le bruit de la chambre froide vous n'entendez rien de particulier.</listen>
+	</Senses>
+
+</Room>

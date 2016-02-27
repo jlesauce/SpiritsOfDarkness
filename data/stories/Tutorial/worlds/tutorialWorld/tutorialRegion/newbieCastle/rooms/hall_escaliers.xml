@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Room id="hall_escaliers" name="Escaliers du Hall">
+
+	<ShortDescription>Escaliers du hall principal menant aux étages supérieurs.</ShortDescription>
+
+	<LongDescription>Vous montez les marches d'un grand escalier en marbre recouvert d'un tapis rouge en feutre. En vous
+		retournant vous pouvez observer le magnifique hall d'entrée de l'école et prendre toute la mesure de la grandeur des
+		lieux.
+	</LongDescription>
+
+	<Directions>
+		<north></north>
+		<north_east></north_east>
+		<east></east>
+		<south_east></south_east>
+		<south id="hall">Redescendre les escaliers.</south>
+		<south_west></south_west>
+		<west></west>
+		<north_west></north_west>
+	</Directions>
+
+	<Senses>
+		<inspect>En y regardant bien vous trouvez de la poussière cachée sous le tapis.</inspect>
+		<feel></feel>
+		<touch></touch>
+		<smell></smell>
+		<taste></taste>
+		<listen></listen>
+	</Senses>
+
+</Room>

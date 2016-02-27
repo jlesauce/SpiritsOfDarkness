@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Meta information on the story -->
+<Story id="didacticiel" name="Didacticiel">
+
+	<!-- Description of the story -->
+	<Description>Didacticiel du jeu Spirits of Darkness.\n\nCe didacticiel permet aux joueurs débutants de découvrir les
+		différentes mécaniques de jeu et d'apprendre les commandes de base permettant d'interagir avec l'univers.
+	</Description>
+
+	<!-- Specifies the entry point -->
+	<EntryPoint id="tutorialWorld" />
+</Story>

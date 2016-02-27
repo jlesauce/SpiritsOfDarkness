@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration Resources -->
+<configuration>
+	<properties fileName="gui/mainView.properties" config-name="mainView" throwExceptionOnMissing="true" />
+	<properties fileName="application.properties" config-name="application" throwExceptionOnMissing="true" />
+	<properties fileName="toolbox/general.properties" config-name="general" throwExceptionOnMissing="true" />
+	<properties fileName="toolbox/library.properties" config-name="library" throwExceptionOnMissing="true" />
+</configuration>
