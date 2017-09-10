@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,6 +34,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jdom2.JDOMException;
 import org.jls.sod.ApplicationController;
 import org.jls.sod.core.loader.Loader;
 import org.jls.sod.core.model.Story;
@@ -44,11 +45,10 @@ import org.jls.sod.core.model.world.World;
 import org.jls.sod.core.model.world.Zone;
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.util.file.FileUtils;
-import org.jdom2.JDOMException;
 
 /**
  * The game controller.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 3, 2015
  */
@@ -61,7 +61,7 @@ public class GameController {
 
 	/**
 	 * Instanciates the game controller.
-	 * 
+	 *
 	 * @param model
 	 *            The game data model.
 	 * @param controller
@@ -98,7 +98,7 @@ public class GameController {
 	/**
 	 * Creates a new game with the selected story and save the new game instance
 	 * in the save directory.
-	 * 
+	 *
 	 * @param storyId
 	 *            The story identifier (i.e. the name of the story directory).
 	 * @param saveDirName
@@ -109,7 +109,7 @@ public class GameController {
 	 *             If an error occurred during the create of the save directory.
 	 * @throws JDOMException
 	 *             If one the description files is malformed.
-	 * 
+	 *
 	 */
 	public boolean createNewGame (final String storyId, final String saveDirName) throws IOException, JDOMException {
 		// Checks input
@@ -180,7 +180,7 @@ public class GameController {
 
 	/**
 	 * Loads the specified game instance.
-	 * 
+	 *
 	 * @param savedGameId
 	 *            Game instance identifier.
 	 * @throws IOException
@@ -288,7 +288,7 @@ public class GameController {
 	/**
 	 * Updates the current position of the player. This function update the data
 	 * model and the instance file descriptor.
-	 * 
+	 *
 	 * @param room
 	 *            The new position of the player.
 	 * @throws ConfigurationException
@@ -308,9 +308,13 @@ public class GameController {
 		config.save();
 	}
 
+    public static boolean hasSavedGames () {
+        return new File(ResourceManager.SAVED_PATH).exists();
+    }
+
 	/**
 	 * Returns the game data model.
-	 * 
+	 *
 	 * @return The game data model.
 	 */
 	public GameModel getModel () {
@@ -319,7 +323,7 @@ public class GameController {
 
 	/**
 	 * Returns the display delegate controller.
-	 * 
+	 *
 	 * @return The display controller.
 	 */
 	public DisplayController getDisplayController () {

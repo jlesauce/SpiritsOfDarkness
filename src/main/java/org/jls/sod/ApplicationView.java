@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,10 +42,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jls.sod.core.GameController;
 import org.jls.sod.gui.LoadGameDialog;
 import org.jls.sod.gui.MapPanel;
 import org.jls.sod.gui.NewGameDialog;
@@ -54,9 +53,11 @@ import org.jls.toolbox.widget.Console;
 import org.jls.toolbox.widget.InternalFrame;
 import org.jls.toolbox.widget.dialog.Dialog;
 
+import net.miginfocom.swing.MigLayout;
+
 /**
  * Main frame of the application.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 2, 2015
  */
@@ -81,7 +82,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
 	/**
 	 * Instanciates the application's main frame.
-	 * 
+	 *
 	 * @param model
 	 *            Data model of the application.
 	 * @param controller
@@ -103,7 +104,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
 	/**
 	 * Changes the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
-	 * 
+	 *
 	 * @param isWaiting
 	 *            <code>true</code> to use the waiting cursor,
 	 *            <code>false</code> to use the default cursor.
@@ -116,7 +117,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
 	/**
 	 * Shows a pop-up animation with the specified message.
-	 * 
+	 *
 	 * @param title
 	 *            Title of the pop-up.
 	 * @param msg
@@ -180,35 +181,35 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 		this.mapFrame.setVisible(false);
 	}
 
-	public void printConsole (String text) {
+	public void printConsole (final String text) {
 		this.console.print(text);
 	}
 
-	public void printConsole (String text, int fontStyle) {
+	public void printConsole (final String text, final int fontStyle) {
 		this.console.print(text, fontStyle);
 	}
 
-	public void printConsole (String text, int fontStyle, int size) {
+	public void printConsole (final String text, final int fontStyle, final int size) {
 		this.console.print(text, fontStyle, size);
 	}
 
-	public void printConsole (String text, Color textColor) {
+	public void printConsole (final String text, final Color textColor) {
 		this.console.print(text, textColor);
 	}
 
-	public void printConsole (String text, Color textColor, int fontStyle) {
+	public void printConsole (final String text, final Color textColor, final int fontStyle) {
 		this.console.print(text, textColor, fontStyle);
 	}
 
-	public void printConsole (String text, Color textColor, int fontStyle, int size) {
+	public void printConsole (final String text, final Color textColor, final int fontStyle, final int size) {
 		this.console.print(text, textColor, fontStyle, size);
 	}
 
-	public void printConsole (String text, Color textColor, Color bgColor, int fontStyle) {
+	public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle) {
 		this.console.print(text, textColor, bgColor, fontStyle);
 	}
 
-	public void printConsole (String text, Color textColor, Color bgColor, int fontStyle, int size) {
+	public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle, final int size) {
 		this.console.print(text, textColor, bgColor, fontStyle, size);
 	}
 
@@ -283,7 +284,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e) {
+	public void actionPerformed (final ActionEvent e) {
 		/*
 		 * JMenuItem
 		 */
@@ -295,9 +296,14 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 				showNewGamePanel();
 			}
 			// Load Game
-			else if (this.menuItems.get("file.loadGame").equals(item)) {
-				showLoadGamePanel();
-			}
+            else if (this.menuItems.get("file.loadGame").equals(item)) {
+                if (GameController.hasSavedGames()) {
+                    showLoadGamePanel();
+                } else {
+                    pop("No saved games", this.props.getString("mainView.loadGameDialog.noSavedGame"),
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
 			// Exit application
 			else if (this.menuItems.get("file.exit").equals(item)) {
 				this.logger.debug("Exit application");
@@ -311,7 +317,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 	}
 
 	@Override
-	public void keyTyped (KeyEvent e) {
+	public void keyTyped (final KeyEvent e) {
 		/*
 		 * JTextField
 		 */
@@ -335,7 +341,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 	}
 
 	@Override
-	public void keyPressed (KeyEvent e) {
+	public void keyPressed (final KeyEvent e) {
 		/*
 		 * JTextField
 		 */
@@ -358,6 +364,6 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 	}
 
 	@Override
-	public void keyReleased (KeyEvent e) {
+	public void keyReleased (final KeyEvent e) {
 	}
 }
