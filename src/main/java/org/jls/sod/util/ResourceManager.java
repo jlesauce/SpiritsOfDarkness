@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ import org.jls.sod.SpiritsOfDarkness;
 
 /**
  * Singleton managing the access to the resources of the application.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Aug 31, 2015
  */
@@ -98,7 +98,7 @@ public class ResourceManager {
 
 	/**
 	 * Returns the unique instance of this class.
-	 * 
+	 *
 	 * @return Unique instance of this class.
 	 */
 	public final static ResourceManager getInstance () {
@@ -110,7 +110,7 @@ public class ResourceManager {
 
 	/**
 	 * Permet d'accéder à une resource de l'application via le nom du fichier.
-	 * 
+	 *
 	 * @param name
 	 *            Nom du fichier à récupérer.
 	 * @return {@link URL} pointant vers la resource recherchée ou
@@ -126,7 +126,7 @@ public class ResourceManager {
 
 	/**
 	 * Permet d'accéder à une resource de l'application via le nom du fichier.
-	 * 
+	 *
 	 * @param name
 	 *            Nom du fichier à récupérer.
 	 * @return {@link InputStream} permettant d'accéder à la ressource
@@ -138,7 +138,7 @@ public class ResourceManager {
 
 	/**
 	 * Returns a file to access the specified resource.
-	 * 
+	 *
 	 * @param name
 	 *            The resource name.
 	 * @return A file object to access the resource.
@@ -150,7 +150,7 @@ public class ResourceManager {
 	/**
 	 * Permet de mettre à jour la valeur associée à la clé de propriété
 	 * spécifiée.
-	 * 
+	 *
 	 * @param key
 	 *            Clé de propriété.
 	 * @param value
@@ -173,7 +173,7 @@ public class ResourceManager {
 	 * Renvoie la chaîne de texte associée à la clé de propriété spécifiée. Si
 	 * la clé n'existe pas alors une exception de type
 	 * {@link IllegalArgumentException} est lancée.
-	 * 
+	 *
 	 * @param key
 	 *            Clé de propriété.
 	 * @return Chaîne de texte associée à la clé spécifiée.
@@ -191,7 +191,7 @@ public class ResourceManager {
 	 * {@link IllegalArgumentException} est lancée. Si la valeur ne peut être
 	 * parsée, alors une exception de type {@link NumberFormatException} est
 	 * lancée.
-	 * 
+	 *
 	 * @param key
 	 *            Clé de propriété.
 	 * @return Valeur de type <code>int</code> associée à la clé spécifiée
@@ -201,7 +201,7 @@ public class ResourceManager {
 		if (!str.isEmpty()) {
 			try {
 				return Integer.parseInt(str);
-			} catch (@SuppressWarnings("unused") Exception e) {
+			} catch (Exception e) {
 				throw new NumberFormatException("Cannot parse value to integer : " + str);
 			}
 		}
@@ -214,7 +214,7 @@ public class ResourceManager {
 	 * alors une exception de type {@link IllegalArgumentException} est lancée.
 	 * Si la valeur ne peut être parsée, alors une exception de type
 	 * {@link IllegalArgumentException} est lancée.
-	 * 
+	 *
 	 * @param key
 	 *            Clé de propriété.
 	 * @return Nouvelle instance de {@link Color} construite à partir de la
@@ -236,7 +236,7 @@ public class ResourceManager {
 	 * Renvoie une icône instanciée à partir du chemin récupéré grâce à la clé
 	 * de propriété spécifiée. Si la clé n'existe pas, alors une exception du
 	 * type {@link IllegalArgumentException} est lancée.
-	 * 
+	 *
 	 * @param key
 	 *            Clé de propriété.
 	 * @return Nouvelle instance de {@link ImageIcon}.

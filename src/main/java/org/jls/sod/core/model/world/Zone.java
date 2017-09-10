@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +28,7 @@ import java.util.HashMap;
 
 /**
  * Data model of a zone.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 3, 2015
  */
@@ -39,13 +39,13 @@ public class Zone {
 	private final String description;
 	private final Region region;
 	private final HashMap<String, Room> rooms;
-	private final Room[][] map;
+	//private final Room[][] map;
 
 	private Room entryPoint;
 
 	/**
 	 * Instanciates a new zone.
-	 * 
+	 *
 	 * @param id
 	 *            The zone identifier.
 	 * @param name
@@ -62,12 +62,12 @@ public class Zone {
 		this.rooms = new HashMap<>();
 		this.region = region;
 		this.entryPoint = null;
-		this.map = null;
+		//this.map = null;
 	}
 
 	/**
 	 * Returns the zone identifier.
-	 * 
+	 *
 	 * @return Zone idientifier.
 	 */
 	public String getId () {
@@ -76,7 +76,7 @@ public class Zone {
 
 	/**
 	 * Returns the zone name.
-	 * 
+	 *
 	 * @return Zone name.
 	 */
 	public String getName () {
@@ -85,7 +85,7 @@ public class Zone {
 
 	/**
 	 * Returns the description of this zone.
-	 * 
+	 *
 	 * @return Description of this zone.
 	 */
 	public String getDescription () {
@@ -94,7 +94,7 @@ public class Zone {
 
 	/**
 	 * Returns the rooms contained in this zone.
-	 * 
+	 *
 	 * @return Rooms contained in this zone.
 	 */
 	public HashMap<String, Room> getRooms () {
@@ -104,7 +104,7 @@ public class Zone {
 	/**
 	 * Adds the specified room to the map of the rooms. If the map previously
 	 * contained a mapping for the room, the old value is replaced.
-	 * 
+	 *
 	 * @param room
 	 *            The room to add to the map.
 	 * @return The previous room contained in the map, or <code>null</code> if
@@ -117,7 +117,7 @@ public class Zone {
 	/**
 	 * Returns the room to which the specified key is mapped, or
 	 * <code>null</code> if this map contains no mapping for the key.
-	 * 
+	 *
 	 * @param key
 	 *            The room identifier.
 	 * @return The room contained in the map or <code>null</code> if this map
@@ -129,7 +129,7 @@ public class Zone {
 
 	/**
 	 * Returns the region where this zone is located.
-	 * 
+	 *
 	 * @return The region where this zone is located.
 	 */
 	public Region getRegion () {
@@ -138,7 +138,7 @@ public class Zone {
 
 	/**
 	 * Returns the default room where the player should start.
-	 * 
+	 *
 	 * @return The default room where the player should start.
 	 */
 	public Room getEntryPoint () {
@@ -147,7 +147,7 @@ public class Zone {
 
 	/**
 	 * Specfies the default room where the player should start.
-	 * 
+	 *
 	 * @param entry
 	 *            The default room where the player should start.
 	 */

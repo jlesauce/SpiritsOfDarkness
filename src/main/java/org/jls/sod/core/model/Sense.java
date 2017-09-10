@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,7 +27,7 @@ package org.jls.sod.core.model;
 /**
  * Enumerates the different senses the player can use to explore its
  * environment.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Nov 25, 2015
  */
@@ -44,7 +44,7 @@ public enum Sense {
 
 	/**
 	 * Instanciates a new direction and specifies the matching sense's labels.
-	 * 
+	 *
 	 * @param lbls
 	 *            The matching direction's labels.
 	 */
@@ -54,7 +54,7 @@ public enum Sense {
 
 	/**
 	 * Parses the specified sense.
-	 * 
+	 *
 	 * @param value
 	 *            Sense to parse.
 	 * @return Corresponding {@link Sense} enum if an existing sense is found,
@@ -64,7 +64,7 @@ public enum Sense {
 		// If value matches the enum name
 		try {
 			return Sense.valueOf(value.toUpperCase());
-		} catch (@SuppressWarnings("unused") Exception e) {
+		} catch (Exception e) {
 			// Silent exception
 		}
 		// Else try to find a matching label
@@ -81,7 +81,7 @@ public enum Sense {
 
 	/**
 	 * Returns <code>true</code> if the specified argument matches a sense.
-	 * 
+	 *
 	 * @param value
 	 *            The value to test.
 	 * @return <code>true</code> if the specified argument matches a sense
@@ -100,7 +100,7 @@ public enum Sense {
 
 	/**
 	 * Returns the matching labels for this sense.
-	 * 
+	 *
 	 * @return The matching labels for this sense.
 	 */
 	public String[] getMatchingLabels () {

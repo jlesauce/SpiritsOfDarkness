@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ import org.jls.sod.util.ResourceManager;
 
 /**
  * Command that allows the player to take items in the environment.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Nov 27, 2015
  */
@@ -50,7 +50,7 @@ public class TakeCommand extends AbstractCommandExecutor {
 
 	/**
 	 * Instanciates the take command.
-	 * 
+	 *
 	 * @param model
 	 *            The game data model.
 	 * @param controller
@@ -83,10 +83,10 @@ public class TakeCommand extends AbstractCommandExecutor {
 				// Tries to take it
 				try {
 					takeItem(arg);
-				} catch (@SuppressWarnings("unused") ItemNotFoundException e) {
+				} catch (ItemNotFoundException e) {
 					this.logger.warn("Item not found in room's inventory : {}", arg);
 					this.displayController.printError(this.props.getString("command.take.error.itemNotFound"));
-				} catch (@SuppressWarnings("unused") InventoryQuantityException e) {
+				} catch (InventoryQuantityException e) {
 					this.logger.warn("Not enough {} items in room's inventory", arg);
 					this.displayController.printError(this.props.getString("command.take.error.notEnoughItems"));
 				}
@@ -117,10 +117,10 @@ public class TakeCommand extends AbstractCommandExecutor {
 					int quantity = Integer.parseInt(arg1);
 					try {
 						takeItem(arg0, quantity);
-					} catch (@SuppressWarnings("unused") ItemNotFoundException e) {
+					} catch (ItemNotFoundException e) {
 						this.logger.warn("Item not found in room's inventory : {}", arg0);
 						this.displayController.printError(this.props.getString("command.take.error.itemNotFound"));
-					} catch (@SuppressWarnings("unused") InventoryQuantityException e) {
+					} catch (InventoryQuantityException e) {
 						this.logger.warn("Not enough {} items in room's inventory", arg0);
 						this.displayController.printError(this.props.getString("command.take.error.notEnoughItems"));
 					}
@@ -137,7 +137,7 @@ public class TakeCommand extends AbstractCommandExecutor {
 
 	/**
 	 * Takes the specified item.
-	 * 
+	 *
 	 * @param itemId
 	 *            Unique item identifier.
 	 * @throws ItemNotFoundException
@@ -152,7 +152,7 @@ public class TakeCommand extends AbstractCommandExecutor {
 
 	/**
 	 * Takes the specified item and put it in the character's inventory.
-	 * 
+	 *
 	 * @param itemId
 	 *            Unique item identifier.
 	 * @param n
@@ -163,7 +163,7 @@ public class TakeCommand extends AbstractCommandExecutor {
 	 * @throws InventoryQuantityException
 	 *             If the quantity of the specified item is too low.
 	 */
-	private void takeItem (final String itemId, int n) throws ItemNotFoundException, InventoryQuantityException {
+	private void takeItem (final String itemId, final int n) throws ItemNotFoundException, InventoryQuantityException {
 		Room room = this.model.getRoom();
 		Inventory inventory = this.model.getCharacter().getInventory();
 

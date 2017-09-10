@@ -87,7 +87,7 @@ public class GameModel extends AbstractModel {
 	 */
 	private void listStories (final File parentDir) {
 		if (parentDir.exists()) {
-			FileFilter filter = new FileFilter(FileFilter.ONLY_DIRECTORIES);
+			FileFilter filter = new FileFilter(FileFilter.ONLY_FOLDERS);
 			File[] files = parentDir.listFiles(filter);
 			this.logger.info("Listing game stories");
 			for (File file : files) {
