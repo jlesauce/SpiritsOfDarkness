@@ -43,7 +43,7 @@ public enum Sense {
 	private final String[] matchingLabels;
 
 	/**
-	 * Instanciates a new direction and specifies the matching sense's labels.
+	 * Instantiates a new direction and specifies the matching sense's labels.
 	 *
 	 * @param lbls
 	 *            The matching direction's labels.

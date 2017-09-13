@@ -79,7 +79,7 @@ public class ResourceManager {
 	private CombinedConfiguration configuration;
 
 	/**
-	 * Instanciates the resources manager.
+	 * Instantiates the resources manager.
 	 */
 	private ResourceManager () {
 		this.logger = LogManager.getLogger();

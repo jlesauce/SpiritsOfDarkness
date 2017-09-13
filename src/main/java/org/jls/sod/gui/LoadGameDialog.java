@@ -64,7 +64,7 @@ public class LoadGameDialog extends JDialog implements ActionListener {
     private JButton btnCancel;
 
     /**
-     * Instanciates a new dialog.
+     * Instantiates a new dialog.
      *
      * @param controller
      *            The game controller.

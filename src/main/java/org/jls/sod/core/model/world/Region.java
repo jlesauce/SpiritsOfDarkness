@@ -43,7 +43,7 @@ public class Region {
 	private Zone entryPoint;
 
 	/**
-	 * Instanciates a new region.
+	 * Instantiates a new region.
 	 * 
 	 * @param id
 	 *            The region identifier.

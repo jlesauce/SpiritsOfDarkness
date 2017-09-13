@@ -48,7 +48,7 @@ public class DropCommand extends AbstractCommandExecutor {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates the Drop command.
+	 * Instantiates the Drop command.
 	 *
 	 * @param model
 	 *            The game data model.

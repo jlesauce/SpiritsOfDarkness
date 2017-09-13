@@ -38,7 +38,7 @@ public class Story {
 	private final String defaultWorld;
 
 	/**
-	 * Instanciates a new story.
+	 * Instantiates a new story.
 	 * 
 	 * @param id
 	 *            Identifier of the story.

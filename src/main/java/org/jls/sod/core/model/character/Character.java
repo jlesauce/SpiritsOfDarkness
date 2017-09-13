@@ -38,7 +38,7 @@ public class Character {
 	private final Inventory inventory;
 
 	/**
-	 * Instanciates a default character.
+	 * Instantiates a default character.
 	 */
 	public Character () {
 		this.inventory = new Inventory();

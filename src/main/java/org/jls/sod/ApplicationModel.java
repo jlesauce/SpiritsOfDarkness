@@ -50,7 +50,7 @@ public class ApplicationModel extends AbstractModel {
 	private int currentHistoryPosition;
 
 	/**
-	 * Instanciates a default data model.
+	 * Instantiates a default data model.
 	 */
 	public ApplicationModel () {
 		ResourceManager props = ResourceManager.getInstance();

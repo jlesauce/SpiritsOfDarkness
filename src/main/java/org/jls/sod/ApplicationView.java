@@ -81,7 +81,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 	private JTextField tfCommandLine;
 
 	/**
-	 * Instanciates the application's main frame.
+	 * Instantiates the application's main frame.
 	 *
 	 * @param model
 	 *            Data model of the application.
@@ -214,7 +214,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 	}
 
 	/**
-	 * Instanciates the different components composing the user graphical
+	 * Instantiates the different components composing the user graphical
 	 * interface.
 	 */
 	private void createComponents () {

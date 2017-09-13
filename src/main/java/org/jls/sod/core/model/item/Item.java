@@ -49,7 +49,7 @@ public class Item {
 	private boolean isStackable;
 
 	/**
-	 * Instanciates a new item.
+	 * Instantiates a new item.
 	 * 
 	 * @param id
 	 *            Item's unique identifier.

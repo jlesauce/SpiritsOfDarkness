@@ -53,7 +53,7 @@ public class Room {
 	private boolean isVisited;
 
 	/**
-	 * Instanciates a new default room.
+	 * Instantiates a new default room.
 	 * 
 	 * @param id
 	 *            The room identifier.

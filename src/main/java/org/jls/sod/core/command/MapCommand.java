@@ -41,7 +41,7 @@ public class MapCommand extends AbstractCommandExecutor {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates the Map command.
+	 * Instantiates the Map command.
 	 * 
 	 * @param model
 	 *            The game data model.

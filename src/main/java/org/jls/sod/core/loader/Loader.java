@@ -66,7 +66,7 @@ public class Loader {
 	private final File itemsDir;
 
 	/**
-	 * Instanciates the game loader.
+	 * Instantiates the game loader.
 	 * 
 	 * @param instanceDirectory
 	 *            Specifies the instance directory containing all the files of

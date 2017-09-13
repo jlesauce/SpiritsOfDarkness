@@ -63,7 +63,7 @@ public class GameModel extends AbstractModel {
 	private Room room;
 
 	/**
-	 * Instanciates a default data model.
+	 * Instantiates a default data model.
 	 */
 	public GameModel () {
 		this.logger = LogManager.getLogger();

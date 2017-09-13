@@ -1,18 +1,18 @@
 /*#
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2016 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@ import org.jls.sod.util.ResourceManager;
 
 /**
  * Application's main controller.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 2, 2015
  */
@@ -64,8 +64,8 @@ public class ApplicationController {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates the main controller.
-	 * 
+	 * Instantiates the main controller.
+	 *
 	 * @param model
 	 *            Application's data model.
 	 * @throws Exception
@@ -83,7 +83,7 @@ public class ApplicationController {
 
 	/**
 	 * Shows a pop-up animation with the specified message.
-	 * 
+	 *
 	 * @param title
 	 *            Title of the pop-up.
 	 * @param msg
@@ -105,7 +105,7 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Exists the application.
+	 * Exit the application.
 	 */
 	public void exitApplication () {
 		this.logger.info("Exiting application");
@@ -114,7 +114,7 @@ public class ApplicationController {
 
 	/**
 	 * Process the user command.
-	 * 
+	 *
 	 * @param cmd
 	 *            User command.
 	 */
@@ -157,7 +157,7 @@ public class ApplicationController {
 
 	/**
 	 * Sets the application's icon.
-	 * 
+	 *
 	 * @param icon
 	 *            Application's icon.
 	 */
@@ -168,7 +168,7 @@ public class ApplicationController {
 	/**
 	 * Selects the Look&Feel. If the L&F exists then the skin is updated using
 	 * the {@link UIManager}.
-	 * 
+	 *
 	 * @param lafName
 	 *            Identifier of the Look & Feel.
 	 */
@@ -240,7 +240,7 @@ public class ApplicationController {
 
 	/**
 	 * Gets the previous history from the current history's position.
-	 * 
+	 *
 	 * @return Previous history value.
 	 */
 	public String previousHistory () {
@@ -252,7 +252,7 @@ public class ApplicationController {
 
 	/**
 	 * Gets the next history from the current history's position.
-	 * 
+	 *
 	 * @return Next history value.
 	 */
 	public String nextHistory () {
@@ -264,7 +264,7 @@ public class ApplicationController {
 
 	/**
 	 * Prints the command in the console.
-	 * 
+	 *
 	 * @param cmd
 	 *            The command to print.
 	 */
@@ -276,7 +276,7 @@ public class ApplicationController {
 
 	/**
 	 * Prints an error message in the console.
-	 * 
+	 *
 	 * @param msg
 	 *            The error message.
 	 */
@@ -332,7 +332,7 @@ public class ApplicationController {
 
 	/**
 	 * Returns the game controller.
-	 * 
+	 *
 	 * @return The game controller.
 	 */
 	public GameController getGameController () {

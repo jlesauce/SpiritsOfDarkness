@@ -42,7 +42,7 @@ public abstract class AbstractCommandExecutor {
 	protected final Logger logger;
 
 	/**
-	 * Instanciates a new abstract command.
+	 * Instantiates a new abstract command.
 	 * 
 	 * @param model
 	 *            The game data model.

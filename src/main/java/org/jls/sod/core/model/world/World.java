@@ -42,7 +42,7 @@ public class World {
 	private Region entryPoint;
 
 	/**
-	 * Instanciates a new world.
+	 * Instantiates a new world.
 	 * 
 	 * @param id
 	 *            The world identifier.

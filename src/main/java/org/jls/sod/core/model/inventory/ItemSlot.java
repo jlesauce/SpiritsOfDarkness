@@ -42,7 +42,7 @@ public class ItemSlot {
 	private int quantity;
 
 	/**
-	 * Instanciates a new item slot.
+	 * Instantiates a new item slot.
 	 * 
 	 * @param item
 	 *            The {@link Item} instance associated with this slot.
@@ -58,7 +58,7 @@ public class ItemSlot {
 	}
 
 	/**
-	 * Instanciates a new item slot.
+	 * Instantiates a new item slot.
 	 * 
 	 * @param item
 	 *            The {@link Item} instance associated with this slot.

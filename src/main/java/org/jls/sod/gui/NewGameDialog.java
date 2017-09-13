@@ -72,7 +72,7 @@ public class NewGameDialog extends JDialog implements ActionListener {
 	private JButton btnCreate;
 
 	/**
-	 * Instanciates a new dialog.
+	 * Instantiates a new dialog.
 	 * 
 	 * @param controller
 	 *            The game controller.
@@ -124,7 +124,7 @@ public class NewGameDialog extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * Instanciates the components of the graphical user interface.
+	 * Instantiates the components of the graphical user interface.
 	 */
 	private void createComponents () {
 		this.tfSaveName = new JTextField("SAVED_" + TimeUtils.getFileTimestamp());

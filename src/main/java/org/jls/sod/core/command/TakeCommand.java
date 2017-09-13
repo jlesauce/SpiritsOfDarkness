@@ -49,7 +49,7 @@ public class TakeCommand extends AbstractCommandExecutor {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates the take command.
+	 * Instantiates the take command.
 	 *
 	 * @param model
 	 *            The game data model.

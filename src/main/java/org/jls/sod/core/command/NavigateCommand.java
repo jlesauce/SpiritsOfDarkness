@@ -45,7 +45,7 @@ public class NavigateCommand extends AbstractCommandExecutor {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates the navigate command.
+	 * Instantiates the navigate command.
 	 * 
 	 * @param model
 	 *            The game data model.

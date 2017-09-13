@@ -44,7 +44,7 @@ public enum Direction {
 	private final String[] matchingLabels;
 
 	/**
-	 * Instanciates a new direction and specifies the matching direction's
+	 * Instantiates a new direction and specifies the matching direction's
 	 * labels.
 	 *
 	 * @param lbls

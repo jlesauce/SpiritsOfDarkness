@@ -60,7 +60,7 @@ public class GameController {
 	private final Logger logger;
 
 	/**
-	 * Instanciates the game controller.
+	 * Instantiates the game controller.
 	 *
 	 * @param model
 	 *            The game data model.

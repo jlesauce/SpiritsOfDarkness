@@ -44,7 +44,7 @@ public class Zone {
 	private Room entryPoint;
 
 	/**
-	 * Instanciates a new zone.
+	 * Instantiates a new zone.
 	 *
 	 * @param id
 	 *            The zone identifier.

@@ -51,7 +51,7 @@ public class DisplayController {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates a new display delegate controller.
+	 * Instantiates a new display delegate controller.
 	 * 
 	 * @param model
 	 *            The game data model.

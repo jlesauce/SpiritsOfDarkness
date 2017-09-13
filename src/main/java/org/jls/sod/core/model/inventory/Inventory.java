@@ -40,7 +40,7 @@ public class Inventory {
 	private final HashMap<String, ItemSlot> slots;
 
 	/**
-	 * Instanciates a new inventory.
+	 * Instantiates a new inventory.
 	 */
 	public Inventory () {
 		this.slots = new HashMap<>();

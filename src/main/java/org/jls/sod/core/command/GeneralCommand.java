@@ -41,7 +41,7 @@ public class GeneralCommand extends AbstractCommandExecutor {
 	private final ResourceManager props;
 
 	/**
-	 * Instanciates a new command.
+	 * Instantiates a new command.
 	 * 
 	 * @param model
 	 *            The game data model.
