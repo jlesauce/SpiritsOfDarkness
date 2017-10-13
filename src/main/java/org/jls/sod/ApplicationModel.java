@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod;
 
@@ -39,131 +39,131 @@ import org.jls.toolbox.gui.AbstractModel;
  */
 public class ApplicationModel extends AbstractModel {
 
-	private static final int HISTORY_MAX_SIZE = 100;
+    private static final int HISTORY_MAX_SIZE = 100;
 
-	private final String appName;
-	private final String appVersion;
+    private final String appName;
+    private final String appVersion;
 
-	private final ArrayList<AbstractCommandExecutor> commandExecutors;
-	private final LinkedList<String> history;
+    private final ArrayList<AbstractCommandExecutor> commandExecutors;
+    private final LinkedList<String> history;
 
-	private int currentHistoryPosition;
+    private int currentHistoryPosition;
 
-	/**
-	 * Instantiates a default data model.
-	 */
-	public ApplicationModel () {
-		ResourceManager props = ResourceManager.getInstance();
-		this.appName = props.getString("name");
-		this.appVersion = props.getString("version");
-		this.commandExecutors = new ArrayList<>();
-		this.history = new LinkedList<>();
-		this.currentHistoryPosition = 0;
-	}
+    /**
+     * Instantiates a default data model.
+     */
+    public ApplicationModel() {
+        ResourceManager props = ResourceManager.getInstance();
+        this.appName = props.getString("name");
+        this.appVersion = props.getString("version");
+        this.commandExecutors = new ArrayList<>();
+        this.history = new LinkedList<>();
+        this.currentHistoryPosition = 0;
+    }
 
-	/**
-	 * Returns the application's name.
-	 * 
-	 * @return Application's name.
-	 */
-	public String getAppName () {
-		return this.appName;
-	}
+    /**
+     * Returns the application's name.
+     * 
+     * @return Application's name.
+     */
+    public String getAppName () {
+        return this.appName;
+    }
 
-	/**
-	 * Returns the application's version.
-	 * 
-	 * @return Application's version.
-	 */
-	public String getAppVersion () {
-		return this.appVersion;
-	}
+    /**
+     * Returns the application's version.
+     * 
+     * @return Application's version.
+     */
+    public String getAppVersion () {
+        return this.appVersion;
+    }
 
-	/**
-	 * Returns the list of command executors.
-	 * 
-	 * @return List of command executors.
-	 */
-	public ArrayList<AbstractCommandExecutor> getCommandExecutors () {
-		return this.commandExecutors;
-	}
+    /**
+     * Returns the list of command executors.
+     * 
+     * @return List of command executors.
+     */
+    public ArrayList<AbstractCommandExecutor> getCommandExecutors () {
+        return this.commandExecutors;
+    }
 
-	/**
-	 * Returns the command history.
-	 * 
-	 * @return The command history.
-	 */
-	public LinkedList<String> getHistory () {
-		return this.history;
-	}
+    /**
+     * Returns the command history.
+     * 
+     * @return The command history.
+     */
+    public LinkedList<String> getHistory () {
+        return this.history;
+    }
 
-	/**
-	 * Returns the command history at the specified index. If the index is out
-	 * of bounds, an empty string is returned.
-	 * 
-	 * @param index
-	 *            The index of the history.
-	 * @return The command history at the specified index or an empty string if
-	 *         index is out of bounds.
-	 */
-	public String getHistory (final int index) {
-		if (index >= 0 && index < this.history.size()) {
-			return this.history.get(index);
-		} else {
-			return "";
-		}
-	}
+    /**
+     * Returns the command history at the specified index. If the index is out of
+     * bounds, an empty string is returned.
+     * 
+     * @param index
+     *            The index of the history.
+     * @return The command history at the specified index or an empty string if
+     *         index is out of bounds.
+     */
+    public String getHistory (final int index) {
+        if (index >= 0 && index < this.history.size()) {
+            return this.history.get(index);
+        } else {
+            return "";
+        }
+    }
 
-	/**
-	 * Updates the current history with a new entry.
-	 * 
-	 * @param cmd
-	 *            New command to put in the history.
-	 */
-	public void putHistory (final String cmd) {
-		this.history.addLast(cmd);
-		if (this.history.size() > HISTORY_MAX_SIZE) {
-			this.history.poll();
-		}
-		setCurrentHistoryPosition(this.history.size());
-	}
+    /**
+     * Updates the current history with a new entry.
+     * 
+     * @param cmd
+     *            New command to put in the history.
+     */
+    public void putHistory (final String cmd) {
+        this.history.addLast(cmd);
+        if (this.history.size() > HISTORY_MAX_SIZE) {
+            this.history.poll();
+        }
+        setCurrentHistoryPosition(this.history.size());
+    }
 
-	/**
-	 * Returns the current history position.
-	 * 
-	 * @return The current history position.
-	 */
-	public int getCurrentHistoryPosition () {
-		return this.currentHistoryPosition;
-	}
+    /**
+     * Returns the current history position.
+     * 
+     * @return The current history position.
+     */
+    public int getCurrentHistoryPosition () {
+        return this.currentHistoryPosition;
+    }
 
-	/**
-	 * Sets the current history position.
-	 * 
-	 * @param position
-	 *            The current history position.
-	 */
-	protected void setCurrentHistoryPosition (int position) {
-		this.currentHistoryPosition = position;
-	}
+    /**
+     * Sets the current history position.
+     * 
+     * @param position
+     *            The current history position.
+     */
+    protected void setCurrentHistoryPosition (int position) {
+        this.currentHistoryPosition = position;
+    }
 
-	/**
-	 * Increments the history position.
-	 */
-	public void incrementHistoryPosition () {
-		this.currentHistoryPosition++;
-		if (this.currentHistoryPosition > this.history.size()) {
-			this.currentHistoryPosition = this.history.size();
-		}
-	}
+    /**
+     * Increments the history position.
+     */
+    public void incrementHistoryPosition () {
+        this.currentHistoryPosition++;
+        if (this.currentHistoryPosition > this.history.size()) {
+            this.currentHistoryPosition = this.history.size();
+        }
+    }
 
-	/**
-	 * Decrements the history position.
-	 */
-	public void decrementHistoryPosition () {
-		this.currentHistoryPosition--;
-		if (this.currentHistoryPosition < 0) {
-			this.currentHistoryPosition = 0;
-		}
-	}
+    /**
+     * Decrements the history position.
+     */
+    public void decrementHistoryPosition () {
+        this.currentHistoryPosition--;
+        if (this.currentHistoryPosition < 0) {
+            this.currentHistoryPosition = 0;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model;
 
@@ -32,63 +32,63 @@ package org.jls.sod.core.model;
  */
 public class Story {
 
-	private final String id;
-	private final String name;
-	private final String description;
-	private final String defaultWorld;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final String defaultWorld;
 
-	/**
-	 * Instantiates a new story.
-	 * 
-	 * @param id
-	 *            Identifier of the story.
-	 * @param name
-	 *            Name of the story.
-	 * @param desc
-	 *            Description of the story.
-	 * @param defWorld
-	 *            Default world.
-	 */
-	public Story (final String id, final String name, final String desc, final String defWorld) {
-		this.id = id;
-		this.name = name;
-		this.description = desc;
-		this.defaultWorld = defWorld;
-	}
+    /**
+     * Instantiates a new story.
+     * 
+     * @param id
+     *            Identifier of the story.
+     * @param name
+     *            Name of the story.
+     * @param desc
+     *            Description of the story.
+     * @param defWorld
+     *            Default world.
+     */
+    public Story(final String id, final String name, final String desc, final String defWorld) {
+        this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.defaultWorld = defWorld;
+    }
 
-	/**
-	 * Returns the identifier of the story.
-	 * 
-	 * @return Identifier of the story.
-	 */
-	public String getId () {
-		return this.id;
-	}
+    /**
+     * Returns the identifier of the story.
+     * 
+     * @return Identifier of the story.
+     */
+    public String getId () {
+        return this.id;
+    }
 
-	/**
-	 * Returns the name of the story.
-	 * 
-	 * @return Name of the story.
-	 */
-	public String getName () {
-		return this.name;
-	}
+    /**
+     * Returns the name of the story.
+     * 
+     * @return Name of the story.
+     */
+    public String getName () {
+        return this.name;
+    }
 
-	/**
-	 * Returns the description of the story.
-	 * 
-	 * @return Description of the story.
-	 */
-	public String getDescription () {
-		return this.description;
-	}
+    /**
+     * Returns the description of the story.
+     * 
+     * @return Description of the story.
+     */
+    public String getDescription () {
+        return this.description;
+    }
 
-	/**
-	 * Returns the default world to load.
-	 * 
-	 * @return The default world to load.
-	 */
-	public String getDefaultWorld () {
-		return this.defaultWorld;
-	}
+    /**
+     * Returns the default world to load.
+     * 
+     * @return The default world to load.
+     */
+    public String getDefaultWorld () {
+        return this.defaultWorld;
+    }
 }

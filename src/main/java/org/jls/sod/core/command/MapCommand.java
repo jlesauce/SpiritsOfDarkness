@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.command;
 
@@ -37,51 +37,51 @@ import org.jls.sod.util.ResourceManager;
  */
 public class MapCommand extends AbstractCommandExecutor {
 
-	private final DisplayController displayController;
-	private final ResourceManager props;
+    private final DisplayController displayController;
+    private final ResourceManager props;
 
-	/**
-	 * Instantiates the Map command.
-	 * 
-	 * @param model
-	 *            The game data model.
-	 * @param controller
-	 *            The game controller.
-	 */
-	public MapCommand (final GameModel model, final GameController controller) {
-		super(model, controller);
-		this.displayController = controller.getDisplayController();
-		this.props = ResourceManager.getInstance();
-	}
+    /**
+     * Instantiates the Map command.
+     * 
+     * @param model
+     *            The game data model.
+     * @param controller
+     *            The game controller.
+     */
+    public MapCommand(final GameModel model, final GameController controller) {
+        super(model, controller);
+        this.displayController = controller.getDisplayController();
+        this.props = ResourceManager.getInstance();
+    }
 
-	@Override
-	public String[] getRecognizedCommands () {
-		String[] cmds = {"map"};
-		return cmds;
-	}
+    @Override
+    public String[] getRecognizedCommands () {
+        String[] cmds = { "map" };
+        return cmds;
+    }
 
-	@Override
-	public void execute (final Command cmd) {
-		// If no argument specified
-		if (cmd.getArgumentCount() == 0) {
-			this.logger.info("Showing the map");
-			this.controller.showMap();
-		}
-		// One argument : map [show | hide]
-		else if (cmd.getArgumentCount() == 1) {
-			String arg = cmd.getArgument(0);
-			switch (arg) {
-				case "show":
-					this.controller.showMap();
-					break;
-				case "hide":
-					this.controller.hideMap();
-					break;
-				default:
-					this.displayController.printError(this.props.getString("command.error.unknownCommand"));
-			}
-		} else {
-			this.displayController.printError(this.props.getString("command.error.invalidNbArgs"));
-		}
-	}
+    @Override
+    public void execute (final Command cmd) {
+        // If no argument specified
+        if (cmd.getArgumentCount() == 0) {
+            this.logger.info("Showing the map");
+            this.controller.showMap();
+        }
+        // One argument : map [show | hide]
+        else if (cmd.getArgumentCount() == 1) {
+            String arg = cmd.getArgument(0);
+            switch (arg) {
+                case "show":
+                    this.controller.showMap();
+                    break;
+                case "hide":
+                    this.controller.hideMap();
+                    break;
+                default:
+                    this.displayController.printError(this.props.getString("command.error.unknownCommand"));
+            }
+        } else {
+            this.displayController.printError(this.props.getString("command.error.invalidNbArgs"));
+        }
+    }
 }

@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model.item;
 
@@ -31,8 +31,5 @@ package org.jls.sod.core.model.item;
  * @date Nov 26, 2015
  */
 public enum WeaponType {
-	AXE,
-	BOW,
-	CROSSBOW,
-	SWORD;
+    AXE, BOW, CROSSBOW, SWORD;
 }

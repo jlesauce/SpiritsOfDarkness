@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model.world;
 
@@ -34,84 +34,84 @@ import java.util.HashMap;
  */
 public class World {
 
-	private final String id;
-	private final String name;
-	private final String description;
-	private final HashMap<String, Region> regions;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final HashMap<String, Region> regions;
 
-	private Region entryPoint;
+    private Region entryPoint;
 
-	/**
-	 * Instantiates a new world.
-	 * 
-	 * @param id
-	 *            The world identifier.
-	 * @param name
-	 *            The world name.
-	 * @param desc
-	 *            Description of this world.
-	 */
-	public World (final String id, final String name, final String desc) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = desc;
-		this.regions = new HashMap<>();
-		this.entryPoint = null;
-	}
+    /**
+     * Instantiates a new world.
+     * 
+     * @param id
+     *            The world identifier.
+     * @param name
+     *            The world name.
+     * @param desc
+     *            Description of this world.
+     */
+    public World(final String id, final String name, final String desc) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.regions = new HashMap<>();
+        this.entryPoint = null;
+    }
 
-	/**
-	 * Returns the world identifier.
-	 * 
-	 * @return World idientifier.
-	 */
-	public String getId () {
-		return this.id;
-	}
+    /**
+     * Returns the world identifier.
+     * 
+     * @return World idientifier.
+     */
+    public String getId () {
+        return this.id;
+    }
 
-	/**
-	 * Returns the world name.
-	 * 
-	 * @return World name.
-	 */
-	public String getName () {
-		return this.name;
-	}
+    /**
+     * Returns the world name.
+     * 
+     * @return World name.
+     */
+    public String getName () {
+        return this.name;
+    }
 
-	/**
-	 * Returns the description of this world.
-	 * 
-	 * @return Description of this world.
-	 */
-	public String getDescription () {
-		return this.description;
-	}
+    /**
+     * Returns the description of this world.
+     * 
+     * @return Description of this world.
+     */
+    public String getDescription () {
+        return this.description;
+    }
 
-	/**
-	 * Returns the regions contained in this world.
-	 * 
-	 * @return Regions contained in this world.
-	 */
-	public HashMap<String, Region> getRegions () {
-		return this.regions;
-	}
+    /**
+     * Returns the regions contained in this world.
+     * 
+     * @return Regions contained in this world.
+     */
+    public HashMap<String, Region> getRegions () {
+        return this.regions;
+    }
 
-	/**
-	 * Returns the default region where the player should start.
-	 * 
-	 * @return The default region where the player should start.
-	 */
-	public Region getEntryPoint () {
-		return this.entryPoint;
-	}
+    /**
+     * Returns the default region where the player should start.
+     * 
+     * @return The default region where the player should start.
+     */
+    public Region getEntryPoint () {
+        return this.entryPoint;
+    }
 
-	/**
-	 * Specifies the default region where the player should start.
-	 * 
-	 * @param entry
-	 *            The default region where the player should start.
-	 */
-	public void setEntryPoint (final Region entry) {
-		this.entryPoint = entry;
-	}
+    /**
+     * Specifies the default region where the player should start.
+     * 
+     * @param entry
+     *            The default region where the player should start.
+     */
+    public void setEntryPoint (final Region entry) {
+        this.entryPoint = entry;
+    }
 }

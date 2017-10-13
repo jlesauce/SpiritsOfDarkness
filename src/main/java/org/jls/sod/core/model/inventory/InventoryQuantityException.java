@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model.inventory;
 
@@ -33,26 +33,26 @@ package org.jls.sod.core.model.inventory;
  */
 public class InventoryQuantityException extends Exception {
 
-	private static final long serialVersionUID = 6071755742494187583L;
+    private static final long serialVersionUID = 6071755742494187583L;
 
-	public InventoryQuantityException () {
-		super();
-	}
+    public InventoryQuantityException() {
+        super();
+    }
 
-	public InventoryQuantityException (String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    public InventoryQuantityException(String message, Throwable cause, boolean enableSuppression,
+            boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 
-	public InventoryQuantityException (String message, Throwable cause) {
-		super(message, cause);
-	}
+    public InventoryQuantityException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public InventoryQuantityException (String message) {
-		super(message);
-	}
+    public InventoryQuantityException(String message) {
+        super(message);
+    }
 
-	public InventoryQuantityException (Throwable cause) {
-		super(cause);
-	}
+    public InventoryQuantityException(Throwable cause) {
+        super(cause);
+    }
 }

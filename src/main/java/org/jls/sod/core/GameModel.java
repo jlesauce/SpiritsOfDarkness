@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core;
 
@@ -47,207 +47,207 @@ import org.jls.toolbox.util.file.FileFilter;
  */
 public class GameModel extends AbstractModel {
 
-	private static final int DEFAULT_MAP_SIZE = 10;
+    private static final int DEFAULT_MAP_SIZE = 10;
 
-	private final Logger logger;
-	private final HashMap<String, File> stories;
-	private final Room[][] map;
+    private final Logger logger;
+    private final HashMap<String, File> stories;
+    private final Room[][] map;
 
-	private XMLConfiguration instanceConfig;
-	private File instanceDir;
+    private XMLConfiguration instanceConfig;
+    private File instanceDir;
 
-	private Character character;
-	private World world;
-	private Region region;
-	private Zone zone;
-	private Room room;
+    private Character character;
+    private World world;
+    private Region region;
+    private Zone zone;
+    private Room room;
 
-	/**
-	 * Instantiates a default data model.
-	 */
-	public GameModel () {
-		this.logger = LogManager.getLogger();
-		this.stories = new HashMap<>();
-		this.map = new Room[DEFAULT_MAP_SIZE][DEFAULT_MAP_SIZE];
-		this.instanceConfig = null;
-		this.instanceDir = null;
-		this.character = null;
-		this.world = null;
-		this.region = null;
-		this.zone = null;
-		this.room = null;
-		listStories(new File(ResourceManager.STORIES_PATH));
-	}
+    /**
+     * Instantiates a default data model.
+     */
+    public GameModel() {
+        this.logger = LogManager.getLogger();
+        this.stories = new HashMap<>();
+        this.map = new Room[DEFAULT_MAP_SIZE][DEFAULT_MAP_SIZE];
+        this.instanceConfig = null;
+        this.instanceDir = null;
+        this.character = null;
+        this.world = null;
+        this.region = null;
+        this.zone = null;
+        this.room = null;
+        listStories(new File(ResourceManager.STORIES_PATH));
+    }
 
-	/**
-	 * List the available stories.
-	 * 
-	 * @param parentDir
-	 *            The directory containing the stories.
-	 */
-	private void listStories (final File parentDir) {
-		if (parentDir.exists()) {
-			FileFilter filter = new FileFilter(FileFilter.ONLY_FOLDERS);
-			File[] files = parentDir.listFiles(filter);
-			this.logger.info("Listing game stories");
-			for (File file : files) {
-				this.stories.put(file.getName(), file);
-			}
-		} else {
-			throw new IllegalStateException("Stories directory not found : " + parentDir.getAbsolutePath());
-		}
-	}
+    /**
+     * List the available stories.
+     * 
+     * @param parentDir
+     *            The directory containing the stories.
+     */
+    private void listStories (final File parentDir) {
+        if (parentDir.exists()) {
+            FileFilter filter = new FileFilter(FileFilter.ONLY_FOLDERS);
+            File[] files = parentDir.listFiles(filter);
+            this.logger.info("Listing game stories");
+            for (File file : files) {
+                this.stories.put(file.getName(), file);
+            }
+        } else {
+            throw new IllegalStateException("Stories directory not found : " + parentDir.getAbsolutePath());
+        }
+    }
 
-	/**
-	 * Returns the current world.
-	 * 
-	 * @return Current world.
-	 */
-	public World getWorld () {
-		return this.world;
-	}
+    /**
+     * Returns the current world.
+     * 
+     * @return Current world.
+     */
+    public World getWorld () {
+        return this.world;
+    }
 
-	/**
-	 * Returns the available game stories.
-	 * 
-	 * @return The available game stories.
-	 */
-	public HashMap<String, File> getStories () {
-		return this.stories;
-	}
+    /**
+     * Returns the available game stories.
+     * 
+     * @return The available game stories.
+     */
+    public HashMap<String, File> getStories () {
+        return this.stories;
+    }
 
-	/**
-	 * Returns the instance's map.
-	 * 
-	 * @return The instance's map.
-	 */
-	public Room[][] getMap () {
-		return map;
-	}
+    /**
+     * Returns the instance's map.
+     * 
+     * @return The instance's map.
+     */
+    public Room[][] getMap () {
+        return map;
+    }
 
-	/**
-	 * Returns the {@link XMLConfiguration} instance used to describe the game
-	 * instance.
-	 * 
-	 * @return Configuration file used to describe the game instance.
-	 */
-	public XMLConfiguration getInstanceConfig () {
-		return instanceConfig;
-	}
+    /**
+     * Returns the {@link XMLConfiguration} instance used to describe the game
+     * instance.
+     * 
+     * @return Configuration file used to describe the game instance.
+     */
+    public XMLConfiguration getInstanceConfig () {
+        return instanceConfig;
+    }
 
-	/**
-	 * Sets the {@link XMLConfiguration} instance used to describe the game
-	 * instance.
-	 * 
-	 * @param config
-	 *            Configuration file used to describe the game instance.
-	 */
-	public void setInstanceConfig (final XMLConfiguration config) {
-		this.instanceConfig = config;
-	}
+    /**
+     * Sets the {@link XMLConfiguration} instance used to describe the game
+     * instance.
+     * 
+     * @param config
+     *            Configuration file used to describe the game instance.
+     */
+    public void setInstanceConfig (final XMLConfiguration config) {
+        this.instanceConfig = config;
+    }
 
-	/**
-	 * Returns the instance directory.
-	 * 
-	 * @return The instance directory.
-	 */
-	public File getInstanceDir () {
-		return instanceDir;
-	}
+    /**
+     * Returns the instance directory.
+     * 
+     * @return The instance directory.
+     */
+    public File getInstanceDir () {
+        return instanceDir;
+    }
 
-	/**
-	 * Sets the instance directory.
-	 * 
-	 * @param dir
-	 *            The instance directory.
-	 */
-	public void setInstanceDir (final File dir) {
-		this.instanceDir = dir;
-	}
+    /**
+     * Sets the instance directory.
+     * 
+     * @param dir
+     *            The instance directory.
+     */
+    public void setInstanceDir (final File dir) {
+        this.instanceDir = dir;
+    }
 
-	/**
-	 * Returns the character's instance.
-	 * 
-	 * @return The character's instance.
-	 */
-	public Character getCharacter () {
-		return character;
-	}
+    /**
+     * Returns the character's instance.
+     * 
+     * @return The character's instance.
+     */
+    public Character getCharacter () {
+        return character;
+    }
 
-	/**
-	 * Sets the character's instance.
-	 * 
-	 * @param character
-	 *            The character's instance.
-	 */
-	public void setCharacter (Character character) {
-		this.character = character;
-	}
+    /**
+     * Sets the character's instance.
+     * 
+     * @param character
+     *            The character's instance.
+     */
+    public void setCharacter (Character character) {
+        this.character = character;
+    }
 
-	/**
-	 * Specifies the current world.
-	 * 
-	 * @param world
-	 *            Current world.
-	 */
-	public void setWorld (World world) {
-		this.world = world;
-	}
+    /**
+     * Specifies the current world.
+     * 
+     * @param world
+     *            Current world.
+     */
+    public void setWorld (World world) {
+        this.world = world;
+    }
 
-	/**
-	 * Returns the current region.
-	 * 
-	 * @return Current region.
-	 */
-	public Region getRegion () {
-		return this.region;
-	}
+    /**
+     * Returns the current region.
+     * 
+     * @return Current region.
+     */
+    public Region getRegion () {
+        return this.region;
+    }
 
-	/**
-	 * Specifies the current region.
-	 * 
-	 * @param region
-	 *            Current region.
-	 */
-	public void setRegion (Region region) {
-		this.region = region;
-	}
+    /**
+     * Specifies the current region.
+     * 
+     * @param region
+     *            Current region.
+     */
+    public void setRegion (Region region) {
+        this.region = region;
+    }
 
-	/**
-	 * Returns the current zone.
-	 * 
-	 * @return Current zone.
-	 */
-	public Zone getZone () {
-		return this.zone;
-	}
+    /**
+     * Returns the current zone.
+     * 
+     * @return Current zone.
+     */
+    public Zone getZone () {
+        return this.zone;
+    }
 
-	/**
-	 * Specifies the current zone.
-	 * 
-	 * @param zone
-	 *            Current zone.
-	 */
-	public void setZone (Zone zone) {
-		this.zone = zone;
-	}
+    /**
+     * Specifies the current zone.
+     * 
+     * @param zone
+     *            Current zone.
+     */
+    public void setZone (Zone zone) {
+        this.zone = zone;
+    }
 
-	/**
-	 * Returns the current room.
-	 * 
-	 * @return Current room.
-	 */
-	public Room getRoom () {
-		return this.room;
-	}
+    /**
+     * Returns the current room.
+     * 
+     * @return Current room.
+     */
+    public Room getRoom () {
+        return this.room;
+    }
 
-	/**
-	 * Specifies the current room.
-	 * 
-	 * @param room
-	 *            Current room.
-	 */
-	public void setRoom (Room room) {
-		this.room = room;
-	}
+    /**
+     * Specifies the current room.
+     * 
+     * @param room
+     *            Current room.
+     */
+    public void setRoom (Room room) {
+        this.room = room;
+    }
 }

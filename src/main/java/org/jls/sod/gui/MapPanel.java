@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.gui;
 
@@ -39,15 +39,15 @@ import javax.swing.JPanel;
  */
 public class MapPanel extends JPanel implements Observer {
 
-	private static final long serialVersionUID = 7402820924342923497L;
+    private static final long serialVersionUID = 7402820924342923497L;
 
-	public MapPanel () {
-		super();
-		setPreferredSize(new Dimension(500, 500));
-		setBackground(Color.black);
-	}
+    public MapPanel() {
+        super();
+        setPreferredSize(new Dimension(500, 500));
+        setBackground(Color.black);
+    }
 
-	@Override
-	public void update (Observable arg0, Object arg1) {
-	}
+    @Override
+    public void update (Observable arg0, Object arg1) {
+    }
 }

@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model;
 
@@ -33,77 +33,72 @@ package org.jls.sod.core.model;
  */
 public enum Sense {
 
-	INSPECT("inspect"),
-	FEEL("feel"),
-	TOUCH("touch"),
-	SMELL("smell"),
-	TASTE("taste"),
-	LISTEN("listen");
+    INSPECT("inspect"), FEEL("feel"), TOUCH("touch"), SMELL("smell"), TASTE("taste"), LISTEN("listen");
 
-	private final String[] matchingLabels;
+    private final String[] matchingLabels;
 
-	/**
-	 * Instantiates a new direction and specifies the matching sense's labels.
-	 *
-	 * @param lbls
-	 *            The matching direction's labels.
-	 */
-	private Sense (final String... lbls) {
-		this.matchingLabels = lbls;
-	}
+    /**
+     * Instantiates a new direction and specifies the matching sense's labels.
+     *
+     * @param lbls
+     *            The matching direction's labels.
+     */
+    private Sense(final String... lbls) {
+        this.matchingLabels = lbls;
+    }
 
-	/**
-	 * Parses the specified sense.
-	 *
-	 * @param value
-	 *            Sense to parse.
-	 * @return Corresponding {@link Sense} enum if an existing sense is found,
-	 *         else throw an {@link IllegalArgumentException}.
-	 */
-	public static Sense parseValue (final String value) {
-		// If value matches the enum name
-		try {
-			return Sense.valueOf(value.toUpperCase());
-		} catch (Exception e) {
-			// Silent exception
-		}
-		// Else try to find a matching label
-		for (Sense d : Sense.values()) {
-			for (String lbl : d.getMatchingLabels()) {
-				// If value matches an existing label
-				if (lbl.equals(value)) {
-					return d;
-				}
-			}
-		}
-		throw new IllegalArgumentException("No matching sense for the value : " + value);
-	}
+    /**
+     * Parses the specified sense.
+     *
+     * @param value
+     *            Sense to parse.
+     * @return Corresponding {@link Sense} enum if an existing sense is found, else
+     *         throw an {@link IllegalArgumentException}.
+     */
+    public static Sense parseValue (final String value) {
+        // If value matches the enum name
+        try {
+            return Sense.valueOf(value.toUpperCase());
+        } catch (Exception e) {
+            // Silent exception
+        }
+        // Else try to find a matching label
+        for (Sense d : Sense.values()) {
+            for (String lbl : d.getMatchingLabels()) {
+                // If value matches an existing label
+                if (lbl.equals(value)) {
+                    return d;
+                }
+            }
+        }
+        throw new IllegalArgumentException("No matching sense for the value : " + value);
+    }
 
-	/**
-	 * Returns <code>true</code> if the specified argument matches a sense.
-	 *
-	 * @param value
-	 *            The value to test.
-	 * @return <code>true</code> if the specified argument matches a sense
-	 *         value, <code>false</code> otherwise.
-	 */
-	public static boolean matchSense (final String value) {
-		for (Sense d : Sense.values()) {
-			for (String s : d.getMatchingLabels()) {
-				if (s.equals(value)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    /**
+     * Returns <code>true</code> if the specified argument matches a sense.
+     *
+     * @param value
+     *            The value to test.
+     * @return <code>true</code> if the specified argument matches a sense value,
+     *         <code>false</code> otherwise.
+     */
+    public static boolean matchSense (final String value) {
+        for (Sense d : Sense.values()) {
+            for (String s : d.getMatchingLabels()) {
+                if (s.equals(value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Returns the matching labels for this sense.
-	 *
-	 * @return The matching labels for this sense.
-	 */
-	public String[] getMatchingLabels () {
-		return this.matchingLabels;
-	}
+    /**
+     * Returns the matching labels for this sense.
+     *
+     * @return The matching labels for this sense.
+     */
+    public String[] getMatchingLabels () {
+        return this.matchingLabels;
+    }
 }

@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model;
 
@@ -32,80 +32,74 @@ package org.jls.sod.core.model;
  */
 public enum Direction {
 
-	NORTH("north", "n"),
-	NORTH_EAST("northeast", "north-east", "north_east", "ne"),
-	EAST("east", "e"),
-	SOUTH_EAST("southeast", "south-east", "south_east", "se"),
-	SOUTH("south", "s"),
-	SOUTH_WEST("southwest", "south-west", "south_west", "sw"),
-	WEST("west", "w"),
-	NORTH_WEST("northwest", "north-west", "north_west", "nw");
+    NORTH("north", "n"), NORTH_EAST("northeast", "north-east", "north_east", "ne"), EAST("east", "e"), SOUTH_EAST(
+            "southeast", "south-east", "south_east", "se"), SOUTH("south", "s"), SOUTH_WEST("southwest", "south-west",
+                    "south_west", "sw"), WEST("west", "w"), NORTH_WEST("northwest", "north-west", "north_west", "nw");
 
-	private final String[] matchingLabels;
+    private final String[] matchingLabels;
 
-	/**
-	 * Instantiates a new direction and specifies the matching direction's
-	 * labels.
-	 *
-	 * @param lbls
-	 *            The matching direction's labels.
-	 */
-	private Direction (final String... lbls) {
-		this.matchingLabels = lbls;
-	}
+    /**
+     * Instantiates a new direction and specifies the matching direction's labels.
+     *
+     * @param lbls
+     *            The matching direction's labels.
+     */
+    private Direction(final String... lbls) {
+        this.matchingLabels = lbls;
+    }
 
-	/**
-	 * Parses the specified direction.
-	 *
-	 * @param value
-	 *            Direction to parse.
-	 * @return Corresponding {@link Direction} enum if an existing direction is
-	 *         found, else throw an {@link IllegalArgumentException}.
-	 */
-	public static Direction parseValue (final String value) {
-		// If value matches the enum name
-		try {
-			return Direction.valueOf(value);
-		} catch (Exception e) {
-			// Silent exception
-		}
-		// Else try to find a matching label
-		for (Direction d : Direction.values()) {
-			for (String lbl : d.getMatchingLabels()) {
-				// If value matches an existing label
-				if (lbl.equals(value)) {
-					return d;
-				}
-			}
-		}
-		throw new IllegalArgumentException("No matching direction for the value : " + value);
-	}
+    /**
+     * Parses the specified direction.
+     *
+     * @param value
+     *            Direction to parse.
+     * @return Corresponding {@link Direction} enum if an existing direction is
+     *         found, else throw an {@link IllegalArgumentException}.
+     */
+    public static Direction parseValue (final String value) {
+        // If value matches the enum name
+        try {
+            return Direction.valueOf(value);
+        } catch (Exception e) {
+            // Silent exception
+        }
+        // Else try to find a matching label
+        for (Direction d : Direction.values()) {
+            for (String lbl : d.getMatchingLabels()) {
+                // If value matches an existing label
+                if (lbl.equals(value)) {
+                    return d;
+                }
+            }
+        }
+        throw new IllegalArgumentException("No matching direction for the value : " + value);
+    }
 
-	/**
-	 * Returns <code>true</code> if the specified argument matches a direction.
-	 *
-	 * @param value
-	 *            The value to test.
-	 * @return <code>true</code> if the specified argument matches a direction
-	 *         value, <code>false</code> otherwise.
-	 */
-	public static boolean matchDirection (final String value) {
-		for (Direction d : Direction.values()) {
-			for (String s : d.getMatchingLabels()) {
-				if (s.equals(value)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    /**
+     * Returns <code>true</code> if the specified argument matches a direction.
+     *
+     * @param value
+     *            The value to test.
+     * @return <code>true</code> if the specified argument matches a direction
+     *         value, <code>false</code> otherwise.
+     */
+    public static boolean matchDirection (final String value) {
+        for (Direction d : Direction.values()) {
+            for (String s : d.getMatchingLabels()) {
+                if (s.equals(value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Returns the matching labels for this direction.
-	 *
-	 * @return The matching labels for this direction.
-	 */
-	public String[] getMatchingLabels () {
-		return this.matchingLabels;
-	}
+    /**
+     * Returns the matching labels for this direction.
+     *
+     * @return The matching labels for this direction.
+     */
+    public String[] getMatchingLabels () {
+        return this.matchingLabels;
+    }
 }

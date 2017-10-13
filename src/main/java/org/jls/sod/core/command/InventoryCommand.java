@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.command;
 
@@ -38,38 +38,38 @@ import org.jls.sod.util.ResourceManager;
  */
 public class InventoryCommand extends AbstractCommandExecutor {
 
-	private final DisplayController displayController;
-	private final ResourceManager props;
+    private final DisplayController displayController;
+    private final ResourceManager props;
 
-	/**
-	 * Instantiates a new command.
-	 * 
-	 * @param model
-	 *            The game data model.
-	 * @param controller
-	 *            The game controller.
-	 */
-	public InventoryCommand (final GameModel model, final GameController controller) {
-		super(model, controller);
-		this.displayController = controller.getDisplayController();
-		this.props = ResourceManager.getInstance();
-	}
+    /**
+     * Instantiates a new command.
+     * 
+     * @param model
+     *            The game data model.
+     * @param controller
+     *            The game controller.
+     */
+    public InventoryCommand(final GameModel model, final GameController controller) {
+        super(model, controller);
+        this.displayController = controller.getDisplayController();
+        this.props = ResourceManager.getInstance();
+    }
 
-	@Override
-	public String[] getRecognizedCommands () {
-		String[] cmds = {"inventory", "i"};
-		return cmds;
-	}
+    @Override
+    public String[] getRecognizedCommands () {
+        String[] cmds = { "inventory", "i" };
+        return cmds;
+    }
 
-	@Override
-	public void execute (final Command cmd) {
-		Inventory inventory = this.model.getCharacter().getInventory();
-		// If no argument specified
-		if (cmd.getArgumentCount() == 0) {
-			// Shows the inventory
-			this.displayController.printItems(inventory);
-		} else {
-			this.displayController.printError(this.props.getString("command.error.unknownCommand"));
-		}
-	}
+    @Override
+    public void execute (final Command cmd) {
+        Inventory inventory = this.model.getCharacter().getInventory();
+        // If no argument specified
+        if (cmd.getArgumentCount() == 0) {
+            // Shows the inventory
+            this.displayController.printItems(inventory);
+        } else {
+            this.displayController.printError(this.props.getString("command.error.unknownCommand"));
+        }
+    }
 }

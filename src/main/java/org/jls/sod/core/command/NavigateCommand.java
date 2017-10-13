@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.command;
 
@@ -41,69 +41,69 @@ import org.jls.sod.util.ResourceManager;
  */
 public class NavigateCommand extends AbstractCommandExecutor {
 
-	private final DisplayController displayController;
-	private final ResourceManager props;
+    private final DisplayController displayController;
+    private final ResourceManager props;
 
-	/**
-	 * Instantiates the navigate command.
-	 * 
-	 * @param model
-	 *            The game data model.
-	 * @param controller
-	 *            The game controller.
-	 */
-	public NavigateCommand (final GameModel model, final GameController controller) {
-		super(model, controller);
-		this.displayController = controller.getDisplayController();
-		this.props = ResourceManager.getInstance();
-	}
+    /**
+     * Instantiates the navigate command.
+     * 
+     * @param model
+     *            The game data model.
+     * @param controller
+     *            The game controller.
+     */
+    public NavigateCommand(final GameModel model, final GameController controller) {
+        super(model, controller);
+        this.displayController = controller.getDisplayController();
+        this.props = ResourceManager.getInstance();
+    }
 
-	@Override
-	public String[] getRecognizedCommands () {
-		String[] cmds = new String[0];
-		for (Direction d : Direction.values()) {
-			cmds = (String[]) ArrayUtils.addAll(cmds, d.getMatchingLabels());
-		}
-		return cmds;
-	}
+    @Override
+    public String[] getRecognizedCommands () {
+        String[] cmds = new String[0];
+        for (Direction d : Direction.values()) {
+            cmds = (String[]) ArrayUtils.addAll(cmds, d.getMatchingLabels());
+        }
+        return cmds;
+    }
 
-	@Override
-	public void execute (final Command cmd) {
-		Direction direction = Direction.parseValue(cmd.getCommandId());
-		try {
-			goInDirection(direction);
-		} catch (ConfigurationException e) {
-			this.logger.error("An error occurred updating current position", e);
-			this.displayController.printError("Cannot update current position : " + e.getMessage());
-		}
-	}
+    @Override
+    public void execute (final Command cmd) {
+        Direction direction = Direction.parseValue(cmd.getCommandId());
+        try {
+            goInDirection(direction);
+        } catch (ConfigurationException e) {
+            this.logger.error("An error occurred updating current position", e);
+            this.displayController.printError("Cannot update current position : " + e.getMessage());
+        }
+    }
 
-	/**
-	 * Moves the player in the specified direction.
-	 * 
-	 * @param direction
-	 *            The direction where to go.
-	 * @throws ConfigurationException
-	 *             If an error occurred updating the current position.
-	 */
-	public void goInDirection (final Direction direction) throws ConfigurationException {
-		Room room = this.model.getRoom();
+    /**
+     * Moves the player in the specified direction.
+     * 
+     * @param direction
+     *            The direction where to go.
+     * @throws ConfigurationException
+     *             If an error occurred updating the current position.
+     */
+    public void goInDirection (final Direction direction) throws ConfigurationException {
+        Room room = this.model.getRoom();
 
-		// If player can go in the specified direction
-		if (room.hasNeighbor(direction)) {
-			Room nextRoom = room.getNeighbor(direction);
+        // If player can go in the specified direction
+        if (room.hasNeighbor(direction)) {
+            Room nextRoom = room.getNeighbor(direction);
 
-			// Prints the result
-			this.logger.info("Going {} in room {}", direction, nextRoom.getName());
-			this.displayController.printCommandResult(
-					this.props.getString("command.navigate.text.goingInTheDirection") + " " + direction + ".\n");
-			this.displayController.printRoomDescription(nextRoom);
+            // Prints the result
+            this.logger.info("Going {} in room {}", direction, nextRoom.getName());
+            this.displayController.printCommandResult(
+                    this.props.getString("command.navigate.text.goingInTheDirection") + " " + direction + ".\n");
+            this.displayController.printRoomDescription(nextRoom);
 
-			// Updates the player current position
-			this.controller.updateCurrentPosition(nextRoom);
-		} else { // Prints an error
-			this.logger.warn("No room in the direction {}", direction);
-			this.displayController.printError(this.props.getString("command.navigate.error.deadEnd"));
-		}
-	}
+            // Updates the player current position
+            this.controller.updateCurrentPosition(nextRoom);
+        } else { // Prints an error
+            this.logger.warn("No room in the direction {}", direction);
+            this.displayController.printError(this.props.getString("command.navigate.error.deadEnd"));
+        }
+    }
 }

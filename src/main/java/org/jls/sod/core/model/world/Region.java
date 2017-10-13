@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model.world;
 
@@ -34,96 +34,96 @@ import java.util.HashMap;
  */
 public class Region {
 
-	private final String id;
-	private final String name;
-	private final String description;
-	private final HashMap<String, Zone> zones;
-	private final World world;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final HashMap<String, Zone> zones;
+    private final World world;
 
-	private Zone entryPoint;
+    private Zone entryPoint;
 
-	/**
-	 * Instantiates a new region.
-	 * 
-	 * @param id
-	 *            The region identifier.
-	 * @param name
-	 *            The region name.
-	 * @param desc
-	 *            The region description.
-	 * @param world
-	 *            Specifies the world which contains this region.
-	 */
-	public Region (final String id, final String name, final String desc, final World world) {
-		this.id = id;
-		this.name = name;
-		this.description = desc;
-		this.zones = new HashMap<>();
-		this.world = world;
-		this.entryPoint = null;
-	}
+    /**
+     * Instantiates a new region.
+     * 
+     * @param id
+     *            The region identifier.
+     * @param name
+     *            The region name.
+     * @param desc
+     *            The region description.
+     * @param world
+     *            Specifies the world which contains this region.
+     */
+    public Region(final String id, final String name, final String desc, final World world) {
+        this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.zones = new HashMap<>();
+        this.world = world;
+        this.entryPoint = null;
+    }
 
-	/**
-	 * Returns the region identifier.
-	 * 
-	 * @return Region idientifier.
-	 */
-	public String getId () {
-		return this.id;
-	}
+    /**
+     * Returns the region identifier.
+     * 
+     * @return Region idientifier.
+     */
+    public String getId () {
+        return this.id;
+    }
 
-	/**
-	 * Returns the region name.
-	 * 
-	 * @return Region name.
-	 */
-	public String getName () {
-		return this.name;
-	}
+    /**
+     * Returns the region name.
+     * 
+     * @return Region name.
+     */
+    public String getName () {
+        return this.name;
+    }
 
-	/**
-	 * Returns the description of this region.
-	 * 
-	 * @return Description of this region.
-	 */
-	public String getDescription () {
-		return this.description;
-	}
+    /**
+     * Returns the description of this region.
+     * 
+     * @return Description of this region.
+     */
+    public String getDescription () {
+        return this.description;
+    }
 
-	/**
-	 * Returns the zones contained in this region.
-	 * 
-	 * @return Zones contained in this region.
-	 */
-	public HashMap<String, Zone> getZones () {
-		return this.zones;
-	}
+    /**
+     * Returns the zones contained in this region.
+     * 
+     * @return Zones contained in this region.
+     */
+    public HashMap<String, Zone> getZones () {
+        return this.zones;
+    }
 
-	/**
-	 * Returns the world where this region is located.
-	 * 
-	 * @return The world where this region is located.
-	 */
-	public World getWorld () {
-		return this.world;
-	}
+    /**
+     * Returns the world where this region is located.
+     * 
+     * @return The world where this region is located.
+     */
+    public World getWorld () {
+        return this.world;
+    }
 
-	/**
-	 * Returns the default zone where the player should start.
-	 * 
-	 * @return The default zone where the player should start.
-	 */
-	public Zone getEntryPoint () {
-		return this.entryPoint;
-	}
+    /**
+     * Returns the default zone where the player should start.
+     * 
+     * @return The default zone where the player should start.
+     */
+    public Zone getEntryPoint () {
+        return this.entryPoint;
+    }
 
-	/**
-	 * Specifies the default zone where the player should start.
-	 * 
-	 * @param entry
-	 *            The default zone where the player should start.
-	 */
-	public void setEntryPoint (final Zone entry) {
-		this.entryPoint = entry;
-	}
+    /**
+     * Specifies the default zone where the player should start.
+     * 
+     * @param entry
+     *            The default zone where the player should start.
+     */
+    public void setEntryPoint (final Zone entry) {
+        this.entryPoint = entry;
+    }
 }

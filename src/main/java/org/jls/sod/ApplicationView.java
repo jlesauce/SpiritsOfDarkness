@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod;
 
@@ -63,239 +63,239 @@ import net.miginfocom.swing.MigLayout;
  */
 public class ApplicationView extends JFrame implements ActionListener, KeyListener {
 
-	private static final long serialVersionUID = 5624587162291736726L;
+    private static final long serialVersionUID = 5624587162291736726L;
 
-	public static ApplicationView APP_FRAME = null;
+    public static ApplicationView APP_FRAME = null;
 
-	private final ApplicationController controller;
-	private final Logger logger;
-	private final ResourceManager props;
+    private final ApplicationController controller;
+    private final Logger logger;
+    private final ResourceManager props;
 
-	private final HashMap<String, JMenu> menus;
-	private final HashMap<String, JMenuItem> menuItems;
-	private JMenuBar menuBar;
+    private final HashMap<String, JMenu> menus;
+    private final HashMap<String, JMenuItem> menuItems;
+    private JMenuBar menuBar;
 
-	private Console console;
-	private Dialog mapFrame;
-	private MapPanel mapPanel;
-	private JTextField tfCommandLine;
+    private Console console;
+    private Dialog mapFrame;
+    private MapPanel mapPanel;
+    private JTextField tfCommandLine;
 
-	/**
-	 * Instantiates the application's main frame.
-	 *
-	 * @param model
-	 *            Data model of the application.
-	 * @param controller
-	 *            Controller of the application.
-	 */
-	public ApplicationView (final ApplicationModel model, final ApplicationController controller) {
-		super(model.getAppName() + " - Version " + model.getAppVersion());
-		ApplicationView.APP_FRAME = this;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.controller = controller;
-		this.logger = LogManager.getLogger();
-		this.props = ResourceManager.getInstance();
-		this.menus = new HashMap<>();
-		this.menuItems = new HashMap<>();
-		createComponents();
-		createGui();
-		addListeners();
-	}
+    /**
+     * Instantiates the application's main frame.
+     *
+     * @param model
+     *            Data model of the application.
+     * @param controller
+     *            Controller of the application.
+     */
+    public ApplicationView(final ApplicationModel model, final ApplicationController controller) {
+        super(model.getAppName() + " - Version " + model.getAppVersion());
+        ApplicationView.APP_FRAME = this;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.controller = controller;
+        this.logger = LogManager.getLogger();
+        this.props = ResourceManager.getInstance();
+        this.menus = new HashMap<>();
+        this.menuItems = new HashMap<>();
+        createComponents();
+        createGui();
+        addListeners();
+    }
 
-	/**
-	 * Changes the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
-	 *
-	 * @param isWaiting
-	 *            <code>true</code> to use the waiting cursor,
-	 *            <code>false</code> to use the default cursor.
-	 */
-	public static void setWaitCursor (final boolean isWaiting) {
-		Cursor cursor = isWaiting ? Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR) : Cursor.getDefaultCursor();
-		APP_FRAME.getGlassPane().setCursor(cursor);
-		APP_FRAME.getGlassPane().setVisible(isWaiting);
-	}
+    /**
+     * Changes the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
+     *
+     * @param isWaiting
+     *            <code>true</code> to use the waiting cursor, <code>false</code> to
+     *            use the default cursor.
+     */
+    public static void setWaitCursor (final boolean isWaiting) {
+        Cursor cursor = isWaiting ? Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR) : Cursor.getDefaultCursor();
+        APP_FRAME.getGlassPane().setCursor(cursor);
+        APP_FRAME.getGlassPane().setVisible(isWaiting);
+    }
 
-	/**
-	 * Shows a pop-up animation with the specified message.
-	 *
-	 * @param title
-	 *            Title of the pop-up.
-	 * @param msg
-	 *            The pop-up message.
-	 * @param msgType
-	 *            Specifies the pop-up message type (see
-	 *            {@link JOptionPane#setMessageType(int) for the availables
-	 *            options}.
-	 */
-	public synchronized void pop (final String title, final String msg, final int msgType) {
-		SwingUtilities.invokeLater(new Runnable() {
+    /**
+     * Shows a pop-up animation with the specified message.
+     *
+     * @param title
+     *            Title of the pop-up.
+     * @param msg
+     *            The pop-up message.
+     * @param msgType
+     *            Specifies the pop-up message type (see
+     *            {@link JOptionPane#setMessageType(int) for the availables
+     *            options}.
+     */
+    public synchronized void pop (final String title, final String msg, final int msgType) {
+        SwingUtilities.invokeLater(new Runnable() {
 
-			@Override
-			public void run () {
-				JOptionPane.showMessageDialog(ApplicationView.this, msg, title, msgType);
-			}
-		});
-	}
+            @Override
+            public void run () {
+                JOptionPane.showMessageDialog(ApplicationView.this, msg, title, msgType);
+            }
+        });
+    }
 
-	/**
-	 * Shows the graphical user interface.
-	 */
-	public void showGui () {
-		pack();
-		setLocationRelativeTo(null);
-		setVisible(true);
-		this.tfCommandLine.requestFocus();
-	}
+    /**
+     * Shows the graphical user interface.
+     */
+    public void showGui () {
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.tfCommandLine.requestFocus();
+    }
 
-	/**
-	 * Shows the map to the player.
-	 */
-	public void showMap () {
-		this.controller.getGameController().getModel().addObserver(this.mapPanel);
-		this.mapFrame.setVisible(true);
-		this.mapFrame.setLocation((int) (getLocation().getX() + getSize().getWidth()), (int) getLocation().getY());
-		this.tfCommandLine.requestFocus();
-	}
+    /**
+     * Shows the map to the player.
+     */
+    public void showMap () {
+        this.controller.getGameController().getModel().addObserver(this.mapPanel);
+        this.mapFrame.setVisible(true);
+        this.mapFrame.setLocation((int) (getLocation().getX() + getSize().getWidth()), (int) getLocation().getY());
+        this.tfCommandLine.requestFocus();
+    }
 
-	/**
-	 * Shows the new game creation panel.
-	 */
-	public void showNewGamePanel () {
-		NewGameDialog dialog = new NewGameDialog(this.controller.getGameController(), this);
-		dialog.showGui();
-	}
+    /**
+     * Shows the new game creation panel.
+     */
+    public void showNewGamePanel () {
+        NewGameDialog dialog = new NewGameDialog(this.controller.getGameController(), this);
+        dialog.showGui();
+    }
 
-	/**
-	 * Shows the load game panel.
-	 */
-	public void showLoadGamePanel () {
-		LoadGameDialog dialog = new LoadGameDialog(this.controller.getGameController(), this);
-		dialog.showGui();
-	}
+    /**
+     * Shows the load game panel.
+     */
+    public void showLoadGamePanel () {
+        LoadGameDialog dialog = new LoadGameDialog(this.controller.getGameController(), this);
+        dialog.showGui();
+    }
 
-	/**
-	 * Hides the map.
-	 */
-	public void hideMap () {
-		this.controller.getGameController().getModel().deleteObserver(this.mapPanel);
-		this.mapFrame.setVisible(false);
-	}
+    /**
+     * Hides the map.
+     */
+    public void hideMap () {
+        this.controller.getGameController().getModel().deleteObserver(this.mapPanel);
+        this.mapFrame.setVisible(false);
+    }
 
-	public void printConsole (final String text) {
-		this.console.print(text);
-	}
+    public void printConsole (final String text) {
+        this.console.print(text);
+    }
 
-	public void printConsole (final String text, final int fontStyle) {
-		this.console.print(text, fontStyle);
-	}
+    public void printConsole (final String text, final int fontStyle) {
+        this.console.print(text, fontStyle);
+    }
 
-	public void printConsole (final String text, final int fontStyle, final int size) {
-		this.console.print(text, fontStyle, size);
-	}
+    public void printConsole (final String text, final int fontStyle, final int size) {
+        this.console.print(text, fontStyle, size);
+    }
 
-	public void printConsole (final String text, final Color textColor) {
-		this.console.print(text, textColor);
-	}
+    public void printConsole (final String text, final Color textColor) {
+        this.console.print(text, textColor);
+    }
 
-	public void printConsole (final String text, final Color textColor, final int fontStyle) {
-		this.console.print(text, textColor, fontStyle);
-	}
+    public void printConsole (final String text, final Color textColor, final int fontStyle) {
+        this.console.print(text, textColor, fontStyle);
+    }
 
-	public void printConsole (final String text, final Color textColor, final int fontStyle, final int size) {
-		this.console.print(text, textColor, fontStyle, size);
-	}
+    public void printConsole (final String text, final Color textColor, final int fontStyle, final int size) {
+        this.console.print(text, textColor, fontStyle, size);
+    }
 
-	public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle) {
-		this.console.print(text, textColor, bgColor, fontStyle);
-	}
+    public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle) {
+        this.console.print(text, textColor, bgColor, fontStyle);
+    }
 
-	public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle, final int size) {
-		this.console.print(text, textColor, bgColor, fontStyle, size);
-	}
+    public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle,
+            final int size) {
+        this.console.print(text, textColor, bgColor, fontStyle, size);
+    }
 
-	/**
-	 * Instantiates the different components composing the user graphical
-	 * interface.
-	 */
-	private void createComponents () {
-		createMenus();
-		this.console = new Console();
-		String fontName = this.props.getString("mainView.console.default.font");
-		int fontSize = this.props.getInt("mainView.console.default.font.size");
-		this.console.setFont(new Font(fontName, Font.PLAIN, fontSize));
-		this.console.setBackground(Color.black);
-		this.console.setDefaultTextBackgroundColor(Color.black);
-		this.console.setDefaultTextColor(Color.white);
-		this.console.setPreferredSize(new Dimension(800, 600));
+    /**
+     * Instantiates the different components composing the user graphical interface.
+     */
+    private void createComponents () {
+        createMenus();
+        this.console = new Console();
+        String fontName = this.props.getString("mainView.console.default.font");
+        int fontSize = this.props.getInt("mainView.console.default.font.size");
+        this.console.setFont(new Font(fontName, Font.PLAIN, fontSize));
+        this.console.setBackground(Color.black);
+        this.console.setDefaultTextBackgroundColor(Color.black);
+        this.console.setDefaultTextColor(Color.white);
+        this.console.setPreferredSize(new Dimension(800, 600));
 
-		// Creates the map
-		this.mapPanel = new MapPanel();
-		this.mapFrame = new Dialog(this, "Map", this.mapFrame);
-		this.mapFrame.setModal(false);
-		this.mapFrame.setDefaultCloseOperation(InternalFrame.HIDE_ON_CLOSE);
-		this.mapFrame.setContentPane(new MapPanel());
-		this.mapFrame.pack();
+        // Creates the map
+        this.mapPanel = new MapPanel();
+        this.mapFrame = new Dialog(this, "Map", this.mapFrame);
+        this.mapFrame.setModal(false);
+        this.mapFrame.setDefaultCloseOperation(InternalFrame.HIDE_ON_CLOSE);
+        this.mapFrame.setContentPane(new MapPanel());
+        this.mapFrame.pack();
 
-		this.tfCommandLine = new JTextField();
-	}
+        this.tfCommandLine = new JTextField();
+    }
 
-	/**
-	 * Creates the different menus of the main frame.
-	 */
-	private void createMenus () {
-		this.menuBar = new JMenuBar();
-		// Creates the menus
-		this.menus.put("file", new JMenu(this.props.getString("mainView.menu.file.label")));
-		this.menus.put("help", new JMenu(this.props.getString("mainView.menu.help.label")));
-		// Creates the items
-		this.menuItems.put("file.newGame", new JMenuItem(this.props.getString("mainView.menu.item.newGame.label")));
-		this.menuItems.put("file.loadGame", new JMenuItem(this.props.getString("mainView.menu.item.loadGame.label")));
-		this.menuItems.put("file.exit", new JMenuItem(this.props.getString("mainView.menu.item.exit.label")));
-		this.menuItems.put("help.about", new JMenuItem(this.props.getString("mainView.menu.item.about.label")));
-		// Adds the items
-		this.menus.get("file").add(this.menuItems.get("file.newGame"));
-		this.menus.get("file").add(this.menuItems.get("file.loadGame"));
-		this.menus.get("file").add(this.menuItems.get("file.exit"));
-		this.menus.get("help").add(this.menuItems.get("help.about"));
-		// Adds the menus
-		this.menuBar.add(this.menus.get("file"));
-		this.menuBar.add(this.menus.get("help"));
-		setJMenuBar(this.menuBar);
-	}
+    /**
+     * Creates the different menus of the main frame.
+     */
+    private void createMenus () {
+        this.menuBar = new JMenuBar();
+        // Creates the menus
+        this.menus.put("file", new JMenu(this.props.getString("mainView.menu.file.label")));
+        this.menus.put("help", new JMenu(this.props.getString("mainView.menu.help.label")));
+        // Creates the items
+        this.menuItems.put("file.newGame", new JMenuItem(this.props.getString("mainView.menu.item.newGame.label")));
+        this.menuItems.put("file.loadGame", new JMenuItem(this.props.getString("mainView.menu.item.loadGame.label")));
+        this.menuItems.put("file.exit", new JMenuItem(this.props.getString("mainView.menu.item.exit.label")));
+        this.menuItems.put("help.about", new JMenuItem(this.props.getString("mainView.menu.item.about.label")));
+        // Adds the items
+        this.menus.get("file").add(this.menuItems.get("file.newGame"));
+        this.menus.get("file").add(this.menuItems.get("file.loadGame"));
+        this.menus.get("file").add(this.menuItems.get("file.exit"));
+        this.menus.get("help").add(this.menuItems.get("help.about"));
+        // Adds the menus
+        this.menuBar.add(this.menus.get("file"));
+        this.menuBar.add(this.menus.get("help"));
+        setJMenuBar(this.menuBar);
+    }
 
-	/**
-	 * Adds the components to the panel to create the user graphical interface.
-	 */
-	private void createGui () {
-		setLayout(new MigLayout("fill"));
-		add(this.console, "grow, push, wrap");
-		add(this.tfCommandLine, "spanx, growx");
-	}
+    /**
+     * Adds the components to the panel to create the user graphical interface.
+     */
+    private void createGui () {
+        setLayout(new MigLayout("fill"));
+        add(this.console, "grow, push, wrap");
+        add(this.tfCommandLine, "spanx, growx");
+    }
 
-	/**
-	 * Adds the listeners to the components of the panel.
-	 */
-	private void addListeners () {
-		this.menuItems.get("file.newGame").addActionListener(this);
-		this.menuItems.get("file.loadGame").addActionListener(this);
-		this.menuItems.get("file.exit").addActionListener(this);
-		this.menuItems.get("help.about").addActionListener(this);
-		this.tfCommandLine.addKeyListener(this);
-	}
+    /**
+     * Adds the listeners to the components of the panel.
+     */
+    private void addListeners () {
+        this.menuItems.get("file.newGame").addActionListener(this);
+        this.menuItems.get("file.loadGame").addActionListener(this);
+        this.menuItems.get("file.exit").addActionListener(this);
+        this.menuItems.get("help.about").addActionListener(this);
+        this.tfCommandLine.addKeyListener(this);
+    }
 
-	@Override
-	public void actionPerformed (final ActionEvent e) {
-		/*
-		 * JMenuItem
-		 */
-		if (e.getSource() instanceof JMenuItem) {
-			JMenuItem item = (JMenuItem) e.getSource();
+    @Override
+    public void actionPerformed (final ActionEvent e) {
+        /*
+         * JMenuItem
+         */
+        if (e.getSource() instanceof JMenuItem) {
+            JMenuItem item = (JMenuItem) e.getSource();
 
-			// New Game
-			if (this.menuItems.get("file.newGame").equals(item)) {
-				showNewGamePanel();
-			}
-			// Load Game
+            // New Game
+            if (this.menuItems.get("file.newGame").equals(item)) {
+                showNewGamePanel();
+            }
+            // Load Game
             else if (this.menuItems.get("file.loadGame").equals(item)) {
                 if (GameController.hasSavedGames()) {
                     showLoadGamePanel();
@@ -304,66 +304,66 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
-			// Exit application
-			else if (this.menuItems.get("file.exit").equals(item)) {
-				this.logger.debug("Exit application");
-				this.controller.exitApplication();
-			}
-			// About application
-			else if (this.menuItems.get("help.about").equals(item)) {
-				this.logger.debug("Show About panel");
-			}
-		}
-	}
+            // Exit application
+            else if (this.menuItems.get("file.exit").equals(item)) {
+                this.logger.debug("Exit application");
+                this.controller.exitApplication();
+            }
+            // About application
+            else if (this.menuItems.get("help.about").equals(item)) {
+                this.logger.debug("Show About panel");
+            }
+        }
+    }
 
-	@Override
-	public void keyTyped (final KeyEvent e) {
-		/*
-		 * JTextField
-		 */
-		if (e.getSource() instanceof JTextField) {
-			JTextField tf = (JTextField) e.getSource();
+    @Override
+    public void keyTyped (final KeyEvent e) {
+        /*
+         * JTextField
+         */
+        if (e.getSource() instanceof JTextField) {
+            JTextField tf = (JTextField) e.getSource();
 
-			// Command textfield
-			if (this.tfCommandLine.equals(tf)) {
+            // Command textfield
+            if (this.tfCommandLine.equals(tf)) {
 
-				// Process command
-				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-					String cmd = tf.getText();
-					if (!cmd.isEmpty()) {
-						this.logger.debug("Process command : {}", cmd);
-						this.controller.processCommand(cmd);
-						tf.setText("");
-					}
-				}
-			}
-		}
-	}
+                // Process command
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    String cmd = tf.getText();
+                    if (!cmd.isEmpty()) {
+                        this.logger.debug("Process command : {}", cmd);
+                        this.controller.processCommand(cmd);
+                        tf.setText("");
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	public void keyPressed (final KeyEvent e) {
-		/*
-		 * JTextField
-		 */
-		if (e.getSource() instanceof JTextField) {
-			JTextField tf = (JTextField) e.getSource();
+    @Override
+    public void keyPressed (final KeyEvent e) {
+        /*
+         * JTextField
+         */
+        if (e.getSource() instanceof JTextField) {
+            JTextField tf = (JTextField) e.getSource();
 
-			// Command textfield
-			if (this.tfCommandLine.equals(tf)) {
+            // Command textfield
+            if (this.tfCommandLine.equals(tf)) {
 
-				// Up in the history
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					tf.setText(this.controller.previousHistory());
-				}
-				// Down in the history
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					tf.setText(this.controller.nextHistory());
-				}
-			}
-		}
-	}
+                // Up in the history
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    tf.setText(this.controller.previousHistory());
+                }
+                // Down in the history
+                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    tf.setText(this.controller.nextHistory());
+                }
+            }
+        }
+    }
 
-	@Override
-	public void keyReleased (final KeyEvent e) {
-	}
+    @Override
+    public void keyReleased (final KeyEvent e) {
+    }
 }

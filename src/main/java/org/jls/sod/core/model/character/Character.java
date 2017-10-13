@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model.character;
 
@@ -35,21 +35,21 @@ import org.jls.sod.core.model.inventory.Inventory;
  */
 public class Character {
 
-	private final Inventory inventory;
+    private final Inventory inventory;
 
-	/**
-	 * Instantiates a default character.
-	 */
-	public Character () {
-		this.inventory = new Inventory();
-	}
+    /**
+     * Instantiates a default character.
+     */
+    public Character() {
+        this.inventory = new Inventory();
+    }
 
-	/**
-	 * Returns the character's inventory.
-	 * 
-	 * @return The character's inventory.
-	 */
-	public Inventory getInventory () {
-		return inventory;
-	}
+    /**
+     * Returns the character's inventory.
+     * 
+     * @return The character's inventory.
+     */
+    public Inventory getInventory () {
+        return inventory;
+    }
 }

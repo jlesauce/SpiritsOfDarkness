@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model;
 
@@ -34,70 +34,70 @@ import java.util.Random;
  */
 public class Die {
 
-	private static final Random random = new Random();
+    private static final Random random = new Random();
 
-	/**
-	 * Rolls a 4-sided die (D4).
-	 * 
-	 * @return Value in the range 1-4.
-	 */
-	public static int d4 () {
-		return d(4);
-	}
+    /**
+     * Rolls a 4-sided die (D4).
+     * 
+     * @return Value in the range 1-4.
+     */
+    public static int d4 () {
+        return d(4);
+    }
 
-	/**
-	 * Rolls a 6-sided die (D6).
-	 * 
-	 * @return Value in the range 1-6.
-	 */
-	public static int d6 () {
-		return d(6);
-	}
+    /**
+     * Rolls a 6-sided die (D6).
+     * 
+     * @return Value in the range 1-6.
+     */
+    public static int d6 () {
+        return d(6);
+    }
 
-	/**
-	 * Rolls a 8-sided die (D8).
-	 * 
-	 * @return Value in the range 1-8.
-	 */
-	public static int d8 () {
-		return d(8);
-	}
+    /**
+     * Rolls a 8-sided die (D8).
+     * 
+     * @return Value in the range 1-8.
+     */
+    public static int d8 () {
+        return d(8);
+    }
 
-	/**
-	 * Rolls a 10-sided die (D10).
-	 * 
-	 * @return Value in the range 1-10.
-	 */
-	public static int d10 () {
-		return d(10);
-	}
+    /**
+     * Rolls a 10-sided die (D10).
+     * 
+     * @return Value in the range 1-10.
+     */
+    public static int d10 () {
+        return d(10);
+    }
 
-	/**
-	 * Rolls a 12-sided die (D12).
-	 * 
-	 * @return Value in the range 1-12.
-	 */
-	public static int d12 () {
-		return d(12);
-	}
+    /**
+     * Rolls a 12-sided die (D12).
+     * 
+     * @return Value in the range 1-12.
+     */
+    public static int d12 () {
+        return d(12);
+    }
 
-	/**
-	 * Rolls a 20-sided die (D20).
-	 * 
-	 * @return Value in the range 1-20.
-	 */
-	public static int d20 () {
-		return d(20);
-	}
+    /**
+     * Rolls a 20-sided die (D20).
+     * 
+     * @return Value in the range 1-20.
+     */
+    public static int d20 () {
+        return d(20);
+    }
 
-	/**
-	 * Rolls a die in the range 1 to the specified value.
-	 * 
-	 * @param value
-	 *            The maximum value of the die.
-	 * @return Value in the range 1 to specified value.
-	 */
-	private static int d (final int value) {
-		return random.nextInt(value) + 1;
-	}
+    /**
+     * Rolls a die in the range 1 to the specified value.
+     * 
+     * @param value
+     *            The maximum value of the die.
+     * @return Value in the range 1 to specified value.
+     */
+    private static int d (final int value) {
+        return random.nextInt(value) + 1;
+    }
 }

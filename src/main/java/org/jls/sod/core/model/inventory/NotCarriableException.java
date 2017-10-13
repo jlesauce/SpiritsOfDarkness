@@ -1,4 +1,4 @@
-/*#
+/*
  * The MIT License (MIT)
  * 
  * Copyright (c) 2016 LE SAUCE Julien
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- #*/
+ */
 
 package org.jls.sod.core.model.inventory;
 
@@ -33,25 +33,26 @@ package org.jls.sod.core.model.inventory;
  */
 public class NotCarriableException extends Exception {
 
-	private static final long serialVersionUID = -778691188566897588L;
+    private static final long serialVersionUID = -778691188566897588L;
 
-	public NotCarriableException () {
-		super();
-	}
+    public NotCarriableException() {
+        super();
+    }
 
-	public NotCarriableException (String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    public NotCarriableException(String message, Throwable cause, boolean enableSuppression,
+            boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 
-	public NotCarriableException (String message, Throwable cause) {
-		super(message, cause);
-	}
+    public NotCarriableException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public NotCarriableException (String message) {
-		super(message);
-	}
+    public NotCarriableException(String message) {
+        super(message);
+    }
 
-	public NotCarriableException (Throwable cause) {
-		super(cause);
-	}
+    public NotCarriableException(Throwable cause) {
+        super(cause);
+    }
 }
