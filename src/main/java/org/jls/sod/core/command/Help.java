@@ -51,6 +51,8 @@ public class Help extends AbstractCommandExecutor {
     public void execute (final Command cmd) {
         if (!cmd.hasArguments()) {
             executeHelpWithoutArgument();
+        } else {
+            this.displayController.printError(ResourceManager.getInstance().getString("command.error.tooManyArgs"));
         }
     }
 
