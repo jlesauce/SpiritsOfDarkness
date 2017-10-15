@@ -42,6 +42,7 @@ import org.jls.sod.core.command.AbstractCommandExecutor;
 import org.jls.sod.core.command.Command;
 import org.jls.sod.core.command.DropCommand;
 import org.jls.sod.core.command.GeneralCommand;
+import org.jls.sod.core.command.Help;
 import org.jls.sod.core.command.InventoryCommand;
 import org.jls.sod.core.command.LookCommand;
 import org.jls.sod.core.command.MapCommand;
@@ -78,7 +79,7 @@ public class ApplicationController {
         this.gameController = new GameController(new GameModel(), this);
         this.logger = LogManager.getLogger();
         this.props = ResourceManager.getInstance();
-        initCommandExecutors();
+        initCommandExecutorsList();
     }
 
     /**
@@ -161,7 +162,7 @@ public class ApplicationController {
      * @param icon
      *            Application's icon.
      */
-    public void setIcon (Image icon) {
+    public void setIcon (final Image icon) {
         this.view.setIconImage(icon);
     }
 
@@ -285,42 +286,41 @@ public class ApplicationController {
         this.view.printConsole(msg + "\n", color, Font.PLAIN);
     }
 
-    public void printConsole (String text) {
+    public void printConsole (final String text) {
         this.view.printConsole(text);
     }
 
-    public void printConsole (String text, int fontStyle) {
+    public void printConsole (final String text, final int fontStyle) {
         this.view.printConsole(text, fontStyle);
     }
 
-    public void printConsole (String text, int fontStyle, int size) {
+    public void printConsole (final String text, final int fontStyle, final int size) {
         this.view.printConsole(text, fontStyle, size);
     }
 
-    public void printConsole (String text, Color textColor) {
+    public void printConsole (final String text, final Color textColor) {
         this.view.printConsole(text, textColor);
     }
 
-    public void printConsole (String text, Color textColor, int fontStyle) {
+    public void printConsole (final String text, final Color textColor, final int fontStyle) {
         this.view.printConsole(text, textColor, fontStyle);
     }
 
-    public void printConsole (String text, Color textColor, int fontStyle, int size) {
+    public void printConsole (final String text, final Color textColor, final int fontStyle, final int size) {
         this.view.printConsole(text, textColor, fontStyle, size);
     }
 
-    public void printConsole (String text, Color textColor, Color bgColor, int fontStyle) {
+    public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle) {
         this.view.printConsole(text, textColor, bgColor, fontStyle);
     }
 
-    public void printConsole (String text, Color textColor, Color bgColor, int fontStyle, int size) {
+    public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle,
+            final int size) {
         this.view.printConsole(text, textColor, bgColor, fontStyle, size);
     }
 
-    /**
-     * Inits the list of the command executors.
-     */
-    private void initCommandExecutors () {
+    private void initCommandExecutorsList () {
+        this.model.getCommandExecutors().add(new Help(this.getGameController().getModel(), this.gameController));
         this.model.getCommandExecutors()
                 .add(new GeneralCommand(this.getGameController().getModel(), this.gameController));
         this.model.getCommandExecutors()

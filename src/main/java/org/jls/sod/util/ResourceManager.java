@@ -26,6 +26,7 @@ package org.jls.sod.util;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -37,12 +38,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.sod.SpiritsOfDarkness;
 
-/**
- * Singleton managing the access to the resources of the application.
- *
- * @author LE SAUCE Julien
- * @date Aug 31, 2015
- */
 public class ResourceManager {
 
     private static final String slash = File.separator;
@@ -70,17 +65,11 @@ public class ResourceManager {
 
     public static final String LOG4J_FILE = "log4j2.xml";
 
-    /**
-     * Unique instance of the class.
-     */
     private static ResourceManager INSTANCE = null;
 
     private final Logger logger;
     private CombinedConfiguration configuration;
 
-    /**
-     * Instantiates the resources manager.
-     */
     private ResourceManager() {
         this.logger = LogManager.getLogger();
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
@@ -96,11 +85,6 @@ public class ResourceManager {
         }
     }
 
-    /**
-     * Returns the unique instance of this class.
-     *
-     * @return Unique instance of this class.
-     */
     public final static ResourceManager getInstance () {
         if (ResourceManager.INSTANCE == null) {
             ResourceManager.INSTANCE = new ResourceManager();
@@ -108,54 +92,25 @@ public class ResourceManager {
         return ResourceManager.INSTANCE;
     }
 
-    /**
-     * Permet d'accéder à une resource de l'application via le nom du fichier.
-     *
-     * @param name
-     *            Nom du fichier à récupérer.
-     * @return {@link URL} pointant vers la resource recherchée ou <code>null</code>
-     *         si la resource n'existe pas.
-     */
-    public final static URL getResource (final String name) {
+    public final static URL getResource (final String name) throws FileNotFoundException {
         URL url = Thread.currentThread().getContextClassLoader().getResource(name);
         if (url == null) {
             url = Thread.currentThread().getContextClassLoader().getResource(RESOURCES_DIR + File.separator + name);
         }
+        if (url == null) {
+            throw new FileNotFoundException("Resource not found");
+        }
         return url;
     }
 
-    /**
-     * Permet d'accéder à une resource de l'application via le nom du fichier.
-     *
-     * @param name
-     *            Nom du fichier à récupérer.
-     * @return {@link InputStream} permettant d'accéder à la ressource recherchée ou
-     *         <code>null</code> si la resource n'existe pas.
-     */
     public final static InputStream getResourceAsStream (final String name) {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
     }
 
-    /**
-     * Returns a file to access the specified resource.
-     *
-     * @param name
-     *            The resource name.
-     * @return A file object to access the resource.
-     */
-    public final static File getResourceAsFile (final String name) {
+    public final static File getResourceAsFile (final String name) throws FileNotFoundException {
         return new File(getResource(name).getPath());
     }
 
-    /**
-     * Permet de mettre à jour la valeur associée à la clé de propriété spécifiée.
-     *
-     * @param key
-     *            Clé de propriété.
-     * @param value
-     *            Valeur associée à la clé spécifiée.
-     * @return Valeur associée à la clé avant modification.
-     */
     public String setProperty (final String key, final String value) {
         if (value != null && !value.isEmpty()) {
             if (this.configuration.containsKey(key)) {
@@ -168,32 +123,13 @@ public class ResourceManager {
         throw new IllegalArgumentException("Value cannot be null or empty");
     }
 
-    /**
-     * Renvoie la chaîne de texte associée à la clé de propriété spécifiée. Si la
-     * clé n'existe pas alors une exception de type {@link IllegalArgumentException}
-     * est lancée.
-     *
-     * @param key
-     *            Clé de propriété.
-     * @return Chaîne de texte associée à la clé spécifiée.
-     */
-    public String getString (final String key) {
+    public String getString (final String key) throws IllegalArgumentException {
         if (this.configuration.containsKey(key)) {
             return this.configuration.getString(key);
         }
         throw new IllegalArgumentException("Key does not exist : " + key);
     }
 
-    /**
-     * Renvoie la valeur de type <code>int</code> associée à la clé de propriété
-     * spécifiée. Si la clé n'existe pas, alors une exception de type
-     * {@link IllegalArgumentException} est lancée. Si la valeur ne peut être
-     * parsée, alors une exception de type {@link NumberFormatException} est lancée.
-     *
-     * @param key
-     *            Clé de propriété.
-     * @return Valeur de type <code>int</code> associée à la clé spécifiée
-     */
     public int getInt (final String key) {
         String str = getString(key);
         if (!str.isEmpty()) {
@@ -206,18 +142,6 @@ public class ResourceManager {
         throw new IllegalStateException("Empty value");
     }
 
-    /**
-     * Renvoie une couleur de type {@link Color} construite à partir de la valeur
-     * associée à la clé de propriété spécifiée. Si la clé n'existe pas, alors une
-     * exception de type {@link IllegalArgumentException} est lancée. Si la valeur
-     * ne peut être parsée, alors une exception de type
-     * {@link IllegalArgumentException} est lancée.
-     *
-     * @param key
-     *            Clé de propriété.
-     * @return Nouvelle instance de {@link Color} construite à partir de la valeur
-     *         de propriété récupérée.
-     */
     public Color getColor (final String key) {
         String str = getString(key);
         if (!str.isEmpty()) {
@@ -230,16 +154,7 @@ public class ResourceManager {
         throw new IllegalStateException("Empty value");
     }
 
-    /**
-     * Renvoie une icône instanciée à partir du chemin récupéré grâce à la clé de
-     * propriété spécifiée. Si la clé n'existe pas, alors une exception du type
-     * {@link IllegalArgumentException} est lancée.
-     *
-     * @param key
-     *            Clé de propriété.
-     * @return Nouvelle instance de {@link ImageIcon}.
-     */
-    public ImageIcon getIcon (final String key) {
+    public ImageIcon getIcon (final String key) throws FileNotFoundException {
         String filename = getString(key);
         String path = IMG_PATH + slash + filename;
         URL url = getResource(path);
