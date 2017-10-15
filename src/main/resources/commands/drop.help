@@ -1,0 +1,10 @@
+NAME
+	drop - Permet de lâcher un objet
+SYNOPSIS
+	drop [OBJECT] [QUANTITY]
+DESCRIPTION
+
+	drop OBJET
+		Permet de lâcher l'objet spécifié.
+	drop OBJET QUANTITE
+		Permet de lâcher plusieurs objets du nombre spécifié.
