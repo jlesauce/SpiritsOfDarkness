@@ -25,8 +25,6 @@
 package org.jls.sod.core.command;
 
 import org.jls.sod.core.DisplayController;
-import org.jls.sod.core.GameController;
-import org.jls.sod.core.GameModel;
 import org.jls.sod.core.loader.Loader;
 import org.jls.sod.core.model.character.Character;
 import org.jls.sod.core.model.inventory.Inventory;
@@ -56,8 +54,8 @@ public class TakeCommand extends AbstractCommandExecutor {
      * @param controller
      *            The game controller.
      */
-    public TakeCommand(final GameModel model, final GameController controller) {
-        super(model, controller);
+    public TakeCommand(final CommandController commandController) {
+        super(commandController);
         this.displayController = controller.getDisplayController();
         this.props = ResourceManager.getInstance();
     }

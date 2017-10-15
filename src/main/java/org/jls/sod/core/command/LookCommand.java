@@ -1,18 +1,18 @@
 /*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2017 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,8 +25,6 @@
 package org.jls.sod.core.command;
 
 import org.jls.sod.core.DisplayController;
-import org.jls.sod.core.GameController;
-import org.jls.sod.core.GameModel;
 import org.jls.sod.core.loader.Loader;
 import org.jls.sod.core.model.Direction;
 import org.jls.sod.core.model.Sense;
@@ -38,7 +36,7 @@ import org.jls.sod.util.ResourceManager;
 
 /**
  * Command that allows the player to inspect rooms or objects.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 4, 2015
  */
@@ -49,14 +47,14 @@ public class LookCommand extends AbstractCommandExecutor {
 
     /**
      * Instantiates a new command.
-     * 
+     *
      * @param model
      *            The game data model.
      * @param controller
      *            The game controller.
      */
-    public LookCommand(final GameModel model, final GameController controller) {
-        super(model, controller);
+    public LookCommand(final CommandController commandController) {
+        super(commandController);
         this.displayController = controller.getDisplayController();
         this.props = ResourceManager.getInstance();
     }
@@ -68,7 +66,7 @@ public class LookCommand extends AbstractCommandExecutor {
     }
 
     @Override
-    public void execute (Command cmd) {
+    public void execute (final Command cmd) {
         Room room = this.model.getRoom();
 
         // If no argument
@@ -148,7 +146,7 @@ public class LookCommand extends AbstractCommandExecutor {
 
     /**
      * Looks to the specified direction.
-     * 
+     *
      * @param direction
      *            The direction where to look.
      */
@@ -167,7 +165,7 @@ public class LookCommand extends AbstractCommandExecutor {
 
     /**
      * Prints the description of the item.
-     * 
+     *
      * @param itemId
      *            The specified item.
      */
@@ -187,7 +185,7 @@ public class LookCommand extends AbstractCommandExecutor {
 
     /**
      * Prints the specified description of the item.
-     * 
+     *
      * @param itemId
      *            The specified item.
      * @param sense

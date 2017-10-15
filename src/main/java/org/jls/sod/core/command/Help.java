@@ -27,8 +27,6 @@ package org.jls.sod.core.command;
 import java.io.IOException;
 
 import org.jls.sod.core.DisplayController;
-import org.jls.sod.core.GameController;
-import org.jls.sod.core.GameModel;
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.util.file.SimpleFile;
 
@@ -37,8 +35,8 @@ public class Help extends AbstractCommandExecutor {
     private final DisplayController displayController;
     private final ResourceManager resources;
 
-    public Help(final GameModel model, final GameController controller) {
-        super(model, controller);
+    public Help(final CommandController commandController) {
+        super(commandController);
         this.displayController = controller.getDisplayController();
         this.resources = ResourceManager.getInstance();
     }
@@ -51,6 +49,12 @@ public class Help extends AbstractCommandExecutor {
 
     @Override
     public void execute (final Command cmd) {
+        if (!cmd.hasArguments()) {
+            executeHelpWithoutArgument();
+        }
+    }
+
+    private void executeHelpWithoutArgument () {
         try {
             this.displayController.printMessage(readHelpCommandDescription());
         } catch (Exception e) {

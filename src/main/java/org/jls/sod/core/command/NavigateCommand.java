@@ -1,18 +1,18 @@
 /*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2017 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,15 +27,13 @@ package org.jls.sod.core.command;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.lang.ArrayUtils;
 import org.jls.sod.core.DisplayController;
-import org.jls.sod.core.GameController;
-import org.jls.sod.core.GameModel;
 import org.jls.sod.core.model.Direction;
 import org.jls.sod.core.model.world.Room;
 import org.jls.sod.util.ResourceManager;
 
 /**
  * Command that allows the player to navigate from room to room.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 3, 2015
  */
@@ -46,14 +44,14 @@ public class NavigateCommand extends AbstractCommandExecutor {
 
     /**
      * Instantiates the navigate command.
-     * 
+     *
      * @param model
      *            The game data model.
      * @param controller
      *            The game controller.
      */
-    public NavigateCommand(final GameModel model, final GameController controller) {
-        super(model, controller);
+    public NavigateCommand(final CommandController commandController) {
+        super(commandController);
         this.displayController = controller.getDisplayController();
         this.props = ResourceManager.getInstance();
     }
@@ -80,7 +78,7 @@ public class NavigateCommand extends AbstractCommandExecutor {
 
     /**
      * Moves the player in the specified direction.
-     * 
+     *
      * @param direction
      *            The direction where to go.
      * @throws ConfigurationException

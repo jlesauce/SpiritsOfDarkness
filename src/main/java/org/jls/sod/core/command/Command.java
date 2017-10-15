@@ -1,18 +1,18 @@
 /*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2017 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +30,7 @@ import java.util.StringTokenizer;
 
 /**
  * Context of the executing command.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 2, 2015
  */
@@ -44,7 +44,7 @@ public class Command {
     /**
      * Instanciates a new {@link Command} specifying the command ID and its
      * arguments.
-     * 
+     *
      * @param cmd
      *            Command ID.
      * @param args
@@ -57,7 +57,7 @@ public class Command {
 
     /**
      * Instanciates a new {@link Command} from the complete command input.
-     * 
+     *
      * @param cmd
      *            Complete command input formatted as <i>[commandID] {...args}</i>.
      */
@@ -87,7 +87,7 @@ public class Command {
     /**
      * Cleanse the command input, meaning that all ignored words are removed from
      * the specified command.
-     * 
+     *
      * @param cmd
      *            Command to cleanse.
      * @return Command cleansed from ignored words.
@@ -119,7 +119,7 @@ public class Command {
 
     /**
      * Returns the command identifier.
-     * 
+     *
      * @return Command identifier.
      */
     public String getCommandId () {
@@ -128,7 +128,7 @@ public class Command {
 
     /**
      * Returns the arguments of the command.
-     * 
+     *
      * @return Arguments of the command.
      */
     public String[] getArguments () {
@@ -138,7 +138,7 @@ public class Command {
     /**
      * Returns the argument at the specified index. If index is out of bounds, then
      * an {@link IllegalArgumentException} is thrown.
-     * 
+     *
      * @param index
      *            Index of the argument {0..n}.
      * @return The argument at the specified index.
@@ -153,10 +153,14 @@ public class Command {
 
     /**
      * Returns the number of arguments of this command.
-     * 
+     *
      * @return Number of arguments of this command.
      */
     public int getArgumentCount () {
         return this.arguments != null ? this.arguments.length : 0;
+    }
+
+    public boolean hasArguments () {
+        return getArgumentCount() > 0;
     }
 }

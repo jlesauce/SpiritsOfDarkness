@@ -40,14 +40,7 @@ import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
 import org.jls.sod.core.command.AbstractCommandExecutor;
 import org.jls.sod.core.command.Command;
-import org.jls.sod.core.command.DropCommand;
-import org.jls.sod.core.command.GeneralCommand;
-import org.jls.sod.core.command.Help;
-import org.jls.sod.core.command.InventoryCommand;
-import org.jls.sod.core.command.LookCommand;
-import org.jls.sod.core.command.MapCommand;
-import org.jls.sod.core.command.NavigateCommand;
-import org.jls.sod.core.command.TakeCommand;
+import org.jls.sod.core.command.CommandController;
 import org.jls.sod.util.ResourceManager;
 
 /**
@@ -61,6 +54,7 @@ public class ApplicationController {
     private final ApplicationModel model;
     private final ApplicationView view;
     private final GameController gameController;
+    private final CommandController commandController;
     private final Logger logger;
     private final ResourceManager props;
 
@@ -77,9 +71,9 @@ public class ApplicationController {
         this.model = model;
         this.view = new ApplicationView(model, this);
         this.gameController = new GameController(new GameModel(), this);
+        this.commandController = new CommandController(this.getGameController().getModel(), this.gameController);
         this.logger = LogManager.getLogger();
         this.props = ResourceManager.getInstance();
-        initCommandExecutorsList();
     }
 
     /**
@@ -139,7 +133,7 @@ public class ApplicationController {
 
         // Detects the associated executor and executes the command
         boolean hasExecutor = false;
-        for (AbstractCommandExecutor executor : this.model.getCommandExecutors()) {
+        for (AbstractCommandExecutor executor : commandController.getCommandExecutorList()) {
             // If the executor contains the command ID
             if (Arrays.asList(executor.getRecognizedCommands()).contains(command.getCommandId())) {
                 hasExecutor = true;
@@ -319,25 +313,6 @@ public class ApplicationController {
         this.view.printConsole(text, textColor, bgColor, fontStyle, size);
     }
 
-    private void initCommandExecutorsList () {
-        this.model.getCommandExecutors().add(new Help(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors()
-                .add(new GeneralCommand(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors()
-                .add(new NavigateCommand(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors().add(new LookCommand(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors().add(new TakeCommand(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors().add(new DropCommand(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors()
-                .add(new InventoryCommand(this.getGameController().getModel(), this.gameController));
-        this.model.getCommandExecutors().add(new MapCommand(this.getGameController().getModel(), this.gameController));
-    }
-
-    /**
-     * Returns the game controller.
-     *
-     * @return The game controller.
-     */
     public GameController getGameController () {
         return this.gameController;
     }

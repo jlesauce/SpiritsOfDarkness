@@ -24,36 +24,44 @@
 
 package org.jls.sod.core.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+
 import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
 
-public abstract class AbstractCommandExecutor {
+public class CommandController {
 
-    protected final CommandController commandController;
-    protected final GameModel model;
-    protected final GameController controller;
-    protected final Logger logger;
+    private final GameModel gameModel;
+    private final GameController gameController;
+    private final ArrayList<AbstractCommandExecutor> commandExecutorList;
 
-    public AbstractCommandExecutor(final CommandController commandController) {
-        this.commandController = commandController;
-        this.model = commandController.getGameModel();
-        this.controller = commandController.getGameController();
-        this.logger = LogManager.getLogger();
-
+    public CommandController(final GameModel gameModel, final GameController gameController) {
+        this.gameModel = gameModel;
+        this.gameController = gameController;
+        commandExecutorList = new ArrayList<>();
+        initCommandExecutorsList();
     }
 
-    public abstract String[] getRecognizedCommands ();
+    private void initCommandExecutorsList () {
+        commandExecutorList.add(new Help(this));
+        commandExecutorList.add(new GeneralCommand(this));
+        commandExecutorList.add(new NavigateCommand(this));
+        commandExecutorList.add(new LookCommand(this));
+        commandExecutorList.add(new TakeCommand(this));
+        commandExecutorList.add(new DropCommand(this));
+        commandExecutorList.add(new InventoryCommand(this));
+        commandExecutorList.add(new MapCommand(this));
+    }
 
-    public abstract void execute (final Command cmd);
+    public ArrayList<AbstractCommandExecutor> getCommandExecutorList () {
+        return commandExecutorList;
+    }
 
-    public boolean isCommandRecognized (final String cmdId) {
-        for (String s : getRecognizedCommands()) {
-            if (s.equals(cmdId)) {
-                return true;
-            }
-        }
-        return false;
+    public GameModel getGameModel () {
+        return gameModel;
+    }
+
+    public GameController getGameController () {
+        return gameController;
     }
 }

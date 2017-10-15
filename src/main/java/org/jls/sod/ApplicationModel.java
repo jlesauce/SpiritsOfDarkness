@@ -1,18 +1,18 @@
 /*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2017 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,19 +24,11 @@
 
 package org.jls.sod;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-import org.jls.sod.core.command.AbstractCommandExecutor;
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.gui.AbstractModel;
 
-/**
- * Data model of the application.
- * 
- * @author LE SAUCE Julien
- * @date Sep 2, 2015
- */
 public class ApplicationModel extends AbstractModel {
 
     private static final int HISTORY_MAX_SIZE = 100;
@@ -44,26 +36,21 @@ public class ApplicationModel extends AbstractModel {
     private final String appName;
     private final String appVersion;
 
-    private final ArrayList<AbstractCommandExecutor> commandExecutors;
     private final LinkedList<String> history;
 
     private int currentHistoryPosition;
 
-    /**
-     * Instantiates a default data model.
-     */
     public ApplicationModel() {
         ResourceManager props = ResourceManager.getInstance();
         this.appName = props.getString("name");
         this.appVersion = props.getString("version");
-        this.commandExecutors = new ArrayList<>();
         this.history = new LinkedList<>();
         this.currentHistoryPosition = 0;
     }
 
     /**
      * Returns the application's name.
-     * 
+     *
      * @return Application's name.
      */
     public String getAppName () {
@@ -72,7 +59,7 @@ public class ApplicationModel extends AbstractModel {
 
     /**
      * Returns the application's version.
-     * 
+     *
      * @return Application's version.
      */
     public String getAppVersion () {
@@ -80,17 +67,8 @@ public class ApplicationModel extends AbstractModel {
     }
 
     /**
-     * Returns the list of command executors.
-     * 
-     * @return List of command executors.
-     */
-    public ArrayList<AbstractCommandExecutor> getCommandExecutors () {
-        return this.commandExecutors;
-    }
-
-    /**
      * Returns the command history.
-     * 
+     *
      * @return The command history.
      */
     public LinkedList<String> getHistory () {
@@ -100,7 +78,7 @@ public class ApplicationModel extends AbstractModel {
     /**
      * Returns the command history at the specified index. If the index is out of
      * bounds, an empty string is returned.
-     * 
+     *
      * @param index
      *            The index of the history.
      * @return The command history at the specified index or an empty string if
@@ -116,7 +94,7 @@ public class ApplicationModel extends AbstractModel {
 
     /**
      * Updates the current history with a new entry.
-     * 
+     *
      * @param cmd
      *            New command to put in the history.
      */
@@ -130,7 +108,7 @@ public class ApplicationModel extends AbstractModel {
 
     /**
      * Returns the current history position.
-     * 
+     *
      * @return The current history position.
      */
     public int getCurrentHistoryPosition () {
@@ -139,11 +117,11 @@ public class ApplicationModel extends AbstractModel {
 
     /**
      * Sets the current history position.
-     * 
+     *
      * @param position
      *            The current history position.
      */
-    protected void setCurrentHistoryPosition (int position) {
+    protected void setCurrentHistoryPosition (final int position) {
         this.currentHistoryPosition = position;
     }
 

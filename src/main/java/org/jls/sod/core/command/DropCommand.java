@@ -25,8 +25,6 @@
 package org.jls.sod.core.command;
 
 import org.jls.sod.core.DisplayController;
-import org.jls.sod.core.GameController;
-import org.jls.sod.core.GameModel;
 import org.jls.sod.core.loader.Loader;
 import org.jls.sod.core.model.inventory.Inventory;
 import org.jls.sod.core.model.inventory.InventoryQuantityException;
@@ -55,8 +53,8 @@ public class DropCommand extends AbstractCommandExecutor {
      * @param controller
      *            The game controller.
      */
-    public DropCommand(final GameModel model, final GameController controller) {
-        super(model, controller);
+    public DropCommand(final CommandController commandController) {
+        super(commandController);
         this.displayController = controller.getDisplayController();
         this.props = ResourceManager.getInstance();
     }
