@@ -24,7 +24,8 @@
 
 package org.jls.sod.core.command;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
@@ -33,28 +34,40 @@ public class CommandController {
 
     private final GameModel gameModel;
     private final GameController gameController;
-    private final ArrayList<AbstractCommandExecutor> commandExecutorList;
+    private final HashMap<String, AbstractCommandExecutor> commandExecutorMap;
 
     public CommandController(final GameModel gameModel, final GameController gameController) {
         this.gameModel = gameModel;
         this.gameController = gameController;
-        commandExecutorList = new ArrayList<>();
+        this.commandExecutorMap = new HashMap<>();
         initCommandExecutorsList();
     }
 
     private void initCommandExecutorsList () {
-        commandExecutorList.add(new Help(this));
-        commandExecutorList.add(new GeneralCommand(this));
-        commandExecutorList.add(new NavigateCommand(this));
-        commandExecutorList.add(new LookCommand(this));
-        commandExecutorList.add(new TakeCommand(this));
-        commandExecutorList.add(new DropCommand(this));
-        commandExecutorList.add(new InventoryCommand(this));
-        commandExecutorList.add(new MapCommand(this));
+        Help help = new Help(this);
+        commandExecutorMap.put(help.getSmallId(), help);
+        GeneralCommand general = new GeneralCommand(this);
+        commandExecutorMap.put(general.getSmallId(), general);
+        NavigateCommand navigate = new NavigateCommand(this);
+        commandExecutorMap.put(navigate.getSmallId(), navigate);
+        LookCommand look = new LookCommand(this);
+        commandExecutorMap.put(look.getSmallId(), look);
+        TakeCommand take = new TakeCommand(this);
+        commandExecutorMap.put(take.getSmallId(), take);
+        DropCommand drop = new DropCommand(this);
+        commandExecutorMap.put(drop.getSmallId(), drop);
+        InventoryCommand inventory = new InventoryCommand(this);
+        commandExecutorMap.put(inventory.getSmallId(), inventory);
+        MapCommand map = new MapCommand(this);
+        commandExecutorMap.put(map.getSmallId(), map);
     }
 
-    public ArrayList<AbstractCommandExecutor> getCommandExecutorList () {
-        return commandExecutorList;
+    public Collection<AbstractCommandExecutor> getCommandExecutorList () {
+        return commandExecutorMap.values();
+    }
+
+    public boolean isCommandIdContainedInCommandList (final String commandId) {
+        return commandExecutorMap.containsKey(commandId);
     }
 
     public GameModel getGameModel () {

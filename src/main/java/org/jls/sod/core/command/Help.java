@@ -48,17 +48,19 @@ public class Help extends AbstractCommandExecutor {
     }
 
     @Override
-    public void execute (final Command cmd) {
-        if (!cmd.hasArguments()) {
-            executeHelpWithoutArgument();
-        } else {
-            this.displayController.printError(ResourceManager.getInstance().getString("command.error.tooManyArgs"));
-        }
+    public String getSmallId () {
+        return "help";
     }
 
     @Override
-    public String getSmallId () {
-        return "help";
+    public void execute (final Command cmd) {
+        if (!cmd.hasArguments()) {
+            executeHelpWithoutArgument();
+        } else if (cmd.getArgumentCount() == 1) {
+            executeHelpWithOneArgument(cmd.getArgument(0).toLowerCase());
+        } else {
+            this.displayController.printError(ResourceManager.getInstance().getString("command.error.tooManyArgs"));
+        }
     }
 
     private void executeHelpWithoutArgument () {
@@ -68,6 +70,20 @@ public class Help extends AbstractCommandExecutor {
             this.logger.error("An error occurred executing help command", e);
             this.displayController.printError("Something went wrong: " + e.getMessage());
         }
+    }
+
+    private void executeHelpWithOneArgument (final String argument) {
+        if (isValidCommandId(argument)) {
+            this.logger.error("NOT IMPLEMENTED");
+            this.displayController.printError("NOT IMPLEMENTED");
+        } else {
+            this.logger.error("User typed an invalid command identifier: {}", argument);
+            this.displayController.printError(this.resources.getString("command.help.invalidCmdId"));
+        }
+    }
+
+    private boolean isValidCommandId (final String commandId) {
+        return commandController.isCommandIdContainedInCommandList(commandId);
     }
 
     private String readHelpCommandDescription () {
