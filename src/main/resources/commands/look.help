@@ -1,0 +1,57 @@
+NAME
+    look - Explore your environment using your senses.
+SYNOPSIS
+    look [DIRECTION | OBJECT]
+    inspect [OBJECT]
+    feel [DIRECTION | OBJECT]
+    touch [DIRECTION | OBJECT]
+    smell [DIRECTION | OBJECT]
+    taste [DIRECTION | OBJECT]
+    listen [DIRECTION | OBJECT]
+    items
+DESCRIPTION
+
+    look
+        Get a visual description of your current location.
+    look <direction>
+        Get a visual description of the pointed direction.
+    look <object>
+        Get a visual description of the specified object.
+    inspect
+        Inspect your current location with more attention.
+    inspect <direction>
+        Look in the specified direction with more attention.
+    inspect <object>
+        Inspect the specified object with more attention.
+    feel
+        Get your feeling about your current location.
+    feel <direction>
+        Get your feeling about the specified direction.
+    feel <item>
+        Get your feeling about the specified item.
+    touch
+        Touch your current location, but why would you do that?
+    touch <direction>
+        We can touch in a direction? For real?
+    touch <item>
+        Touch the specified item.
+    smell
+        Smell the air.
+    smell <direction>
+        Point your nose in the specified direction.
+    smell <object>
+        Smell the specified item.
+    taste
+        Taste your current location, but why would you do that?
+    taste <direction>
+        Pull out your tongue to the specified direction and try doing something useful with it.
+    taste <object>
+        Taste the specified item.
+    listen
+        Listen to find any interesting sound.
+    listen <direction>
+        Listen to the specified direction.
+    listen <object>
+        Listen the specified item.
+    items
+        Get a list of the visible objects in your current location.
