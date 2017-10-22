@@ -1,10 +1,10 @@
 NAME
-	drop - Permet de lâcher un objet
+	drop - Drop an object on the floor.
 SYNOPSIS
 	drop [OBJECT] [QUANTITY]
 DESCRIPTION
 
-	drop OBJET
-		Permet de lâcher l'objet spécifié.
-	drop OBJET QUANTITE
-		Permet de lâcher plusieurs objets du nombre spécifié.
+	drop <object>
+		Drop the specified object on the floor.
+	drop <object> <quantity>
+		Drop <quantity> object(s) on the floor.
