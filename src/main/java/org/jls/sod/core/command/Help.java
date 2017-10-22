@@ -65,7 +65,8 @@ public class Help extends AbstractCommandExecutor {
 
     private void executeHelpWithoutArgument () {
         try {
-            this.displayController.printMessage(readHelpCommandDescription());
+            String help = readHelpCommandDescription("help");
+            this.displayController.printMessage(help != null ? help : "");
         } catch (Exception e) {
             this.logger.error("An error occurred executing help command", e);
             this.displayController.printError("Something went wrong: " + e.getMessage());
@@ -74,8 +75,8 @@ public class Help extends AbstractCommandExecutor {
 
     private void executeHelpWithOneArgument (final String argument) {
         if (isValidCommandId(argument)) {
-            this.logger.error("NOT IMPLEMENTED");
-            this.displayController.printError("NOT IMPLEMENTED");
+            String help = readHelpCommandDescription(argument);
+            this.displayController.printMessage(help != null ? help : "");
         } else {
             this.logger.error("User typed an invalid command identifier: {}", argument);
             this.displayController.printError(this.resources.getString("command.help.invalidCmdId"));
@@ -86,14 +87,30 @@ public class Help extends AbstractCommandExecutor {
         return commandController.isCommandIdContainedInCommandList(commandId);
     }
 
-    private String readHelpCommandDescription () {
-        String filepath = this.resources.getString("command.help.help");
+    private String getHelpFilePathFromResources (final String commandId) {
+        String key = "command." + commandId + ".help";
+        String filepath = null;
+
+        try {
+            filepath = this.resources.getString(key);
+        } catch (Exception e) {
+            this.logger.error("Help filepath not found in resource files: key={}", key, e);
+            this.displayController.printError(this.resources.getString("command.help.helpFileNotFound"));
+        }
+        return filepath;
+    }
+
+    private String readHelpCommandDescription (final String commandId) {
+        String filepath = getHelpFilePathFromResources(commandId);
+        if (filepath == null) {
+            return null;
+        }
 
         SimpleFile helpFile = getHelpCommandDescriptionFile(filepath);
         if (helpFile != null) {
             return readFileContent(helpFile);
         } else {
-            return "Error: null file";
+            return null;
         }
     }
 
@@ -101,8 +118,8 @@ public class Help extends AbstractCommandExecutor {
         try {
             return new SimpleFile(ResourceManager.getResourceAsFile(filepath));
         } catch (Exception e) {
-            this.logger.error("An error occurred retrieving resource file {}", filepath, e);
-            this.displayController.printError("Failed to retrieve resource file: " + e.getMessage());
+            this.logger.error("Help file not found: {}", filepath, e);
+            this.displayController.printError(this.resources.getString("command.help.helpFileNotFound"));
         }
         return null;
     }
