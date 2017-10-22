@@ -1,19 +1,19 @@
 NAME
-	help - Liste de toutes les commandes disponibles dans le jeu
+	help - List of all the available commands
 SYNOPSIS
 	help [COMMAND]
 COMMANDS
-	Liste des commandes disponibles dans le jeu. Pour obtenir plus de détails sur une commande, taper "help <command>".
+	List of the commands available in the game. To get more details about each commands, type "help <command>".
 
 	look
-		Permet d'explorer son environnement
+		Allow you to explore your environment.
 	navigate
-		Permet de se déplacer dans le monde
+		Used to move in the world.
 	inventory
-		Permet d'afficher le contenu de votre sac
+		Print the content of your bag.
 	take
-		Permet de ramasser des objets
+		Used to take objects during your exploration.
 	drop
-		Permet de lâcher des objets
+		Allow you to drop objects on the floor.
 	map
-		Permet d'afficher la carte
+		Show you the map of the explored region.
