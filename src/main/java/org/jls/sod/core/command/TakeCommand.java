@@ -133,6 +133,11 @@ public class TakeCommand extends AbstractCommandExecutor {
         }
     }
 
+    @Override
+    public String getSmallId () {
+        return "take";
+    }
+
     /**
      * Takes the specified item.
      *

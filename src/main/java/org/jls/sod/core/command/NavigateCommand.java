@@ -76,6 +76,11 @@ public class NavigateCommand extends AbstractCommandExecutor {
         }
     }
 
+    @Override
+    public String getSmallId () {
+        return "navigate";
+    }
+
     /**
      * Moves the player in the specified direction.
      *

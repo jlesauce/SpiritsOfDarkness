@@ -144,6 +144,11 @@ public class LookCommand extends AbstractCommandExecutor {
         }
     }
 
+    @Override
+    public String getSmallId () {
+        return "look";
+    }
+
     /**
      * Looks to the specified direction.
      *

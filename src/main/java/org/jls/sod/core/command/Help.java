@@ -56,6 +56,11 @@ public class Help extends AbstractCommandExecutor {
         }
     }
 
+    @Override
+    public String getSmallId () {
+        return "help";
+    }
+
     private void executeHelpWithoutArgument () {
         try {
             this.displayController.printMessage(readHelpCommandDescription());

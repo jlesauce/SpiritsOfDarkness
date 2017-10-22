@@ -70,4 +70,9 @@ public class InventoryCommand extends AbstractCommandExecutor {
             this.displayController.printError(this.props.getString("command.error.unknownCommand"));
         }
     }
+
+    @Override
+    public String getSmallId () {
+        return "inventory";
+    }
 }

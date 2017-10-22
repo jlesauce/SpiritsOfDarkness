@@ -48,6 +48,8 @@ public abstract class AbstractCommandExecutor {
 
     public abstract void execute (final Command cmd);
 
+    public abstract String getSmallId ();
+
     public boolean isCommandRecognized (final String cmdId) {
         for (String s : getRecognizedCommands()) {
             if (s.equals(cmdId)) {

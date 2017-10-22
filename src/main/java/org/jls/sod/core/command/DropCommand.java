@@ -123,6 +123,11 @@ public class DropCommand extends AbstractCommandExecutor {
         }
     }
 
+    @Override
+    public String getSmallId () {
+        return "drop";
+    }
+
     /**
      * Drops the specified item.
      *

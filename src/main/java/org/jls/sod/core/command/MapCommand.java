@@ -82,4 +82,9 @@ public class MapCommand extends AbstractCommandExecutor {
             this.displayController.printError(this.props.getString("command.error.invalidNbArgs"));
         }
     }
+
+    @Override
+    public String getSmallId () {
+        return "map";
+    }
 }
