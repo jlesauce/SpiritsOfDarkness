@@ -42,7 +42,7 @@ public class Command {
     private final String[] arguments;
 
     /**
-     * Instanciates a new {@link Command} specifying the command ID and its
+     * Instantiates a new {@link Command} specifying the command ID and its
      * arguments.
      *
      * @param cmd
@@ -56,7 +56,7 @@ public class Command {
     }
 
     /**
-     * Instanciates a new {@link Command} from the complete command input.
+     * Instantiates a new {@link Command} from the complete command input.
      *
      * @param cmd
      *            Complete command input formatted as <i>[commandID] {...args}</i>.
