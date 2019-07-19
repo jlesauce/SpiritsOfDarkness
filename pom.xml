@@ -14,7 +14,7 @@
     <inceptionYear>2016</inceptionYear>
 
     <properties>
-        <jdk.version>1.8</jdk.version>
+        <jdk.release>12</jdk.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Libraries Version -->
@@ -113,8 +113,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler.version}</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <release>${jdk.release}</release>
                 </configuration>
             </plugin>
 
