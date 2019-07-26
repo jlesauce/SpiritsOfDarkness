@@ -49,6 +49,7 @@ import org.jls.sod.gui.LoadGameDialog;
 import org.jls.sod.gui.MapPanel;
 import org.jls.sod.gui.NewGameDialog;
 import org.jls.sod.util.ResourceManager;
+import org.jls.toolbox.util.TimeUtils;
 import org.jls.toolbox.widget.Console;
 import org.jls.toolbox.widget.InternalFrame;
 import org.jls.toolbox.widget.dialog.Dialog;
@@ -160,8 +161,9 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     /**
      * Shows the new game creation panel.
      */
-    public void showNewGamePanel () {
+    public void showNewGamePanel (String defaultGameName) {
         NewGameDialog dialog = new NewGameDialog(this.controller.getGameController(), this);
+        dialog.setGameName(defaultGameName);
         dialog.showGui();
     }
 
@@ -293,7 +295,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
             // New Game
             if (this.menuItems.get("file.newGame").equals(item)) {
-                showNewGamePanel();
+                showNewGamePanel("SAVED_" + TimeUtils.getFileTimestamp());
             }
             // Load Game
             else if (this.menuItems.get("file.loadGame").equals(item)) {
@@ -332,7 +334,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
                     String cmd = tf.getText();
                     if (!cmd.isEmpty()) {
                         this.logger.debug("Process command : {}", cmd);
-                        this.controller.processCommand(cmd);
+                        this.controller.processUserCommand(cmd);
                         tf.setText("");
                     }
                 }

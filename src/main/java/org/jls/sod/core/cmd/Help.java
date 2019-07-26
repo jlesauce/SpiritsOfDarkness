@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 LE SAUCE Julien
+ * Copyright (c) 2019 LE SAUCE Julien
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,49 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package org.jls.sod.core.command;
+package org.jls.sod.core.cmd;
 
 import java.io.IOException;
 
-import org.jls.sod.core.DisplayController;
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.util.file.SimpleFile;
 
-public class Help extends AbstractCommandExecutor {
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
-    private final DisplayController displayController;
-    private final ResourceManager resources;
+@Command(name = "help", description = "Print the help page for the specified command")
+public class Help extends BasicCommand {
 
-    public Help(final CommandController commandController) {
+    @Parameters(paramLabel = "command", defaultValue = "help",
+            description = "The command for which you want to get help (Default : 'help', to get help in general)")
+    private String commandId;
+
+    public Help(CommandController commandController) {
         super(commandController);
-        this.displayController = controller.getDisplayController();
-        this.resources = ResourceManager.getInstance();
     }
 
     @Override
-    public String[] getRecognizedCommands () {
-        String[] cmds = { "help" };
-        return cmds;
-    }
-
-    @Override
-    public String getSmallId () {
-        return "help";
-    }
-
-    @Override
-    public void execute (final Command cmd) {
-        if (!cmd.hasArguments()) {
-            executeHelpWithoutArgument();
-        } else if (cmd.getArgumentCount() == 1) {
-            executeHelpWithOneArgument(cmd.getArgument(0).toLowerCase());
-        } else {
-            this.displayController.printError(ResourceManager.getInstance().getString("command.error.tooManyArgs"));
+    public String apply(ParsedCommand command) {
+        if (command.getContext().isUsageHelpRequested()) {
+            printHelp(command);
+            return "";
         }
+
+        if (commandId.equals("help")) {
+            executeHelpWithoutArgument();
+        }
+        else {
+            executeHelpWithOneArgument(commandId);
+        }
+        return null;
     }
 
-    private void executeHelpWithoutArgument () {
+    private void executeHelpWithoutArgument() {
         try {
             String help = readHelpCommandDescription("help");
             this.displayController.printMessage(help != null ? help : "");
@@ -73,34 +68,22 @@ public class Help extends AbstractCommandExecutor {
         }
     }
 
-    private void executeHelpWithOneArgument (final String argument) {
+    private void executeHelpWithOneArgument(final String argument) {
         if (isValidCommandId(argument)) {
             String help = readHelpCommandDescription(argument);
             this.displayController.printMessage(help != null ? help : "");
-        } else {
+        }
+        else {
             this.logger.error("User typed an invalid command identifier: {}", argument);
-            this.displayController.printError(this.resources.getString("command.help.invalidCmdId"));
+            this.displayController.printError(this.props.getString("command.help.invalidCmdId"));
         }
     }
 
-    private boolean isValidCommandId (final String commandId) {
+    private boolean isValidCommandId(final String commandId) {
         return commandController.isCommandIdContainedInCommandList(commandId);
     }
 
-    private String getHelpFilePathFromResources (final String commandId) {
-        String key = "command." + commandId + ".help";
-        String filepath = null;
-
-        try {
-            filepath = this.resources.getString(key);
-        } catch (Exception e) {
-            this.logger.error("Help filepath not found in resource files: key={}", key, e);
-            this.displayController.printError(this.resources.getString("command.help.helpFileNotFound"));
-        }
-        return filepath;
-    }
-
-    private String readHelpCommandDescription (final String commandId) {
+    private String readHelpCommandDescription(final String commandId) {
         String filepath = getHelpFilePathFromResources(commandId);
         if (filepath == null) {
             return null;
@@ -109,22 +92,36 @@ public class Help extends AbstractCommandExecutor {
         SimpleFile helpFile = getHelpCommandDescriptionFile(filepath);
         if (helpFile != null) {
             return readFileContent(helpFile);
-        } else {
+        }
+        else {
             return null;
         }
     }
 
-    private SimpleFile getHelpCommandDescriptionFile (final String filepath) {
+    private String getHelpFilePathFromResources(final String commandId) {
+        String key = "command." + commandId + ".help";
+        String filepath = null;
+
+        try {
+            filepath = this.props.getString(key);
+        } catch (Exception e) {
+            this.logger.error("Help filepath not found in resource files: key={}", key, e);
+            this.displayController.printError(this.props.getString("command.help.helpFileNotFound"));
+        }
+        return filepath;
+    }
+
+    private SimpleFile getHelpCommandDescriptionFile(final String filepath) {
         try {
             return new SimpleFile(ResourceManager.getResourceAsFile(filepath));
         } catch (Exception e) {
             this.logger.error("Help file not found: {}", filepath, e);
-            this.displayController.printError(this.resources.getString("command.help.helpFileNotFound"));
+            this.displayController.printError(this.props.getString("command.help.helpFileNotFound"));
         }
         return null;
     }
 
-    private String readFileContent (final SimpleFile file) {
+    private String readFileContent(final SimpleFile file) {
         try {
             return file.readFileContentAsString();
         } catch (IOException e) {

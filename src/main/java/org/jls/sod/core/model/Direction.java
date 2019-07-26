@@ -32,9 +32,10 @@ package org.jls.sod.core.model;
  */
 public enum Direction {
 
-    NORTH("north", "n"), NORTH_EAST("northeast", "north-east", "north_east", "ne"), EAST("east", "e"), SOUTH_EAST(
-            "southeast", "south-east", "south_east", "se"), SOUTH("south", "s"), SOUTH_WEST("southwest", "south-west",
-                    "south_west", "sw"), WEST("west", "w"), NORTH_WEST("northwest", "north-west", "north_west", "nw");
+    NORTH("north", "n"), NORTH_EAST("northeast", "north-east", "north_east", "ne"), EAST("east", "e"),
+    SOUTH_EAST("southeast", "south-east", "south_east", "se"), SOUTH("south", "s"),
+    SOUTH_WEST("southwest", "south-west", "south_west", "sw"), WEST("west", "w"),
+    NORTH_WEST("northwest", "north-west", "north_west", "nw"), CENTER("center");
 
     private final String[] matchingLabels;
 
@@ -42,7 +43,7 @@ public enum Direction {
      * Instantiates a new direction and specifies the matching direction's labels.
      *
      * @param lbls
-     *            The matching direction's labels.
+     *             The matching direction's labels.
      */
     private Direction(final String... lbls) {
         this.matchingLabels = lbls;
@@ -52,7 +53,7 @@ public enum Direction {
      * Parses the specified direction.
      *
      * @param value
-     *            Direction to parse.
+     *              Direction to parse.
      * @return Corresponding {@link Direction} enum if an existing direction is
      *         found, else throw an {@link IllegalArgumentException}.
      */
@@ -79,7 +80,7 @@ public enum Direction {
      * Returns <code>true</code> if the specified argument matches a direction.
      *
      * @param value
-     *            The value to test.
+     *              The value to test.
      * @return <code>true</code> if the specified argument matches a direction
      *         value, <code>false</code> otherwise.
      */

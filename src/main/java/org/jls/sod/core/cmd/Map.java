@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 LE SAUCE Julien
+ * Copyright (c) 2019 LE SAUCE Julien
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,41 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.jls.sod.core.cmd;
 
-package org.jls.sod.core.command;
+import picocli.CommandLine.Command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jls.sod.core.GameController;
-import org.jls.sod.core.GameModel;
+@Command(name = "map", description = "Show the map of the explored zone")
+public class Map extends BasicCommand {
 
-public abstract class AbstractCommandExecutor {
-
-    protected final CommandController commandController;
-    protected final GameModel model;
-    protected final GameController controller;
-    protected final Logger logger;
-
-    public AbstractCommandExecutor(final CommandController commandController) {
-        this.commandController = commandController;
-        this.model = commandController.getGameModel();
-        this.controller = commandController.getGameController();
-        this.logger = LogManager.getLogger();
-
+    public Map(CommandController commandController) {
+        super(commandController);
     }
 
-    public abstract String[] getRecognizedCommands ();
-
-    public abstract void execute (final Command cmd);
-
-    public abstract String getSmallId ();
-
-    public boolean isCommandRecognized (final String cmdId) {
-        for (String s : getRecognizedCommands()) {
-            if (s.equals(cmdId)) {
-                return true;
-            }
+    @Override
+    public String apply(ParsedCommand command) {
+        if (command.getContext().isUsageHelpRequested()) {
+            printHelp(command);
+            return "";
         }
-        return false;
+
+        this.controller.showMap();
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 LE SAUCE Julien
+ * Copyright (c) 2019 LE SAUCE Julien
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,12 +46,6 @@ import org.jls.sod.core.model.world.Zone;
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.util.file.FileUtils;
 
-/**
- * The game controller.
- *
- * @author LE SAUCE Julien
- * @date Sep 3, 2015
- */
 public class GameController {
 
     private final GameModel model;
@@ -59,14 +53,6 @@ public class GameController {
     private final DisplayController displayController;
     private final Logger logger;
 
-    /**
-     * Instantiates the game controller.
-     *
-     * @param model
-     *            The game data model.
-     * @param controller
-     *            The controller of the application.
-     */
     public GameController(final GameModel model, final ApplicationController controller) {
         this.model = model;
         this.controller = controller;
@@ -74,44 +60,41 @@ public class GameController {
         this.logger = LogManager.getLogger();
     }
 
-    /**
-     * Shows the new game creation panel.
-     */
-    public void showNewGamePanel () {
-        this.controller.showNewGamePanel();
+    public void showNewGamePanel(String defaultGameName) {
+        this.controller.showNewGamePanel(defaultGameName);
     }
 
-    /**
-     * Shows the load game panel.
-     */
-    public void showLoadGamePanel () {
+    public void showLoadGamePanel() {
         this.controller.showLoadGamePanel();
     }
 
-    /**
-     * Exits the application.
-     */
-    public void exitApplication () {
-        this.controller.showLoadGamePanel();
+    public void exitApplication() {
+        this.controller.exitApplication();
+    }
+
+    public void showMap() {
+        this.controller.showUserMap();
+    }
+
+    public void hideMap() {
+        this.controller.hideUserMap();
     }
 
     /**
-     * Creates a new game with the selected story and save the new game instance in
+     * Create a new game with the selected story and save the new game instance in
      * the save directory.
      *
-     * @param storyId
-     *            The story identifier (i.e. the name of the story directory).
-     * @param saveDirName
-     *            The name of the new game instance.
+     * @param storyId     The story identifier (i.e. the name of the story
+     *                    directory).
+     * @param saveDirName The name of the new game instance.
      * @return <code>true</code> if the game instance has been created,
      *         <code>false</code> otherwise.
-     * @throws IOException
-     *             If an error occurred during the create of the save directory.
-     * @throws JDOMException
-     *             If one the description files is malformed.
+     * @throws IOException   If an error occurred during the create of the save
+     *                       directory.
+     * @throws JDOMException If one the description files is malformed.
      *
      */
-    public boolean createNewGame (final String storyId, final String saveDirName) throws IOException, JDOMException {
+    public boolean createNewGame(final String storyId, final String saveDirName) throws IOException, JDOMException {
         // Checks input
         if (storyId == null) {
             throw new NullPointerException("Story ID cannot be null");
@@ -141,7 +124,8 @@ public class GameController {
                             JOptionPane.WARNING_MESSAGE);
                     this.controller.printError("A game instance with the name " + saveDirName + " already exist.");
                     return false;
-                } else { // Else creates the new game instance
+                }
+                else { // Else creates the new game instance
                     this.logger.info("Creating new game instance {}", saveDirName);
 
                     // Copy the story to the save directory
@@ -170,25 +154,24 @@ public class GameController {
                     }
                     return true;
                 }
-            } else {
+            }
+            else {
                 throw new IllegalStateException("Story directory not found : " + storyDir.getAbsolutePath());
             }
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Story not found : " + saveDirName);
         }
     }
 
     /**
-     * Loads the specified game instance.
+     * Load the specified game instance.
      *
-     * @param savedGameId
-     *            Game instance identifier.
-     * @throws IOException
-     *             If an error occurred reading the game instance files.
-     * @throws JDOMException
-     *             If a game instance file is malformed.
+     * @param savedGameId Game instance identifier.
+     * @throws IOException   If an error occurred reading the game instance files.
+     * @throws JDOMException If a game instance file is malformed.
      */
-    public void loadGame (final String savedGameId) throws JDOMException, IOException {
+    public void loadGame(final String savedGameId) throws JDOMException, IOException {
         // Checks input
         if (savedGameId == null) {
             throw new NullPointerException("Game instance identifier cannot be null");
@@ -253,7 +236,8 @@ public class GameController {
                 this.logger.info("Select room : {}", room.getName());
 
                 this.model.getRoom().setVisited(true);
-            } else {
+            }
+            else {
                 throw new IllegalStateException("World entry point not found : " + story.getDefaultWorld());
             }
             this.displayController.printMessage("Game instance " + savedGameId + " has been loaded.");
@@ -266,35 +250,21 @@ public class GameController {
             this.displayController.printWelcomeMessage();
             // Prints the description of the entry point
             this.displayController.printRoomDescription(this.model.getRoom());
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Game instance not found : " + gameDir.getAbsolutePath());
         }
-    }
-
-    /**
-     * Shows the map to the player.
-     */
-    public void showMap () {
-        this.controller.showMap();
-    }
-
-    /**
-     * Hides the map.
-     */
-    public void hideMap () {
-        this.controller.hideMap();
     }
 
     /**
      * Updates the current position of the player. This function update the data
      * model and the instance file descriptor.
      *
-     * @param room
-     *            The new position of the player.
-     * @throws ConfigurationException
-     *             If an error occurred saving instance configuration file.
+     * @param room The new position of the player.
+     * @throws ConfigurationException If an error occurred saving instance
+     *                                configuration file.
      */
-    public void updateCurrentPosition (final Room room) throws ConfigurationException {
+    public void updateCurrentPosition(final Room room) throws ConfigurationException {
         this.logger.info("Updates current position : {}", room.getName());
         this.model.setRoom(room);
         room.setVisited(true);
@@ -308,25 +278,15 @@ public class GameController {
         config.save();
     }
 
-    public static boolean hasSavedGames () {
+    public static boolean hasSavedGames() {
         return new File(ResourceManager.SAVED_PATH).exists();
     }
 
-    /**
-     * Returns the game data model.
-     *
-     * @return The game data model.
-     */
-    public GameModel getModel () {
+    public GameModel getModel() {
         return this.model;
     }
 
-    /**
-     * Returns the display delegate controller.
-     *
-     * @return The display controller.
-     */
-    public DisplayController getDisplayController () {
+    public DisplayController getDisplayController() {
         return displayController;
     }
 }

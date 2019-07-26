@@ -102,7 +102,7 @@ public class SpiritsOfDarkness {
                     final ApplicationModel model = new ApplicationModel();
                     final ApplicationController controller = new ApplicationController(model);
                     controller.setSkin("Nimbus");
-                    controller.setIcon(p.getIcon("icon").getImage());
+                    controller.setApplicationIcon(p.getIcon("icon").getImage());
                     controller.showGui();
                 } catch (Exception e) {
                     Throwable t = e;

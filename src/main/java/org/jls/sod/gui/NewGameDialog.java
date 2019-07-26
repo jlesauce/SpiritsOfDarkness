@@ -1,18 +1,18 @@
 /*
  * The MIT License (MIT)
- * 
- * Copyright (c) 2017 LE SAUCE Julien
- * 
+ *
+ * Copyright (c) 2019 LE SAUCE Julien
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -54,7 +54,7 @@ import org.jls.toolbox.util.TimeUtils;
 
 /**
  * Creates a dialog for the player to create a new game.
- * 
+ *
  * @author LE SAUCE Julien
  * @date Sep 3, 2015
  */
@@ -73,11 +73,11 @@ public class NewGameDialog extends JDialog implements ActionListener {
 
     /**
      * Instantiates a new dialog.
-     * 
+     *
      * @param controller
-     *            The game controller.
+     *                   The game controller.
      * @param owner
-     *            The parent frame.
+     *                   The parent frame.
      */
     public NewGameDialog(final GameController controller, final JFrame owner) {
         super(owner, "New Game", true);
@@ -90,17 +90,21 @@ public class NewGameDialog extends JDialog implements ActionListener {
         addListeners();
     }
 
+    public void setGameName (final String gameName) {
+        this.tfSaveName.setText(gameName);
+    }
+
     /**
      * Pops to the user a small dialog with the specified message and message type.
-     * 
+     *
      * @param title
-     *            Title of the pop-up.
+     *               Title of the pop-up.
      * @param msg
-     *            The pop-up message.
+     *               The pop-up message.
      * @param option
-     *            Specifies the message type (see
-     *            {@link JOptionPane#setOptionType(int)} to know the different
-     *            message types).
+     *               Specifies the message type (see
+     *               {@link JOptionPane#setOptionType(int)} to know the different
+     *               message types).
      */
     public synchronized void pop (final String title, final String msg, final int option) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -161,9 +165,9 @@ public class NewGameDialog extends JDialog implements ActionListener {
 
     /**
      * Updates the description text field.
-     * 
+     *
      * @param storyId
-     *            Identifier of the story.
+     *                Identifier of the story.
      */
     private void updateDescription (final String storyId) {
         File storyDir = new File(ResourceManager.STORIES_PATH, storyId);

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 LE SAUCE Julien
+ * Copyright (c) 2019 LE SAUCE Julien
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,27 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.jls.sod.core.cmd;
 
-package org.jls.sod.core.command;
+import picocli.CommandLine.Command;
 
-public class AttackCommand extends AbstractCommandExecutor {
+@Command(name = "inventory", description = "Show the content of your inventory")
+public class Inventory extends BasicCommand {
 
-    public AttackCommand(final CommandController commandController) {
+    public Inventory(CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public void execute (final Command cmd) {
-    }
-
-    @Override
-    public String[] getRecognizedCommands () {
-        String[] cmds = { "attack" };
-        return cmds;
-    }
-
-    @Override
-    public String getSmallId () {
-        return "attack";
+    public String apply(ParsedCommand command) {
+        if (command.getContext().isUsageHelpRequested()) {
+            printHelp(command);
+            return "";
+        }
+        org.jls.sod.core.model.inventory.Inventory inventory = this.model.getCharacter().getInventory();
+        this.displayController.printItems(inventory);
+        return "";
     }
 }
