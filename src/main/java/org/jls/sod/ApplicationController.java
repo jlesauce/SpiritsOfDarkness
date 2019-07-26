@@ -21,18 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.jls.sod;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.sod.core.GameController;
@@ -42,7 +39,6 @@ import org.jls.sod.core.cmd.Command;
 import org.jls.sod.core.cmd.CommandController;
 import org.jls.sod.core.cmd.ParsedCommand;
 import org.jls.sod.util.ResourceManager;
-
 import picocli.CommandLine;
 import picocli.CommandLine.ParseResult;
 
@@ -67,9 +63,12 @@ public class ApplicationController {
     /**
      * Show a pop-up animation with the specified message.
      *
-     * @param title   Title of the pop-up.
-     * @param msg     The pop-up message.
-     * @param msgType Specify the pop-up message type (see
+     * @param title
+     *                Title of the pop-up.
+     * @param msg
+     *                The pop-up message.
+     * @param msgType
+     *                Specify the pop-up message type (see
      *                {@link JOptionPane#setMessageType(int) for the available
      *                options}.
      */
@@ -89,7 +88,8 @@ public class ApplicationController {
     /**
      * Process the command given by the user in the console view.
      *
-     * @param cmd The user command as a string.
+     * @param cmd
+     *            The user command as a string.
      */
     public void processUserCommand(final String cmd) {
         if (cmd == null) {
@@ -109,7 +109,8 @@ public class ApplicationController {
      * Find the executor associated with the command ID, parse the command and
      * execute it.
      *
-     * @param cmd The command object.
+     * @param cmd
+     *            The command object.
      */
     private void executeUserCommand(final Command cmd) {
         AbstractCommandCaller cmdExecutor = findCommandExecutorInExecutors(cmd.getCommandId());
@@ -143,10 +144,11 @@ public class ApplicationController {
     }
 
     /**
-     * Select the Look&Feel. If the L&F exists then the skin is updated using the
-     * {@link UIManager}.
+     * Select the Look&Feel. If the L&F exists then the skin is updated using
+     * the {@link UIManager}.
      *
-     * @param lafName Identifier of the Look & Feel.
+     * @param lafName
+     *                Identifier of the Look & Feel.
      */
     public void setSkin(final String lafName) {
         // System L&F
@@ -187,8 +189,8 @@ public class ApplicationController {
         }
     }
 
-    public void showNewGamePanel(String defaultGameName) {
-        this.view.showNewGamePanel(defaultGameName);
+    public void showNewGamePanel() {
+        this.view.showNewGamePanel();
     }
 
     public void showLoadGamePanel() {
@@ -196,11 +198,11 @@ public class ApplicationController {
     }
 
     public void showUserMap() {
-        this.view.showMap();
+        this.view.showUserMap();
     }
 
     public void hideUserMap() {
-        this.view.hideMap();
+        this.view.hideUserMap();
     }
 
     /**

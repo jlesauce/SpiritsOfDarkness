@@ -21,14 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.jls.sod.core;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang.StringUtils;
@@ -60,8 +57,8 @@ public class GameController {
         this.logger = LogManager.getLogger();
     }
 
-    public void showNewGamePanel(String defaultGameName) {
-        this.controller.showNewGamePanel(defaultGameName);
+    public void showNewGamePanel() {
+        this.controller.showNewGamePanel();
     }
 
     public void showLoadGamePanel() {
@@ -81,17 +78,21 @@ public class GameController {
     }
 
     /**
-     * Create a new game with the selected story and save the new game instance in
-     * the save directory.
+     * Create a new game with the selected story and save the new game instance
+     * in the save directory.
      *
-     * @param storyId     The story identifier (i.e. the name of the story
+     * @param storyId
+     *                    The story identifier (i.e. the name of the story
      *                    directory).
-     * @param saveDirName The name of the new game instance.
+     * @param saveDirName
+     *                    The name of the new game instance.
      * @return <code>true</code> if the game instance has been created,
      *         <code>false</code> otherwise.
-     * @throws IOException   If an error occurred during the create of the save
+     * @throws IOException
+     *                       If an error occurred during the create of the save
      *                       directory.
-     * @throws JDOMException If one the description files is malformed.
+     * @throws JDOMException
+     *                       If one the description files is malformed.
      *
      */
     public boolean createNewGame(final String storyId, final String saveDirName) throws IOException, JDOMException {
@@ -167,9 +168,13 @@ public class GameController {
     /**
      * Load the specified game instance.
      *
-     * @param savedGameId Game instance identifier.
-     * @throws IOException   If an error occurred reading the game instance files.
-     * @throws JDOMException If a game instance file is malformed.
+     * @param savedGameId
+     *                    Game instance identifier.
+     * @throws IOException
+     *                       If an error occurred reading the game instance
+     *                       files.
+     * @throws JDOMException
+     *                       If a game instance file is malformed.
      */
     public void loadGame(final String savedGameId) throws JDOMException, IOException {
         // Checks input
@@ -257,18 +262,20 @@ public class GameController {
     }
 
     /**
-     * Updates the current position of the player. This function update the data
+     * Update the current position of the player. This function update the data
      * model and the instance file descriptor.
      *
-     * @param room The new position of the player.
-     * @throws ConfigurationException If an error occurred saving instance
+     * @param room
+     *             The new position of the player.
+     * @throws ConfigurationException
+     *                                If an error occurred saving instance
      *                                configuration file.
      */
     public void updateCurrentPosition(final Room room) throws ConfigurationException {
         this.logger.info("Updates current position : {}", room.getName());
         this.model.setRoom(room);
         room.setVisited(true);
-        // Updates instance config file
+        // Update instance config file
         XMLConfiguration config = this.model.getInstanceConfig();
         Zone zone = room.getZone();
         Region region = zone.getRegion();

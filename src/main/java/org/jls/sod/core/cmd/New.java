@@ -24,13 +24,9 @@
 package org.jls.sod.core.cmd;
 
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
 
-@Command(name = "new", description = "Create a new game")
+@Command(name = "new", description = "Show the new game creation panel")
 public class New extends BasicCommand {
-
-    @Parameters(paramLabel = "gameName", description = "The name of the new game to create")
-    private String name;
 
     public New(CommandController commandController) {
         super(commandController);
@@ -42,7 +38,7 @@ public class New extends BasicCommand {
             printHelp(command);
             return "";
         }
-        this.controller.showNewGamePanel(this.name);
+        this.controller.showNewGamePanel();
         return "";
     }
 }

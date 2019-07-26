@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.jls.sod;
 
 import java.awt.Color;
@@ -33,7 +32,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -41,7 +39,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.sod.core.GameController;
@@ -53,15 +50,8 @@ import org.jls.toolbox.util.TimeUtils;
 import org.jls.toolbox.widget.Console;
 import org.jls.toolbox.widget.InternalFrame;
 import org.jls.toolbox.widget.dialog.Dialog;
-
 import net.miginfocom.swing.MigLayout;
 
-/**
- * Main frame of the application.
- *
- * @author LE SAUCE Julien
- * @date Sep 2, 2015
- */
 public class ApplicationView extends JFrame implements ActionListener, KeyListener {
 
     private static final long serialVersionUID = 5624587162291736726L;
@@ -81,14 +71,6 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     private MapPanel mapPanel;
     private JTextField tfCommandLine;
 
-    /**
-     * Instantiates the application's main frame.
-     *
-     * @param model
-     *            Data model of the application.
-     * @param controller
-     *            Controller of the application.
-     */
     public ApplicationView(final ApplicationModel model, final ApplicationController controller) {
         super(model.getAppName() + " - Version " + model.getAppVersion());
         ApplicationView.APP_FRAME = this;
@@ -107,119 +89,101 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
      * Changes the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
      *
      * @param isWaiting
-     *            <code>true</code> to use the waiting cursor, <code>false</code> to
-     *            use the default cursor.
+     *                  <code>true</code> to use the waiting cursor,
+     *                  <code>false</code> to use the default cursor.
      */
-    public static void setWaitCursor (final boolean isWaiting) {
+    public static void setWaitCursor(final boolean isWaiting) {
         Cursor cursor = isWaiting ? Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR) : Cursor.getDefaultCursor();
         APP_FRAME.getGlassPane().setCursor(cursor);
         APP_FRAME.getGlassPane().setVisible(isWaiting);
     }
 
     /**
-     * Shows a pop-up animation with the specified message.
+     * Show a pop-up animation with the specified message.
      *
      * @param title
-     *            Title of the pop-up.
+     *                Title of the pop-up.
      * @param msg
-     *            The pop-up message.
+     *                The pop-up message.
      * @param msgType
-     *            Specifies the pop-up message type (see
-     *            {@link JOptionPane#setMessageType(int) for the availables
-     *            options}.
+     *                Specifies the pop-up message type (see
+     *                {@link JOptionPane#setMessageType(int) for the available
+     *                options}.
      */
-    public synchronized void pop (final String title, final String msg, final int msgType) {
+    public synchronized void pop(final String title, final String msg, final int msgType) {
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
-            public void run () {
+            public void run() {
                 JOptionPane.showMessageDialog(ApplicationView.this, msg, title, msgType);
             }
         });
     }
 
-    /**
-     * Shows the graphical user interface.
-     */
-    public void showGui () {
+    public void showGui() {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         this.tfCommandLine.requestFocus();
     }
 
-    /**
-     * Shows the map to the player.
-     */
-    public void showMap () {
+    public void showUserMap() {
         this.controller.getGameController().getModel().addObserver(this.mapPanel);
         this.mapFrame.setVisible(true);
         this.mapFrame.setLocation((int) (getLocation().getX() + getSize().getWidth()), (int) getLocation().getY());
         this.tfCommandLine.requestFocus();
     }
 
-    /**
-     * Shows the new game creation panel.
-     */
-    public void showNewGamePanel (String defaultGameName) {
-        NewGameDialog dialog = new NewGameDialog(this.controller.getGameController(), this);
-        dialog.setGameName(defaultGameName);
-        dialog.showGui();
-    }
-
-    /**
-     * Shows the load game panel.
-     */
-    public void showLoadGamePanel () {
-        LoadGameDialog dialog = new LoadGameDialog(this.controller.getGameController(), this);
-        dialog.showGui();
-    }
-
-    /**
-     * Hides the map.
-     */
-    public void hideMap () {
+    public void hideUserMap() {
         this.controller.getGameController().getModel().deleteObserver(this.mapPanel);
         this.mapFrame.setVisible(false);
     }
 
-    public void printConsole (final String text) {
+    public void showNewGamePanel() {
+        NewGameDialog dialog = new NewGameDialog(this.controller.getGameController(), this);
+        dialog.setGameName("SAVED_" + TimeUtils.getFileTimestamp());
+        dialog.showGui();
+    }
+
+    public void showLoadGamePanel() {
+        LoadGameDialog dialog = new LoadGameDialog(this.controller.getGameController(), this);
+        dialog.showGui();
+    }
+
+    public void printConsole(final String text) {
         this.console.print(text);
     }
 
-    public void printConsole (final String text, final int fontStyle) {
+    public void printConsole(final String text, final int fontStyle) {
         this.console.print(text, fontStyle);
     }
 
-    public void printConsole (final String text, final int fontStyle, final int size) {
+    public void printConsole(final String text, final int fontStyle, final int size) {
         this.console.print(text, fontStyle, size);
     }
 
-    public void printConsole (final String text, final Color textColor) {
+    public void printConsole(final String text, final Color textColor) {
         this.console.print(text, textColor);
     }
 
-    public void printConsole (final String text, final Color textColor, final int fontStyle) {
+    public void printConsole(final String text, final Color textColor, final int fontStyle) {
         this.console.print(text, textColor, fontStyle);
     }
 
-    public void printConsole (final String text, final Color textColor, final int fontStyle, final int size) {
+    public void printConsole(final String text, final Color textColor, final int fontStyle, final int size) {
         this.console.print(text, textColor, fontStyle, size);
     }
 
-    public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle) {
+    public void printConsole(final String text, final Color textColor, final Color bgColor, final int fontStyle) {
         this.console.print(text, textColor, bgColor, fontStyle);
     }
 
-    public void printConsole (final String text, final Color textColor, final Color bgColor, final int fontStyle,
+    public void printConsole(final String text, final Color textColor, final Color bgColor, final int fontStyle,
             final int size) {
         this.console.print(text, textColor, bgColor, fontStyle, size);
     }
 
-    /**
-     * Instantiates the different components composing the user graphical interface.
-     */
-    private void createComponents () {
+    private void createComponents() {
         createMenus();
         this.console = new Console();
         String fontName = this.props.getString("mainView.console.default.font");
@@ -241,43 +205,34 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
         this.tfCommandLine = new JTextField();
     }
 
-    /**
-     * Creates the different menus of the main frame.
-     */
-    private void createMenus () {
+    private void createMenus() {
         this.menuBar = new JMenuBar();
-        // Creates the menus
+        // Create menus
         this.menus.put("file", new JMenu(this.props.getString("mainView.menu.file.label")));
         this.menus.put("help", new JMenu(this.props.getString("mainView.menu.help.label")));
-        // Creates the items
+        // Create items
         this.menuItems.put("file.newGame", new JMenuItem(this.props.getString("mainView.menu.item.newGame.label")));
         this.menuItems.put("file.loadGame", new JMenuItem(this.props.getString("mainView.menu.item.loadGame.label")));
         this.menuItems.put("file.exit", new JMenuItem(this.props.getString("mainView.menu.item.exit.label")));
         this.menuItems.put("help.about", new JMenuItem(this.props.getString("mainView.menu.item.about.label")));
-        // Adds the items
+        // Add items
         this.menus.get("file").add(this.menuItems.get("file.newGame"));
         this.menus.get("file").add(this.menuItems.get("file.loadGame"));
         this.menus.get("file").add(this.menuItems.get("file.exit"));
         this.menus.get("help").add(this.menuItems.get("help.about"));
-        // Adds the menus
+        // Add menus
         this.menuBar.add(this.menus.get("file"));
         this.menuBar.add(this.menus.get("help"));
         setJMenuBar(this.menuBar);
     }
 
-    /**
-     * Adds the components to the panel to create the user graphical interface.
-     */
-    private void createGui () {
+    private void createGui() {
         setLayout(new MigLayout("fill"));
         add(this.console, "grow, push, wrap");
         add(this.tfCommandLine, "spanx, growx");
     }
 
-    /**
-     * Adds the listeners to the components of the panel.
-     */
-    private void addListeners () {
+    private void addListeners() {
         this.menuItems.get("file.newGame").addActionListener(this);
         this.menuItems.get("file.loadGame").addActionListener(this);
         this.menuItems.get("file.exit").addActionListener(this);
@@ -286,7 +241,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     }
 
     @Override
-    public void actionPerformed (final ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
         /*
          * JMenuItem
          */
@@ -295,13 +250,14 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
             // New Game
             if (this.menuItems.get("file.newGame").equals(item)) {
-                showNewGamePanel("SAVED_" + TimeUtils.getFileTimestamp());
+                showNewGamePanel();
             }
             // Load Game
             else if (this.menuItems.get("file.loadGame").equals(item)) {
                 if (GameController.hasSavedGames()) {
                     showLoadGamePanel();
-                } else {
+                }
+                else {
                     pop("No saved games", this.props.getString("mainView.loadGameDialog.noSavedGame"),
                             JOptionPane.WARNING_MESSAGE);
                 }
@@ -319,7 +275,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     }
 
     @Override
-    public void keyTyped (final KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
         /*
          * JTextField
          */
@@ -343,7 +299,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     }
 
     @Override
-    public void keyPressed (final KeyEvent e) {
+    public void keyPressed(final KeyEvent e) {
         /*
          * JTextField
          */
@@ -366,6 +322,6 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     }
 
     @Override
-    public void keyReleased (final KeyEvent e) {
+    public void keyReleased(final KeyEvent e) {
     }
 }
