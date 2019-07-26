@@ -1,18 +1,18 @@
 /*
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2017 LE SAUCE Julien
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,9 +29,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.URL;
 import java.util.List;
-
 import javax.swing.SwingUtilities;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.sod.util.ResourceManager;
@@ -39,19 +37,13 @@ import org.jls.toolbox.widget.ErrorPopUp;
 
 /**
  * Spirits of Darkness launcher.
- * 
- * @author LE SAUCE Julien
- * @date Sep 2, 2015
+ *
+ * @author Julien LE SAUCE
+ * @date 02/09/2015
  */
 public class SpiritsOfDarkness {
 
-    /**
-     * Starts the application.
-     * 
-     * @param args
-     *            No arguments.
-     */
-    public static void main (final String[] args) {
+    public static void main(final String[] args) {
         /*
          * Configures the logger
          */
@@ -97,13 +89,14 @@ public class SpiritsOfDarkness {
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
-            public void run () {
+            public void run() {
                 try {
                     final ApplicationModel model = new ApplicationModel();
                     final ApplicationController controller = new ApplicationController(model);
                     controller.setSkin("Nimbus");
                     controller.setApplicationIcon(p.getIcon("icon").getImage());
                     controller.showGui();
+                    controller.startGame();
                 } catch (Exception e) {
                     Throwable t = e;
                     while (t.getCause() != null) {
@@ -117,15 +110,15 @@ public class SpiritsOfDarkness {
     }
 
     /**
-     * Returns the JVM arguments as a list.
-     * 
+     * Return the JVM arguments as a list.
+     *
      * @param prefix
-     *            Prefix of each argument in the exported string.
+     *               Prefix of each argument in the exported string.
      * @param suffix
-     *            Suffix of each argument in the exported string.
+     *               Suffix of each argument in the exported string.
      * @return String containing the JVM arguments as a formatted list.
      */
-    private static String getVMArguments (String prefix, String suffix) {
+    private static String getVMArguments(String prefix, String suffix) {
         RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
         List<String> vmArgs = runtimeMxBean.getInputArguments();
         if (vmArgs.size() > 0) {
@@ -139,17 +132,17 @@ public class SpiritsOfDarkness {
     }
 
     /**
-     * Returns the application arguments as a list.
-     * 
+     * Return the application arguments as a list.
+     *
      * @param prefix
-     *            Prefix of each argument in the exported string.
+     *               Prefix of each argument in the exported string.
      * @param suffix
-     *            Suffix of each argument in the exported string.
+     *               Suffix of each argument in the exported string.
      * @param args
-     *            Arguments given to the application.
+     *               Arguments given to the application.
      * @return String containing the application arguments as a formatted list.
      */
-    private static String formatMainArguments (String prefix, String suffix, String[] args) {
+    private static String formatMainArguments(String prefix, String suffix, String[] args) {
         if (args.length > 0) {
             String str = "";
             for (String s : args) {

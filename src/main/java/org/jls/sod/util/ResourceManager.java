@@ -29,9 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
-
 import javax.swing.ImageIcon;
-
 import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.DefaultConfigurationBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -42,22 +40,12 @@ public class ResourceManager {
 
     private static final String slash = File.separator;
 
-    /*
-     * Directories
-     */
     public static final String RESOURCES_DIR = "resources";
-
-    /*
-     * Package resources
-     */
     public static final String RESOURCES_PATH = SpiritsOfDarkness.class.getProtectionDomain().getCodeSource()
             .getLocation().getPath() + RESOURCES_DIR;
     public static final String IMG_PATH = "img";
     public static final String PROPERTIES_PATH = "properties";
 
-    /*
-     * User resources
-     */
     public static final String USER_DIR = System.getProperty("user.dir");
     public static final String DATA_PATH = USER_DIR + slash + "data";
     public static final String STORIES_PATH = DATA_PATH + slash + "stories";
@@ -69,10 +57,11 @@ public class ResourceManager {
 
     private final Logger logger;
     private CombinedConfiguration configuration;
+    private DefaultConfigurationBuilder builder;
 
     private ResourceManager() {
         this.logger = LogManager.getLogger();
-        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+        builder = new DefaultConfigurationBuilder();
         builder.setConfigurationBasePath(RESOURCES_PATH);
         builder.setBasePath(RESOURCES_PATH);
         try {
@@ -85,14 +74,14 @@ public class ResourceManager {
         }
     }
 
-    public final static ResourceManager getInstance () {
+    public final static ResourceManager getInstance() {
         if (ResourceManager.INSTANCE == null) {
             ResourceManager.INSTANCE = new ResourceManager();
         }
         return ResourceManager.INSTANCE;
     }
 
-    public final static URL getResource (final String name) throws FileNotFoundException {
+    public final static URL getResource(final String name) throws FileNotFoundException {
         URL url = Thread.currentThread().getContextClassLoader().getResource(name);
         if (url == null) {
             url = Thread.currentThread().getContextClassLoader().getResource(RESOURCES_DIR + File.separator + name);
@@ -103,15 +92,15 @@ public class ResourceManager {
         return url;
     }
 
-    public final static InputStream getResourceAsStream (final String name) {
+    public final static InputStream getResourceAsStream(final String name) {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
     }
 
-    public final static File getResourceAsFile (final String name) throws FileNotFoundException {
+    public final static File getResourceAsFile(final String name) throws FileNotFoundException {
         return new File(getResource(name).getPath());
     }
 
-    public String setProperty (final String key, final String value) {
+    public String setProperty(final String key, final String value) {
         if (value != null && !value.isEmpty()) {
             if (this.configuration.containsKey(key)) {
                 String oldValue = this.getString(key);
@@ -123,14 +112,14 @@ public class ResourceManager {
         throw new IllegalArgumentException("Value cannot be null or empty");
     }
 
-    public String getString (final String key) throws IllegalArgumentException {
+    public String getString(final String key) throws IllegalArgumentException {
         if (this.configuration.containsKey(key)) {
             return this.configuration.getString(key);
         }
         throw new IllegalArgumentException("Key does not exist : " + key);
     }
 
-    public int getInt (final String key) {
+    public int getInt(final String key) {
         String str = getString(key);
         if (!str.isEmpty()) {
             try {
@@ -142,7 +131,7 @@ public class ResourceManager {
         throw new IllegalStateException("Empty value");
     }
 
-    public Color getColor (final String key) {
+    public Color getColor(final String key) {
         String str = getString(key);
         if (!str.isEmpty()) {
             try {
@@ -154,7 +143,7 @@ public class ResourceManager {
         throw new IllegalStateException("Empty value");
     }
 
-    public ImageIcon getIcon (final String key) throws FileNotFoundException {
+    public ImageIcon getIcon(final String key) throws FileNotFoundException {
         String filename = getString(key);
         String path = IMG_PATH + slash + filename;
         URL url = getResource(path);

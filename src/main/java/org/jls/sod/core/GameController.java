@@ -41,18 +41,21 @@ import org.jls.sod.core.model.world.Room;
 import org.jls.sod.core.model.world.World;
 import org.jls.sod.core.model.world.Zone;
 import org.jls.sod.util.ResourceManager;
+import org.jls.sod.util.Settings;
 import org.jls.toolbox.util.file.FileUtils;
 
 public class GameController {
 
     private final GameModel model;
     private final ApplicationController controller;
+    private final Settings settings;
     private final DisplayController displayController;
     private final Logger logger;
 
-    public GameController(final GameModel model, final ApplicationController controller) {
+    public GameController(final GameModel model, final ApplicationController controller, final Settings settings) {
         this.model = model;
         this.controller = controller;
+        this.settings = settings;
         this.displayController = new DisplayController(model, controller);
         this.logger = LogManager.getLogger();
     }
@@ -255,10 +258,17 @@ public class GameController {
             this.displayController.printWelcomeMessage();
             // Prints the description of the entry point
             this.displayController.printRoomDescription(this.model.getRoom());
+
+            updateLastPlayedGameInSettings(savedGameId);
         }
         else {
             throw new IllegalArgumentException("Game instance not found : " + gameDir.getAbsolutePath());
         }
+    }
+
+    private void updateLastPlayedGameInSettings(final String instanceName) {
+        this.logger.info("Update last played game: " + instanceName);
+        this.settings.setLastPlayedGame(instanceName);
     }
 
     /**

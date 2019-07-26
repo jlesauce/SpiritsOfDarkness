@@ -86,7 +86,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     }
 
     /**
-     * Changes the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
+     * Change the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
      *
      * @param isWaiting
      *                  <code>true</code> to use the waiting cursor,
@@ -194,7 +194,7 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
         this.console.setDefaultTextColor(Color.white);
         this.console.setPreferredSize(new Dimension(800, 600));
 
-        // Creates the map
+        // Create the map
         this.mapPanel = new MapPanel();
         this.mapFrame = new Dialog(this, "Map", this.mapFrame);
         this.mapFrame.setModal(false);

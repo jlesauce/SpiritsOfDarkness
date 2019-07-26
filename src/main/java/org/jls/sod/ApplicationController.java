@@ -39,6 +39,7 @@ import org.jls.sod.core.cmd.Command;
 import org.jls.sod.core.cmd.CommandController;
 import org.jls.sod.core.cmd.ParsedCommand;
 import org.jls.sod.util.ResourceManager;
+import org.jls.sod.util.Settings;
 import picocli.CommandLine;
 import picocli.CommandLine.ParseResult;
 
@@ -50,11 +51,13 @@ public class ApplicationController {
     private final CommandController commandController;
     private final Logger logger;
     private final ResourceManager props;
+    private final Settings settings;
 
     public ApplicationController(final ApplicationModel model) throws Exception {
         this.model = model;
         this.view = new ApplicationView(model, this);
-        this.gameController = new GameController(new GameModel(), this);
+        this.settings = new Settings();
+        this.gameController = new GameController(new GameModel(), this, settings);
         this.commandController = new CommandController(this.getGameController().getModel(), this.gameController);
         this.logger = LogManager.getLogger();
         this.props = ResourceManager.getInstance();
@@ -78,6 +81,29 @@ public class ApplicationController {
 
     public void showGui() {
         this.view.showGui();
+    }
+
+    public void startGame() {
+        if (settings.isLastPlayedGameAutoloadEnabled()) {
+            autoloadLastPlayedGame();
+        }
+    }
+
+    private void autoloadLastPlayedGame() {
+        String lastPlayedGame = settings.getLastPlayedGame();
+
+        if (!lastPlayedGame.isBlank()) {
+            try {
+                gameController.loadGame(lastPlayedGame);
+            } catch (Exception e) {
+                gameController.getDisplayController().printError("Cannot load the game instance: " + lastPlayedGame);
+                gameController.getDisplayController().printError(e.getMessage());
+                this.logger.error(e);
+            }
+        }
+        else {
+            this.logger.info("Tried to load last played game but lastPlayedGame was blank");
+        }
     }
 
     public void exitApplication() {
