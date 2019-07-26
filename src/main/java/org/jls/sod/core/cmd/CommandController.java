@@ -25,7 +25,6 @@
 package org.jls.sod.core.cmd;
 
 import java.util.HashMap;
-
 import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
 import org.jls.sod.core.model.Direction;
@@ -45,8 +44,8 @@ public class CommandController {
 
     private void initCommandExecutorsList() {
         this.commandExecutorMap.put("help", new Help(this));
-        this.commandExecutorMap.put("new", new NewGame(this));
-        this.commandExecutorMap.put("load", new LoadGame(this));
+        this.commandExecutorMap.put("new", new New(this));
+        this.commandExecutorMap.put("load", new Load(this));
         this.commandExecutorMap.put("exit", new Exit(this));
 
         this.commandExecutorMap.put("move", new Move(this));

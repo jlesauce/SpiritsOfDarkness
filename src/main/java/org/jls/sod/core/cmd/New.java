@@ -26,13 +26,13 @@ package org.jls.sod.core.cmd;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "load", description = "Load a saved game")
-public class LoadGame extends BasicCommand {
+@Command(name = "new", description = "Create a new game")
+public class New extends BasicCommand {
 
-    @Parameters(paramLabel = "gameName", description = "The name of the game instance")
+    @Parameters(paramLabel = "gameName", description = "The name of the new game to create")
     private String name;
 
-    public LoadGame(CommandController commandController) {
+    public New(CommandController commandController) {
         super(commandController);
     }
 
@@ -42,8 +42,7 @@ public class LoadGame extends BasicCommand {
             printHelp(command);
             return "";
         }
-
-        this.controller.showLoadGamePanel();
+        this.controller.showNewGamePanel(this.name);
         return "";
     }
 }
