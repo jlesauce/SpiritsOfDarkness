@@ -24,17 +24,15 @@
 package org.jls.sod.core.cmd;
 
 import java.io.IOException;
-
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.util.file.SimpleFile;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "help", description = "Print the help page for the specified command")
 public class Help extends BasicCommand {
 
-    @Parameters(paramLabel = "command", defaultValue = "help",
+    @Parameters(paramLabel = "command", arity = "0..1",
             description = "The command for which you want to get help (Default : 'help', to get help in general)")
     private String commandId;
 
@@ -49,7 +47,7 @@ public class Help extends BasicCommand {
             return "";
         }
 
-        if (commandId.equals("help")) {
+        if (commandId == null) {
             executeHelpWithoutArgument();
         }
         else {

@@ -127,6 +127,7 @@ public class ApplicationController {
         Command command = new Command(cmd);
 
         printCommandInConsole(command.toString());
+        model.putHistory(command.toString());
         this.logger.info("Processing command : {}", command.toString());
         executeUserCommand(command);
     }
