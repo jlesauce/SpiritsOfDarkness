@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<Monster id="armure_animee" name="Armure Animée">
+    <Description>
+        <Short>Armure de plaques magiquement animée.</Short>
+        <Long>Armure de plaques magiquement animée, tapant et grinçant comme l'esprit vengeur d'un chevalier tombé au
+            champ d'honneur.</Long>
+    </Description>
+
+    <Statistics>
+        <Type>Construct</Type>
+        <ArmorClass>18</ArmorClass>
+        <HitPoints>33</HitPoints>
+        <Challenge>1</Challenge>
+    </Statistics>
+
+    <Abilities>
+        <Strength>
+            <BaseScore>14</BaseScore>
+            <Modifier>2</Modifier>
+        </Strength>
+        <Dexterity>
+            <BaseScore>11</BaseScore>
+            <Modifier>0</Modifier>
+        </Dexterity>
+        <Constitution>
+            <BaseScore>13</BaseScore>
+            <Modifier>1</Modifier>
+        </Constitution>
+        <Intelligence>
+            <BaseScore>1</BaseScore>
+            <Modifier>-5</Modifier>
+        </Intelligence>
+        <Wisdom>
+            <BaseScore>3</BaseScore>
+            <Modifier>-4</Modifier>
+        </Wisdom>
+        <Charisma>
+            <BaseScore>1</BaseScore>
+            <Modifier>-5</Modifier>
+        </Charisma>
+    </Abilities>
+
+    <Equipment>
+        <Head></Head>
+        <Body></Body>
+        <Hands></Hands>
+        <Legs></Legs>
+        <Feet></Feet>
+        <Weapons></Weapons>
+        <Items></Items>
+    </Equipment>
+</Monster>

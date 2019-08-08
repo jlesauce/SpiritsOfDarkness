@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 
 <World id="tutorialWorld" name="Tutorial">
-
-	<Description>Description complète du monde.</Description>
-
-	<EntryPoint id="tutorialRegion" />
+    <Description>Description complète du monde.</Description>
+    <EntryPoint id="tutorialRegion" />
 </World>

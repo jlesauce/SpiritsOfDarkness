@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<Room id="salle_entrainement" name="Salle d'entraînement">
+    <ShortDescription>Salle d'entraînement au combat.</ShortDescription>
+
+    <LongDescription>Vous entrez dans une très grande salle aux murs de pierre, il n'y a aucune fenêtre mais des torches
+        sont allumées. La salle semble vide ormis une armure disposée au centre de la pièce.</LongDescription>
+
+    <Directions>
+        <north></north>
+        <north_east></north_east>
+        <east></east>
+        <south_east></south_east>
+        <south></south>
+        <south_west id="hall">Revenir dans le hall.</south_west>
+        <west></west>
+        <north_west></north_west>
+    </Directions>
+
+    <Senses>
+        <inspect>L'armure disposée au centre la salle attire particulièrement votre attention. Elle semble avoir
+            légèrement bougé la tête</inspect>
+        <feel>Vous ne ressentez rien de particulier ormis un petit bourdonnement témoignant de l'utilisation récente de
+            magie.</feel>
+        <touch></touch>
+        <smell>Vous sentez comme un mélange d'humidité et de transpiration.</smell>
+        <taste></taste>
+        <listen>Une fois que vos oreilles se sont habituées au silence de la salle, vous entendez le son des torches qui
+            brûlent ainsi qu'un léger grincement. Il est difficile de dire d'où provenait ce son.</listen>
+    </Senses>
+
+    <Monsters>
+        <Monster id="armure_animee" />
+    </Monsters>
+</Room>

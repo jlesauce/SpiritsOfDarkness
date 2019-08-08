@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 
 <Room id="jardins" name="Jardins">
+    <ShortDescription>Jardins de l'école.</ShortDescription>
 
-	<ShortDescription>Jardins de l'école.</ShortDescription>
+    <LongDescription>Vous arrivez à l'entrée des jardins de l'école. Il fait beau et les oiseaux chantent.</LongDescription>
 
-	<LongDescription>Vous arrivez à l'entrée des jardins de l'école. Il fait beau et les oiseaux chantent.</LongDescription>
+    <Directions>
+        <north></north>
+        <north_east></north_east>
+        <east></east>
+        <south_east></south_east>
+        <south id="hall">Revenir dans le hall.</south>
+        <south_west></south_west>
+        <west></west>
+        <north_west></north_west>
+    </Directions>
 
-	<Directions>
-		<north></north>
-		<north_east></north_east>
-		<east></east>
-		<south_east></south_east>
-		<south id="hall">Revenir dans le hall.</south>
-		<south_west></south_west>
-		<west></west>
-		<north_west></north_west>
-	</Directions>
-
-	<Senses>
-		<inspect></inspect>
-		<feel>Vous ressentez soudain l'envie de retirer vos chaussures et d'aller marcher pieds nus dans l'herbe.</feel>
-		<touch></touch>
-		<smell>Vous sentez l'odeur printanière des fleurs et de l'herbe fraîchement coupée.</smell>
-		<taste></taste>
-		<listen>Vous entendez les oiseaux chanter dans les arbres et le bruit d'une abeille qui vous frôle l'oreille.</listen>
-	</Senses>
-
+    <Senses>
+        <inspect></inspect>
+        <feel>Vous ressentez soudain l'envie de retirer vos chaussures et d'aller marcher pieds nus dans l'herbe.</feel>
+        <touch></touch>
+        <smell>Vous sentez l'odeur printanière des fleurs et de l'herbe fraîchement coupée.</smell>
+        <taste></taste>
+        <listen>Vous entendez les oiseaux chanter dans les arbres et le bruit d'une abeille qui vous frôle l'oreille.</listen>
+    </Senses>
 </Room>

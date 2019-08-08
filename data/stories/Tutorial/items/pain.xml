@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 
 <Item id="pain" name="Pain" type="food" isCarriable="true" isStackable="true">
 
-	<Description>
-		<Short>Petite miche de pain.</Short>
-		<Long>Petite miche de pain aux céréales cuite au feu de bois.</Long>
-	</Description>
+    <Description>
+        <Short>Petite miche de pain.</Short>
+        <Long>Petite miche de pain aux céréales cuite au feu de bois.</Long>
+    </Description>
 
-	<Senses>
-		<inspect>Petite miche de pain standard, faite à partir de farine de blé et cuite au feu de bois.</inspect>
-		<feel>La miche de pain a l'air bonne et l'idée d'une panse bien remplie vous réconforte.</feel>
-		<touch>La crôute est dure et craquante mais l'intérieur a l'air moelleux.</touch>
-		<smell>La miche sent le bon pain frais et l'odeur du feu de bois.</smell>
-		<taste>Le pain semble frais et vous laisse un petit arrière goût salé dans la bouche.</taste>
-		<listen></listen>
-	</Senses>
+    <Senses>
+        <inspect>Petite miche de pain standard, faite à partir de farine de blé et cuite au feu de bois.</inspect>
+        <feel>La miche de pain a l'air bonne et l'idée d'une panse bien remplie vous réconforte.</feel>
+        <touch>La crôute est dure et craquante mais l'intérieur a l'air moelleux.</touch>
+        <smell>La miche sent le bon pain frais et l'odeur du feu de bois.</smell>
+        <taste>Le pain semble frais et vous laisse un petit arrière goût salé dans la bouche.</taste>
+        <listen></listen>
+    </Senses>
 
 </Item>
