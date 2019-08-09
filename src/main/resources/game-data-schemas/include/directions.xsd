@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://www.w3schools.com"
+    xmlns:tns="https://www.w3schools.com"
+    elementFormDefault="qualified">
+
+    <xs:complexType name="Directions">
+        <xs:sequence>
+            <xs:element
+                name="North"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="NorthEast"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="East"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="SouthEast"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="South"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="SouthWest"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="SouthWest"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="West"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="NorthWest"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

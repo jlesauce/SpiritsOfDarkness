@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://www.w3schools.com"
+    xmlns:tns="https://www.w3schools.com"
+    elementFormDefault="qualified">
+
+    <xs:complexType name="Senses">
+        <xs:sequence>
+            <xs:element
+                name="Inspect"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="Feel"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="Touch"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="Smell"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="Taste"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+            <xs:element
+                name="Listen"
+                minOccurs="1"
+                maxOccurs="1"
+                type="xs:string">
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://www.w3schools.com"
+    xmlns:tns="https://www.w3schools.com"
+    elementFormDefault="qualified">
+
+    <xs:complexType name="Description">
+        <xs:sequence>
+            <xs:element
+                name="Short"
+                type="xs:string"
+                minOccurs="1"
+                maxOccurs="1"></xs:element>
+            <xs:element
+                name="Long"
+                type="xs:string"
+                minOccurs="1"
+                maxOccurs="1"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

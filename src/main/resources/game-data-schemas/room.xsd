@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://www.w3schools.com"
+    xmlns:tns="https://www.w3schools.com"
+    elementFormDefault="qualified">
+
+    <xs:include schemaLocation="include/description.xsd"></xs:include>
+    <xs:include schemaLocation="include/directions.xsd"></xs:include>
+    <xs:include schemaLocation="include/senses.xsd"></xs:include>
+
+    <xs:complexType name="Room">
+        <xs:sequence>
+            <xs:element
+                name="Description"
+                type="tns:Description">
+            </xs:element>
+
+            <xs:element
+                name="Directions"
+                type="tns:Directions">
+            </xs:element>
+
+            <xs:element
+                name="Senses"
+                type="tns:Senses">
+            </xs:element>
+
+            <xs:element name="Items">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element
+                            name="Item"
+                            type="xs:string"
+                            minOccurs="0"
+                            maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
