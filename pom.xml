@@ -20,10 +20,10 @@
         <!-- Libraries Version -->
         <junit.version>4.12</junit.version>
         <log4j.version>2.13.3</log4j.version>
-        <commons-configuration.version>2.5</commons-configuration.version>
+        <commons-configuration.version>2.7</commons-configuration.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-io.version>2.4</commons-io.version>
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-beanutils.version>[1.9.4,)</commons-beanutils.version>
         <jdom.version>2.0.6</jdom.version>
         <miglayout.version>3.7.4</miglayout.version>
         <picocli.version>4.0.1</picocli.version>
