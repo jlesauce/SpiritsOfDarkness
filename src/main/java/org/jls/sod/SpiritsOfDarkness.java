@@ -21,135 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package org.jls.sod;
 
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.net.URL;
-import java.util.List;
-import javax.swing.SwingUtilities;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.jls.sod.util.ResourceManager;
 import org.jls.toolbox.widget.ErrorPopUp;
 
-/**
- * Spirits of Darkness launcher.
- *
- * @author Julien LE SAUCE
- * @date 02/09/2015
- */
+import javax.swing.*;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class SpiritsOfDarkness {
 
     public static void main(final String[] args) {
-        /*
-         * Configures the logger
-         */
-        String log4jKey = "log4j.configurationFile";
-        // If no configuration is configured
-        if (System.getProperty(log4jKey) == null) {
-            // Load the default configuration
-            String path = ResourceManager.LOG4J_FILE;
-            URL url = Thread.currentThread().getContextClassLoader().getResource(path);
-            if (url == null) {
-                path = ResourceManager.RESOURCES_DIR + File.separator + ResourceManager.LOG4J_FILE;
-                url = Thread.currentThread().getContextClassLoader().getResource(path);
-            }
-            System.setProperty(log4jKey, url.getFile());
-        }
-        final Logger logger = LogManager.getLogger();
-        logger.info("log4j configuration file set : {}", System.getProperty(log4jKey));
+        configureLogger();
+        setNimbusLookAndFeel();
 
-        /*
-         * System Info
-         */
-        final ResourceManager p = ResourceManager.getInstance();
-        String head = "";
-        String vmArgs = getVMArguments("\t#  \t", "\n");
-        String mainArgs = formatMainArguments("\t#  \t", "\n", args);
-        head += "\n\n\t#####################################\n";
-        head += "\t#  Launching " + p.getString("name") + " version " + p.getString("version") + "\n";
-        head += "\t#  OS Name : " + System.getProperty("os.name") + "\n";
-        head += "\t#  Architecture : " + System.getProperty("os.arch") + "\n";
-        head += "\t#  Processor : " + System.getProperty("sun.arch.data.model") + " bits\n";
-        head += "\t#  Version : " + System.getProperty("os.version") + "\n";
-        head += "\t#  " + "\n";
-        head += "\t#  VM Arguments :" + "\n";
-        head += vmArgs;
-        head += "\t#  Main Arguments :" + "\n";
-        head += mainArgs;
-        head += "\t#####################################\n";
-        logger.info(head);
-
-        /*
-         * Launch the application
-         */
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    final ApplicationModel model = new ApplicationModel();
-                    final ApplicationController controller = new ApplicationController(model);
-                    controller.setSkin("Nimbus");
-                    controller.setApplicationIcon(p.getIcon("icon").getImage());
-                    controller.showGui();
-                    controller.startGame();
-                } catch (Exception e) {
-                    Throwable t = e;
-                    while (t.getCause() != null) {
-                        t = t.getCause();
-                    }
-                    logger.fatal("An error occurred during application launching", e);
-                    ErrorPopUp.showExceptionDialog(null, t, e.getMessage());
-                }
+        SwingUtilities.invokeLater(() -> {
+            try {
+                ApplicationController controller = new ApplicationController(new ApplicationModel());
+                controller.setApplicationIcon(ResourceManager.getInstance().getIcon("icon").getImage());
+                controller.showGui();
+                controller.startGame();
+            } catch (Exception e) {
+                LogManager.getLogger().fatal("An error occurred during application launching", e);
+                ErrorPopUp.showExceptionDialog(null, e, e.getMessage());
             }
         });
     }
 
-    /**
-     * Return the JVM arguments as a list.
-     *
-     * @param prefix
-     *               Prefix of each argument in the exported string.
-     * @param suffix
-     *               Suffix of each argument in the exported string.
-     * @return String containing the JVM arguments as a formatted list.
-     */
-    private static String getVMArguments(String prefix, String suffix) {
-        RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
-        List<String> vmArgs = runtimeMxBean.getInputArguments();
-        if (vmArgs.size() > 0) {
-            String args = "";
-            for (String s : vmArgs) {
-                args += prefix + s + suffix;
-            }
-            return args;
+    private static void configureLogger() {
+        InputStream log4jInStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(ResourceManager.LOG4J_FILE);
+        if (log4jInStream == null) {
+            System.err.println("ERROR: " + ResourceManager.LOG4J_FILE + " not found");
+            return;
         }
-        return prefix + "<none>" + suffix;
+
+        try {
+            ConfigurationSource source = new ConfigurationSource(log4jInStream);
+            Configurator.initialize(null, source);
+        } catch (IOException e) {
+            System.err.println("ERROR: Failed to configure logger");
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Return the application arguments as a list.
-     *
-     * @param prefix
-     *               Prefix of each argument in the exported string.
-     * @param suffix
-     *               Suffix of each argument in the exported string.
-     * @param args
-     *               Arguments given to the application.
-     * @return String containing the application arguments as a formatted list.
-     */
-    private static String formatMainArguments(String prefix, String suffix, String[] args) {
-        if (args.length > 0) {
-            String str = "";
-            for (String s : args) {
-                str += prefix + s + suffix;
+    private static void setNimbusLookAndFeel() {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
-            return str;
+        } catch (Exception e) {
+            LogManager.getLogger().warn("Cannot set java look and feel");
         }
-        return prefix + "<none>" + suffix;
     }
 }
