@@ -23,11 +23,13 @@
  */
 package org.jls.sod.core.cmd;
 
-import java.io.IOException;
-import org.jls.sod.util.ResourceManager;
-import org.jls.toolbox.util.file.SimpleFile;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @Command(name = "help", description = "Print the help page for the specified command")
 public class Help extends BasicCommand {
@@ -49,8 +51,7 @@ public class Help extends BasicCommand {
 
         if (commandId == null) {
             executeHelpWithoutArgument();
-        }
-        else {
+        } else {
             executeHelpWithOneArgument(commandId);
         }
         return null;
@@ -70,8 +71,7 @@ public class Help extends BasicCommand {
         if (isValidCommandId(argument)) {
             String help = readHelpCommandDescription(argument);
             this.displayController.printMessage(help != null ? help : "");
-        }
-        else {
+        } else {
             this.logger.error("User typed an invalid command identifier: {}", argument);
             this.displayController.printError(this.props.getString("command.help.invalidCmdId"));
         }
@@ -87,13 +87,9 @@ public class Help extends BasicCommand {
             return null;
         }
 
-        SimpleFile helpFile = getHelpCommandDescriptionFile(filepath);
-        if (helpFile != null) {
-            return readFileContent(helpFile);
-        }
-        else {
-            return null;
-        }
+        InputStream in = getClass().getResourceAsStream("/" + filepath);
+        BufferedReader input = new BufferedReader(new InputStreamReader(in));
+        return input.lines().collect(Collectors.joining());
     }
 
     private String getHelpFilePathFromResources(final String commandId) {
@@ -107,25 +103,5 @@ public class Help extends BasicCommand {
             this.displayController.printError(this.props.getString("command.help.helpFileNotFound"));
         }
         return filepath;
-    }
-
-    private SimpleFile getHelpCommandDescriptionFile(final String filepath) {
-        try {
-            return new SimpleFile(ResourceManager.getResourceAsFile(filepath));
-        } catch (Exception e) {
-            this.logger.error("Help file not found: {}", filepath, e);
-            this.displayController.printError(this.props.getString("command.help.helpFileNotFound"));
-        }
-        return null;
-    }
-
-    private String readFileContent(final SimpleFile file) {
-        try {
-            return file.readFileContentAsString();
-        } catch (IOException e) {
-            this.logger.error("An error occurred reading {} content", file, e);
-            this.displayController.printError("Failed to read file content: " + e.getMessage());
-            return "";
-        }
     }
 }

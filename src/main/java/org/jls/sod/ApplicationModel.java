@@ -53,7 +53,7 @@ public class ApplicationModel extends AbstractModel {
      *
      * @return Application's name.
      */
-    public String getAppName () {
+    public String getAppName() {
         return this.appName;
     }
 
@@ -62,7 +62,7 @@ public class ApplicationModel extends AbstractModel {
      *
      * @return Application's version.
      */
-    public String getAppVersion () {
+    public String getAppVersion() {
         return this.appVersion;
     }
 
@@ -71,20 +71,17 @@ public class ApplicationModel extends AbstractModel {
      *
      * @return The command history.
      */
-    public LinkedList<String> getHistory () {
+    public LinkedList<String> getHistory() {
         return this.history;
     }
 
     /**
-     * Returns the command history at the specified index. If the index is out of
-     * bounds, an empty string is returned.
+     * Returns the command history at the specified index. If the index is out of bounds, an empty string is returned.
      *
-     * @param index
-     *            The index of the history.
-     * @return The command history at the specified index or an empty string if
-     *         index is out of bounds.
+     * @param index The index of the history.
+     * @return The command history at the specified index or an empty string if index is out of bounds.
      */
-    public String getHistory (final int index) {
+    public String getHistory(final int index) {
         if (index >= 0 && index < this.history.size()) {
             return this.history.get(index);
         } else {
@@ -95,10 +92,9 @@ public class ApplicationModel extends AbstractModel {
     /**
      * Updates the current history with a new entry.
      *
-     * @param cmd
-     *            New command to put in the history.
+     * @param cmd New command to put in the history.
      */
-    public void putHistory (final String cmd) {
+    public void putHistory(final String cmd) {
         this.history.addLast(cmd);
         if (this.history.size() > HISTORY_MAX_SIZE) {
             this.history.poll();
@@ -111,24 +107,23 @@ public class ApplicationModel extends AbstractModel {
      *
      * @return The current history position.
      */
-    public int getCurrentHistoryPosition () {
+    public int getCurrentHistoryPosition() {
         return this.currentHistoryPosition;
     }
 
     /**
      * Sets the current history position.
      *
-     * @param position
-     *            The current history position.
+     * @param position The current history position.
      */
-    protected void setCurrentHistoryPosition (final int position) {
+    protected void setCurrentHistoryPosition(final int position) {
         this.currentHistoryPosition = position;
     }
 
     /**
      * Increments the history position.
      */
-    public void incrementHistoryPosition () {
+    public void incrementHistoryPosition() {
         this.currentHistoryPosition++;
         if (this.currentHistoryPosition > this.history.size()) {
             this.currentHistoryPosition = this.history.size();
@@ -138,7 +133,7 @@ public class ApplicationModel extends AbstractModel {
     /**
      * Decrements the history position.
      */
-    public void decrementHistoryPosition () {
+    public void decrementHistoryPosition() {
         this.currentHistoryPosition--;
         if (this.currentHistoryPosition < 0) {
             this.currentHistoryPosition = 0;
