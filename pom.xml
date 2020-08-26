@@ -1,47 +1,74 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                        http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
+    <!-- Project Description -->
     <groupId>org.jls</groupId>
-    <artifactId>spirits-of-darkness</artifactId>
+    <artifactId>sod</artifactId>
     <name>Spirits Of Darkness</name>
     <version>0.1.0</version>
     <packaging>jar</packaging>
-    <url>https://github.com/Awax56/SpiritsOfDarkness</url>
+    <url>https://github.com/jlesauce/SpiritsOfDarkness</url>
     <description>Spirits of Darkness is a meta RPG text-based game</description>
     <inceptionYear>2016</inceptionYear>
 
+    <!-- Project Properties -->
     <properties>
+        <mainClass>SpiritsOfDarkness</mainClass>
         <jdk.release>12</jdk.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Libraries Version -->
-        <junit.version>4.12</junit.version>
+        <toolbox.version>1.1</toolbox.version>
+        <junit.version>4.13</junit.version>
         <log4j.version>2.13.3</log4j.version>
-        <commons-configuration.version>2.7</commons-configuration.version>
-        <commons-collections.version>3.2.2</commons-collections.version>
-        <commons-io.version>2.4</commons-io.version>
-        <commons-beanutils.version>[1.9.4,)</commons-beanutils.version>
         <jdom.version>2.0.6</jdom.version>
+        <picocli.version>4.5.0</picocli.version>
         <miglayout.version>3.7.4</miglayout.version>
-        <picocli.version>4.0.1</picocli.version>
-        <toolbox.version>1.0.2</toolbox.version>
+        <commons-configuration2.version>2.7</commons-configuration2.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-beanutils.version>[1.9.4,)</commons-beanutils.version>
 
-        <!-- Maven Plugin Versions -->
-        <compiler.version>3.8.1</compiler.version>
-        <source.version>3.1.0</source.version>
-        <assembly.version>3.1.1</assembly.version>
-        <javadoc.version>3.1.1</javadoc.version>
+        <!-- Maven Plugins Version -->
+        <mvn.compiler.version>3.8.1</mvn.compiler.version>
+        <mvn.source.version>3.2.1</mvn.source.version>
+        <mvn.deploy.version>2.8.2</mvn.deploy.version>
+        <mvn.site.version>3.9.0</mvn.site.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub Julien Le Sauce Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/jlesauce/Toolbox</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- Project Libraries -->
     <dependencies>
+        <!-- Toolbox -->
+        <dependency>
+            <groupId>org.jls</groupId>
+            <artifactId>toolbox</artifactId>
+            <version>${toolbox.version}</version>
+        </dependency>
+
+        <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
         </dependency>
+
+        <!-- LOG4J -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -52,55 +79,72 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-configuration2</artifactId>
-            <version>${commons-configuration.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collections.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>${commons-beanutils.version}</version>
-        </dependency>
+
+        <!-- JDOM -->
         <dependency>
             <groupId>org.jdom</groupId>
             <artifactId>jdom2</artifactId>
             <version>${jdom.version}</version>
         </dependency>
+
+        <!-- Picocli -->
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>${picocli.version}</version>
+        </dependency>
+
+        <!-- MigLayout -->
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout</artifactId>
             <version>${miglayout.version}</version>
         </dependency>
-		<dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>${picocli.version}</version>
-		</dependency>
+
+        <!-- Apache Commons Configuration 2 -->
         <dependency>
-            <groupId>org.jls</groupId>
-            <artifactId>toolbox</artifactId>
-            <version>${toolbox.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>${commons-configuration2.version}</version>
+        </dependency>
+
+        <!-- Apache Commons Collections -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
+
+        <!-- Apache Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+        <!-- Apache Commons BeanUtils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
     </dependencies>
 
     <build>
+        <!-- Specify path to project .properties -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
-            <!-- Compiles Java sources -->
+            <!-- Compile Java sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler.version}</version>
+                <version>${mvn.compiler.version}</version>
                 <configuration>
                     <release>${jdk.release}</release>
                 </configuration>
@@ -110,7 +154,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${source.version}</version>
+                <version>${mvn.source.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -121,39 +165,48 @@
                 </executions>
             </plugin>
 
-            <!-- Build an assembly (distribution) of sources and/or binaries -->
+            <!-- Package a runnable jar file -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>${assembly.version}</version>
                 <executions>
                     <execution>
-                        <id>make-executable-jar-with-dependencies</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>bin</outputDirectory>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                    <mainClass>${project.groupId}.${project.artifactId}.${mainClass}</mainClass>
+                                </manifest>
+                                <manifestEntries>
+                                    <Class-Path>.</Class-Path>
+                                    <Multi-Release>true</Multi-Release>
+                                </manifestEntries>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <finalName>${project.artifactId}-${project.version}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            <mainClass>${project.groupId}.${project.artifactId}.${project.name}</mainClass>
-                        </manifest>
-                        <manifestEntries>
-                            <Class-Path>.</Class-Path>
-                        </manifestEntries>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <encoding>${encoding}</encoding>
-                </configuration>
+            </plugin>
+
+            <!-- Required maven plugins -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${mvn.deploy.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${mvn.site.version}</version>
             </plugin>
         </plugins>
     </build>
@@ -164,11 +217,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${javadoc.version}</version>
                 <configuration>
                 </configuration>
             </plugin>
         </plugins>
     </reporting>
-
 </project>
