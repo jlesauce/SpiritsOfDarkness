@@ -26,6 +26,7 @@ package org.jls.sod.core;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang.StringUtils;
@@ -52,52 +53,35 @@ public class GameController {
     private final DisplayController displayController;
     private final Logger logger;
 
-    public GameController(final GameModel model, final ApplicationController controller, final Settings settings) {
+    public GameController(final GameModel model, final ApplicationController controller,
+                          final Settings settings) {
         this.model = model;
         this.controller = controller;
         this.settings = settings;
-        this.displayController = new DisplayController(model, controller);
-        this.logger = LogManager.getLogger();
+        displayController = new DisplayController(model, controller);
+        logger = LogManager.getLogger();
     }
 
     public void showNewGamePanel() {
-        this.controller.showNewGamePanel();
+        controller.showNewGamePanel();
     }
 
     public void showLoadGamePanel() {
-        this.controller.showLoadGamePanel();
+        controller.showLoadGamePanel();
     }
 
     public void exitApplication() {
-        this.controller.exitApplication();
+        controller.exitApplication();
     }
 
     public void showMap() {
-        this.controller.showUserMap();
+        controller.showUserMap();
     }
 
     public void hideMap() {
-        this.controller.hideUserMap();
+        controller.hideUserMap();
     }
 
-    /**
-     * Create a new game with the selected story and save the new game instance
-     * in the save directory.
-     *
-     * @param storyId
-     *                    The story identifier (i.e. the name of the story
-     *                    directory).
-     * @param saveDirName
-     *                    The name of the new game instance.
-     * @return <code>true</code> if the game instance has been created,
-     *         <code>false</code> otherwise.
-     * @throws IOException
-     *                       If an error occurred during the create of the save
-     *                       directory.
-     * @throws JDOMException
-     *                       If one the description files is malformed.
-     *
-     */
     public boolean createNewGame(final String storyId, final String saveDirName) throws IOException, JDOMException {
         // Checks input
         if (storyId == null) {
@@ -114,9 +98,9 @@ public class GameController {
         }
 
         // If the story directory is known
-        if (this.model.getStories().containsKey(storyId)) {
+        if (model.getStories().containsKey(storyId)) {
             // Gets the story directory
-            File storyDir = this.model.getStories().get(storyId);
+            File storyDir = model.getStories().get(storyId);
 
             // If the directory still exists
             if (storyDir.exists()) {
@@ -124,17 +108,19 @@ public class GameController {
 
                 // Checks if a saved game already exists
                 if (dstDir.exists()) {
-                    this.controller.pop("New Game Error", "A game instance with the same name already exist.",
+                    controller.pop("New Game Error",
+                            "A game instance with the same name already exist.",
                             JOptionPane.WARNING_MESSAGE);
-                    this.controller.printError("A game instance with the name " + saveDirName + " already exist.");
+                    controller.printError(
+                            "A game instance with the name " + saveDirName + " already exist.");
                     return false;
-                }
-                else { // Else creates the new game instance
-                    this.logger.info("Creating new game instance {}", saveDirName);
+                } else { // Else creates the new game instance
+                    logger.info("Creating new game instance {}", saveDirName);
 
                     // Copy the story to the save directory
                     FileUtils.copyFolder(storyDir, dstDir);
-                    this.displayController.printMessage("Game instance " + saveDirName + " has been created.");
+                    displayController.printMessage(
+                            "Game instance " + saveDirName + " has been created.");
 
                     // Generates the instance XML file
                     XMLConfiguration instanceConfig = new XMLConfiguration();
@@ -142,8 +128,9 @@ public class GameController {
                     try {
                         instanceConfig.save(new File(dstDir, "instance.xml"));
                     } catch (ConfigurationException e1) {
-                        this.controller.printError("Cannot generate the instance configuration file.");
-                        this.logger.error("Cannot generate the instance configuration file", e1);
+                        controller.printError(
+                                "Cannot generate the instance configuration file.");
+                        logger.error("Cannot generate the instance configuration file", e1);
                     }
 
                     // Loads the game
@@ -152,33 +139,23 @@ public class GameController {
                     } catch (Exception e) {
                         // If an error occurred, delete the new instance
                         FileUtils.delete(dstDir, true);
-                        this.logger.debug("New instance {} deleted because an error occurred at loading", saveDirName);
-                        this.controller.printError("Cannot load the game instance.");
+                        logger.debug(
+                                "New instance {} deleted because an error occurred at loading",
+                                saveDirName);
+                        controller.printError("Cannot load the game instance.");
                         throw e;
                     }
                     return true;
                 }
+            } else {
+                throw new IllegalStateException(
+                        "Story directory not found : " + storyDir.getAbsolutePath());
             }
-            else {
-                throw new IllegalStateException("Story directory not found : " + storyDir.getAbsolutePath());
-            }
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Story not found : " + saveDirName);
         }
     }
 
-    /**
-     * Load the specified game instance.
-     *
-     * @param savedGameId
-     *                    Game instance identifier.
-     * @throws IOException
-     *                       If an error occurred reading the game instance
-     *                       files.
-     * @throws JDOMException
-     *                       If a game instance file is malformed.
-     */
     public void loadGame(final String savedGameId) throws JDOMException, IOException {
         // Checks input
         if (savedGameId == null) {
@@ -191,29 +168,34 @@ public class GameController {
         File gameDir = new File(ResourceManager.SAVED_PATH, savedGameId);
         // If the game instance exists
         if (gameDir.exists()) {
-            this.logger.info("Loading game instance {}", savedGameId);
+            logger.info("Loading game instance {}", savedGameId);
+            logger.info("Game instance is located under: {}", gameDir);
 
             // Build loader instance
             Loader loader = Loader.build(gameDir);
 
             // Loads game instance
             try {
-                XMLConfiguration instanceConfig = new XMLConfiguration(new File(gameDir, "instance.xml"));
-                this.model.setInstanceConfig(instanceConfig);
-                this.model.setInstanceDir(gameDir);
+                XMLConfiguration instanceConfig = new XMLConfiguration(
+                        new File(gameDir, "instance.xml"));
+                model.setInstanceConfig(instanceConfig);
+                model.setInstanceDir(gameDir);
             } catch (ConfigurationException e) {
-                this.controller.printError("Cannot load the instance configuration file.");
-                throw new IllegalArgumentException("Cannot load the instance configuration file", e);
+                controller.printError("Cannot load the instance configuration file.");
+                throw new IllegalArgumentException("Cannot load the instance configuration file",
+                        e);
             }
 
             // Extracts the saved room entry point's path from the instance
             // config file if there is one
-            XMLConfiguration config = this.model.getInstanceConfig();
+            XMLConfiguration config = model.getInstanceConfig();
             String entryPoints = config.getString("entryPoint.path");
-            String[] entryTokens = StringUtils.countMatches(entryPoints, ".") == 3 ? entryPoints.split("\\.") : null;
+            String[] entryTokens = StringUtils.countMatches(entryPoints,
+                    ".") == 3 ? entryPoints.split("\\.") : null;
 
             if (entryTokens != null) { // Log
-                this.logger.debug("Select entry path from instance configuration file : {}", entryPoints);
+                logger.debug("Select entry path from instance configuration file : {}",
+                        entryPoints);
             }
 
             // Gets the world ID entry point using the saved path if there is
@@ -221,72 +203,61 @@ public class GameController {
             Story story = Loader.getInstance().loadStory();
             String worldId = entryTokens != null ? entryTokens[0] : story.getDefaultWorld();
 
-            this.logger.debug("World entry point : {}", worldId);
+            logger.debug("World entry point : {}", worldId);
 
             // Loads world
-            this.logger.info("Loading world");
+            logger.info("Loading world");
             // Loads the default entry point or the path specified in the
             // instance config file whereas a path is provided or not
-            World world = entryTokens != null ? loader.loadWorld(worldId, entryTokens) : loader.loadWorld(worldId);
+            World world = entryTokens != null ? loader.loadWorld(worldId,
+                    entryTokens) : loader.loadWorld(worldId);
 
             // Selects the world entry point
             if (world != null) {
-                this.model.setWorld(world);
-                this.logger.info("Select world : {}", world.getName());
+                model.setWorld(world);
+                logger.info("Select world : {}", world.getName());
                 Region region = world.getEntryPoint();
-                this.model.setRegion(region);
-                this.logger.info("Select region : {}", region.getId());
+                model.setRegion(region);
+                logger.info("Select region : {}", region.getId());
                 Zone zone = region.getEntryPoint();
-                this.model.setZone(zone);
-                this.logger.info("Select zone : {}", zone.getName());
+                model.setZone(zone);
+                logger.info("Select zone : {}", zone.getName());
                 Room room = zone.getEntryPoint();
-                this.model.setRoom(room);
-                this.logger.info("Select room : {}", room.getName());
+                model.setRoom(room);
+                logger.info("Select room : {}", room.getName());
 
-                this.model.getRoom().setVisited(true);
+                model.getRoom().setVisited(true);
+            } else {
+                throw new IllegalStateException(
+                        "World entry point not found : " + story.getDefaultWorld());
             }
-            else {
-                throw new IllegalStateException("World entry point not found : " + story.getDefaultWorld());
-            }
-            this.displayController.printMessage("Game instance " + savedGameId + " has been loaded.");
+            displayController.printMessage(
+                    "Game instance " + savedGameId + " has been loaded.");
 
             // Loads the character
             Character character = new Character();
-            this.model.setCharacter(character);
+            model.setCharacter(character);
 
-            // Prints the welcome message
-            this.displayController.printWelcomeMessage();
-            // Prints the description of the entry point
-            this.displayController.printRoomDescription(this.model.getRoom());
-
+            displayController.printWelcomeMessage();
+            displayController.printRoomDescription(model.getRoom());
             updateLastPlayedGameInSettings(savedGameId);
-        }
-        else {
-            throw new IllegalArgumentException("Game instance not found : " + gameDir.getAbsolutePath());
+        } else {
+            throw new IllegalArgumentException(
+                    "Game instance not found : " + gameDir.getAbsolutePath());
         }
     }
 
     private void updateLastPlayedGameInSettings(final String instanceName) {
-        this.logger.info("Update last played game: " + instanceName);
-        this.settings.setLastPlayedGame(instanceName);
+        logger.info("Update last played game: " + instanceName);
+        settings.setLastPlayedGame(instanceName);
     }
 
-    /**
-     * Update the current position of the player. This function update the data
-     * model and the instance file descriptor.
-     *
-     * @param room
-     *             The new position of the player.
-     * @throws ConfigurationException
-     *                                If an error occurred saving instance
-     *                                configuration file.
-     */
     public void updateCurrentPosition(final Room room) throws ConfigurationException {
-        this.logger.info("Updates current position : {}", room.getName());
-        this.model.setRoom(room);
+        logger.info("Updates current position : {}", room.getName());
+        model.setRoom(room);
         room.setVisited(true);
         // Update instance config file
-        XMLConfiguration config = this.model.getInstanceConfig();
+        XMLConfiguration config = model.getInstanceConfig();
         Zone zone = room.getZone();
         Region region = zone.getRegion();
         World world = region.getWorld();
@@ -300,7 +271,7 @@ public class GameController {
     }
 
     public GameModel getModel() {
-        return this.model;
+        return model;
     }
 
     public DisplayController getDisplayController() {
