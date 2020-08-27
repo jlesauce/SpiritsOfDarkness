@@ -24,70 +24,42 @@
 
 package org.jls.sod.core.model;
 
-/**
- * Enumerates the possible directions when the player is navigating.
- *
- * @author LE SAUCE Julien
- * @date Sep 2, 2015
- */
 public enum Direction {
 
-    NORTH("north", "n"), NORTH_EAST("northeast", "north-east", "north_east", "ne"), EAST("east", "e"),
+    NORTH("north", "n"), NORTH_EAST("northeast", "north-east", "north_east", "ne"), EAST("east",
+            "e"),
     SOUTH_EAST("southeast", "south-east", "south_east", "se"), SOUTH("south", "s"),
     SOUTH_WEST("southwest", "south-west", "south_west", "sw"), WEST("west", "w"),
     NORTH_WEST("northwest", "north-west", "north_west", "nw"), CENTER("center");
 
     private final String[] matchingLabels;
 
-    /**
-     * Instantiates a new direction and specifies the matching direction's labels.
-     *
-     * @param lbls
-     *             The matching direction's labels.
-     */
-    private Direction(final String... lbls) {
-        this.matchingLabels = lbls;
+    Direction(final String... labels) {
+        this.matchingLabels = labels;
     }
 
-    /**
-     * Parses the specified direction.
-     *
-     * @param value
-     *              Direction to parse.
-     * @return Corresponding {@link Direction} enum if an existing direction is
-     *         found, else throw an {@link IllegalArgumentException}.
-     */
-    public static Direction parseValue (final String value) {
+    public static Direction parseValue(final String directionAsString) {
         // If value matches the enum name
         try {
-            return Direction.valueOf(value);
+            return Direction.valueOf(directionAsString);
         } catch (Exception e) {
             // Silent exception
         }
-        // Else try to find a matching label
-        for (Direction d : Direction.values()) {
-            for (String lbl : d.getMatchingLabels()) {
-                // If value matches an existing label
-                if (lbl.equals(value)) {
-                    return d;
+        // Try to find a matching label
+        for (Direction direction : Direction.values()) {
+            for (String label : direction.getMatchingLabels()) {
+                if (label.equals(directionAsString)) {
+                    return direction;
                 }
             }
         }
-        throw new IllegalArgumentException("No matching direction for the value : " + value);
+        throw new IllegalArgumentException("No matching direction for: " + directionAsString);
     }
 
-    /**
-     * Returns <code>true</code> if the specified argument matches a direction.
-     *
-     * @param value
-     *              The value to test.
-     * @return <code>true</code> if the specified argument matches a direction
-     *         value, <code>false</code> otherwise.
-     */
-    public static boolean matchDirection (final String value) {
+    public static boolean matchDirection(final String directionAsString) {
         for (Direction d : Direction.values()) {
             for (String s : d.getMatchingLabels()) {
-                if (s.equals(value)) {
+                if (s.equals(directionAsString)) {
                     return true;
                 }
             }
@@ -95,12 +67,7 @@ public enum Direction {
         return false;
     }
 
-    /**
-     * Returns the matching labels for this direction.
-     *
-     * @return The matching labels for this direction.
-     */
-    public String[] getMatchingLabels () {
+    public String[] getMatchingLabels() {
         return this.matchingLabels;
     }
 }

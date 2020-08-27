@@ -23,38 +23,29 @@
  */
 package org.jls.sod.core.cmd;
 
-import java.io.IOException;
 import org.jdom2.JDOMException;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
 
-@Command(name = "load", description = "Load a saved game")
+import java.io.IOException;
+
 public class Load extends BasicCommand {
 
-    @Parameters(paramLabel = "instanceName", arity = "0..1", description = "The name of the game instance")
-    private String instanceName;
-
-    public Load(CommandController commandController) {
+    public Load(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return null;
-        }
+    public String apply(final Command command) {
+        String instanceName = command.getNamespace().getString("instanceName");
 
-        if (instanceName == null) {
-            this.controller.showLoadGamePanel();
-        }
-        else {
+        if (instanceName == null || instanceName.isEmpty()) {
+            controller.showLoadGamePanel();
+        } else {
             try {
                 controller.loadGame(instanceName);
             } catch (JDOMException | IOException e) {
-                displayController.printError("Cannot load the game instance.");
+                displayController.printError("Cannot load game instance name: " + instanceName);
                 displayController.printError(e.getMessage());
-                this.logger.error(e);
+                logger.error(e);
             }
         }
         return null;

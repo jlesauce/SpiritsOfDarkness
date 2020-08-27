@@ -47,7 +47,7 @@ public class SpiritsOfDarkness {
                 controller.showGui();
                 controller.startGame();
             } catch (Exception e) {
-                LogManager.getLogger().fatal("An error occurred during application launching", e);
+                LogManager.getLogger().fatal("An error occurred during application startup", e);
                 ErrorPopUp.showExceptionDialog(null, e, e.getMessage());
             }
         });

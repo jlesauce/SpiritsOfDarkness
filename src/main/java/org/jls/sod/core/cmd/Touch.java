@@ -25,26 +25,15 @@ package org.jls.sod.core.cmd;
 
 import org.jls.sod.core.model.Sense;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "touch", description = "Use your hands to explore the room, in a direction or to touch an object to get more information if possible")
 public class Touch extends SenseBase {
 
-    @Parameters(paramLabel = "target", arity = "0..1", defaultValue = "null", description = "The direction or the object you want to touch")
-    protected String target;
-
-    public Touch(CommandController commandController) {
+    public Touch(final CommandController commandController) {
         super(commandController);
-        this.sense = Sense.TOUCH;
+        sense = Sense.TOUCH;
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-        return applyCommandWith(this.sense, command);
+    public String apply(final Command command) {
+        return applyCommandWith(sense, command);
     }
 }

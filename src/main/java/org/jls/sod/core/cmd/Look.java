@@ -28,86 +28,57 @@ import org.jls.sod.core.model.inventory.ItemSlot;
 import org.jls.sod.core.model.item.Item;
 import org.jls.sod.core.model.world.Room;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "look", description = "Look to a direction or at an object to get a visual description")
 public class Look extends SenseBase {
 
-    @Parameters(paramLabel = "target", arity = "0..1", defaultValue = "null", description = "The direction or the object to look at")
-    String target;
-
-    public Look(CommandController commandController) {
+    public Look(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
+    public String apply(final Command command) {
+        String target = command.getNamespace().getString("target");
 
-        if (noArgSpecified()) {
+        if (target == null || target.isEmpty()) {
             lookToCurrentPosition();
-            return "";
+            return null;
         }
-
-        if (argumentIsADirection(this.target)) {
-            Direction direction = Direction.parseValue(this.target);
+        if (isADirection(target)) {
+            Direction direction = Direction.parseValue(target);
             lookToDirection(direction);
-            return "";
-        }
-        else if (argumentIsAnItem(this.target)) {
-            String itemId = this.target;
-            lookAtItem(itemId);
-            return "";
-        }
-        else {
+            return null;
+        } else if (isValidItem(target)) {
+            lookAtItem(target);
+            return null;
+        } else {
             throw new IllegalArgumentException("User argument is neither a direction nor an item");
         }
     }
 
-    /**
-     * Look to current position to get a visual description.
-     */
     private void lookToCurrentPosition() {
         Room currentRoom = this.model.getRoom();
-        this.logger.info("Looking current room : {}", currentRoom.getName());
-        displayController.printCommandResult(this.props.getString("command.look.currentRoom"));
-        this.displayController.printDescription(currentRoom.getLongDescrition());
+        logger.info("Looking current room : {}", currentRoom.getName());
+        displayController.printCommandResult(props.getString("command.look.currentRoom"));
+        displayController.printDescription(currentRoom.getLongDescrition());
     }
 
-    /**
-     * Look to the specified direction to get a short visual description.
-     *
-     * @param direction The direction to look to.
-     */
     private void lookToDirection(final Direction direction) {
-        displayController.printCommandResult(this.props.getString("command.look.to.direction") + " " + direction);
+        displayController.printCommandResult(props.getString("command.look.to.direction") + " " + direction);
 
         if (playerCanGoInThis(direction)) {
             Room nextRoom = nextRoomInThis(direction);
-            this.displayController.printDescription(nextRoom.getShortDescription());
-            this.logger.info("Looking {} : room {}", direction, nextRoom.getName());
-        }
-        else {
+            displayController.printDescription(nextRoom.getShortDescription());
+            logger.info("Looking {} : room {}", direction, nextRoom.getName());
+        } else {
             printYouCannotGoInThis(direction);
         }
     }
 
-    /**
-     * Look at specified item to get a visual description of it.
-     *
-     * @param itemId The item short identifier.
-     */
     private void lookAtItem(final String itemId) {
-        displayController.printCommandResult(this.props.getString("command.look.at.item") + " " + itemId);
+        displayController.printCommandResult(props.getString("command.look.at.item") + " " + itemId);
 
         if (doesCurrentRoomContainsItem(itemId)) {
             printItemDescription(itemId);
-        }
-        else {
+        } else {
             printNoItemInCurrentRoom();
         }
     }
@@ -115,10 +86,10 @@ public class Look extends SenseBase {
     private void printItemDescription(final String itemId) {
         ItemSlot slot = getCurrentRoomInventory().getItemSlot(itemId);
         Item item = slot.getItem();
-        this.displayController.printItemDescription(item);
+        displayController.printItemDescription(item);
     }
 
     private void printNoItemInCurrentRoom() {
-        this.displayController.printError(this.props.getString("command.look.error.noItemInRoom"));
+        displayController.printError(props.getString("command.look.error.noItemInRoom"));
     }
 }

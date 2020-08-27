@@ -23,22 +23,7 @@
  */
 package org.jls.sod;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.HashMap;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import net.miginfocom.swing.MigLayout;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.sod.core.GameController;
@@ -50,11 +35,16 @@ import org.jls.toolbox.util.TimeUtils;
 import org.jls.toolbox.widget.Console;
 import org.jls.toolbox.widget.InternalFrame;
 import org.jls.toolbox.widget.dialog.Dialog;
-import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 public class ApplicationView extends JFrame implements ActionListener, KeyListener {
-
-    private static final long serialVersionUID = 5624587162291736726L;
 
     public static ApplicationView APP_FRAME = null;
 
@@ -64,7 +54,6 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
     private final HashMap<String, JMenu> menus;
     private final HashMap<String, JMenuItem> menuItems;
-    private JMenuBar menuBar;
 
     private Console console;
     private Dialog mapFrame;
@@ -85,39 +74,9 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
         addListeners();
     }
 
-    /**
-     * Change the mouse's cursor to the wait cursor {@link Cursor#WAIT_CURSOR}.
-     *
-     * @param isWaiting
-     *                  <code>true</code> to use the waiting cursor,
-     *                  <code>false</code> to use the default cursor.
-     */
-    public static void setWaitCursor(final boolean isWaiting) {
-        Cursor cursor = isWaiting ? Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR) : Cursor.getDefaultCursor();
-        APP_FRAME.getGlassPane().setCursor(cursor);
-        APP_FRAME.getGlassPane().setVisible(isWaiting);
-    }
-
-    /**
-     * Show a pop-up animation with the specified message.
-     *
-     * @param title
-     *                Title of the pop-up.
-     * @param msg
-     *                The pop-up message.
-     * @param msgType
-     *                Specifies the pop-up message type (see
-     *                {@link JOptionPane#setMessageType(int) for the available
-     *                options}.
-     */
     public synchronized void pop(final String title, final String msg, final int msgType) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                JOptionPane.showMessageDialog(ApplicationView.this, msg, title, msgType);
-            }
-        });
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(ApplicationView.this, msg,
+                title, msgType));
     }
 
     public void showGui() {
@@ -130,7 +89,8 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     public void showUserMap() {
         this.controller.getGameController().getModel().addObserver(this.mapPanel);
         this.mapFrame.setVisible(true);
-        this.mapFrame.setLocation((int) (getLocation().getX() + getSize().getWidth()), (int) getLocation().getY());
+        this.mapFrame.setLocation((int) (getLocation().getX() + getSize().getWidth()),
+                (int) getLocation().getY());
         this.tfCommandLine.requestFocus();
     }
 
@@ -170,16 +130,19 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
         this.console.print(text, textColor, fontStyle);
     }
 
-    public void printConsole(final String text, final Color textColor, final int fontStyle, final int size) {
+    public void printConsole(final String text, final Color textColor, final int fontStyle,
+                             final int size) {
         this.console.print(text, textColor, fontStyle, size);
     }
 
-    public void printConsole(final String text, final Color textColor, final Color bgColor, final int fontStyle) {
+    public void printConsole(final String text, final Color textColor, final Color bgColor,
+                             final int fontStyle) {
         this.console.print(text, textColor, bgColor, fontStyle);
     }
 
-    public void printConsole(final String text, final Color textColor, final Color bgColor, final int fontStyle,
-            final int size) {
+    public void printConsole(final String text, final Color textColor, final Color bgColor,
+                             final int fontStyle,
+                             final int size) {
         this.console.print(text, textColor, bgColor, fontStyle, size);
     }
 
@@ -206,24 +169,28 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
     }
 
     private void createMenus() {
-        this.menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         // Create menus
         this.menus.put("file", new JMenu(this.props.getString("mainView.menu.file.label")));
         this.menus.put("help", new JMenu(this.props.getString("mainView.menu.help.label")));
         // Create items
-        this.menuItems.put("file.newGame", new JMenuItem(this.props.getString("mainView.menu.item.newGame.label")));
-        this.menuItems.put("file.loadGame", new JMenuItem(this.props.getString("mainView.menu.item.loadGame.label")));
-        this.menuItems.put("file.exit", new JMenuItem(this.props.getString("mainView.menu.item.exit.label")));
-        this.menuItems.put("help.about", new JMenuItem(this.props.getString("mainView.menu.item.about.label")));
+        this.menuItems.put("file.newGame", new JMenuItem(this.props.getString("mainView.menu.item" +
+                ".newGame.label")));
+        this.menuItems.put("file.loadGame", new JMenuItem(this.props.getString("mainView.menu" +
+                ".item.loadGame.label")));
+        this.menuItems.put("file.exit", new JMenuItem(this.props.getString("mainView.menu.item" +
+                ".exit.label")));
+        this.menuItems.put("help.about", new JMenuItem(this.props.getString("mainView.menu.item" +
+                ".about.label")));
         // Add items
         this.menus.get("file").add(this.menuItems.get("file.newGame"));
         this.menus.get("file").add(this.menuItems.get("file.loadGame"));
         this.menus.get("file").add(this.menuItems.get("file.exit"));
         this.menus.get("help").add(this.menuItems.get("help.about"));
         // Add menus
-        this.menuBar.add(this.menus.get("file"));
-        this.menuBar.add(this.menus.get("help"));
-        setJMenuBar(this.menuBar);
+        menuBar.add(this.menus.get("file"));
+        menuBar.add(this.menus.get("help"));
+        setJMenuBar(menuBar);
     }
 
     private void createGui() {
@@ -256,9 +223,9 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
             else if (this.menuItems.get("file.loadGame").equals(item)) {
                 if (GameController.hasSavedGames()) {
                     showLoadGamePanel();
-                }
-                else {
-                    pop("No saved games", this.props.getString("mainView.loadGameDialog.noSavedGame"),
+                } else {
+                    pop("No saved games", this.props.getString("mainView.loadGameDialog" +
+                                    ".noSavedGame"),
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -311,11 +278,11 @@ public class ApplicationView extends JFrame implements ActionListener, KeyListen
 
                 // Up in the history
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    tf.setText(this.controller.previousHistory());
+                    tf.setText(this.controller.getPreviousCommandHistory());
                 }
                 // Down in the history
                 else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    tf.setText(this.controller.nextHistory());
+                    tf.setText(this.controller.getNextCommandHistory());
                 }
             }
         }

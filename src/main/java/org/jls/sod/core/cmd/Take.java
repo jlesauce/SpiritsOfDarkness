@@ -31,87 +31,60 @@ import org.jls.sod.core.model.inventory.NotCarriableException;
 import org.jls.sod.core.model.item.Item;
 import org.jls.sod.core.model.world.Room;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "take", description = "Take a carriable item with you")
 public class Take extends BasicCommand {
 
-    @Parameters(paramLabel = "item", index = "0", description = "Identifier of the item to take ('all' to take all items)")
-    private String itemId;
-
-    @Parameters(paramLabel = "quantity", index = "1", defaultValue = "1", description = "Quantity of items to take (Default: 1)")
-    private int quantity;
-
-    public Take(CommandController commandController) {
+    public Take(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
+    public String apply(final Command command) {
+        String item = command.getNamespace().getString("item");
+        int quantity = command.getNamespace().getInt("quantity");
 
-        if (isValidItem(itemId)) {
+        if (item == null || item.isEmpty()) {
+            displayController.printError(props.getString("command.take.error.noItemSpecified"));
+            return null;
+        } else if (isValidItem(item)) {
             try {
-                takeItem(itemId, quantity);
+                takeItem(item, quantity);
             } catch (ItemNotFoundException e) {
-                this.logger.warn("Item not found in room's inventory : {}", itemId);
-                this.displayController.printError(this.props.getString("command.take.error.itemNotFound"));
+                logger.warn("Item not found in room's inventory : {}", item);
+                displayController.printError(props.getString("command.take.error.itemNotFound"));
             } catch (InventoryQuantityException e) {
-                this.logger.warn("Not enough {} items in room's inventory", itemId);
-                this.displayController.printError(this.props.getString("command.take.error.notEnoughItems"));
+                logger.warn("Not enough {} items in room's inventory", item);
+                displayController.printError(props.getString("command.take.error.notEnoughItems"));
             }
-        }
-        else if (itemId.equals("all")) {
+        } else if (item.equals("all")) {
             takeAllItems();
+        } else {
+            printItemDoesNotExist(item);
         }
-        else {
-            printItemDoesNotExist(itemId);
-        }
-
         return null;
     }
 
-    /**
-     * Take the specified quantity of item and put it in the character's
-     * inventory.
-     *
-     * @param itemId
-     *                 Unique item identifier.
-     * @param quantity
-     *                 Quantity of items to take.
-     * @throws ItemNotFoundException
-     *                                    If the specified item is not contained
-     *                                    in the room's inventory.
-     * @throws InventoryQuantityException
-     *                                    If the quantity of the specified item
-     *                                    is too low.
-     */
     private void takeItem(final String itemId, final int quantity)
             throws ItemNotFoundException, InventoryQuantityException {
-        Room room = this.model.getRoom();
-        Inventory inventory = this.model.getCharacter().getInventory();
+        Room room = model.getRoom();
+        Inventory inventory = model.getCharacter().getInventory();
 
-        this.logger.info("Taking item(s) [{}] x{} from room {}", itemId, quantity, room.getId());
         Item item = room.getInventory().removeItem(itemId, quantity);
         try {
+            logger.info("Taking item(s) [{}] x{} from room {}", itemId, quantity, room.getId());
+            displayController.printCommandResult(
+                    props.getString("command.take.item") + " [" + itemId + "] x" + quantity);
             inventory.addItem(item, quantity);
         } catch (NotCarriableException e) {
-            this.logger.error("Trying to add a not carriable item : {}", item.getId(), e);
+            logger.error("Trying to add a not transportable item : {}", item.getId(), e);
         }
     }
 
-    /**
-     * Take all items in the current room.
-     */
     private void takeAllItems() {
-        Room room = this.model.getRoom();
-        Character character = this.model.getCharacter();
+        Room room = model.getRoom();
+        Character character = model.getCharacter();
 
-        this.logger.info("Taking all items from room {}", room.getId());
+        logger.info("Taking all items from room {}", room.getId());
+        displayController.printCommandResult(props.getString("command.take.all"));
         // Transfer all items in the room to the character's inventory
         character.getInventory().importInventory(room.getInventory());
     }

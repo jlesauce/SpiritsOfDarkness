@@ -33,7 +33,7 @@ import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
 import org.jls.sod.util.ResourceManager;
 
-public abstract class AbstractCommandCaller implements Function<ParsedCommand, String> {
+public abstract class AbstractCommandExecutor implements Function<Command, String> {
 
     protected final CommandController commandController;
     protected final GameModel model;
@@ -42,7 +42,7 @@ public abstract class AbstractCommandCaller implements Function<ParsedCommand, S
     protected final ResourceManager props;
     protected final Logger logger;
 
-    public AbstractCommandCaller(final CommandController commandController) {
+    public AbstractCommandExecutor(final CommandController commandController) {
         this.commandController = commandController;
         this.model = commandController.getGameModel();
         this.controller = commandController.getGameController();

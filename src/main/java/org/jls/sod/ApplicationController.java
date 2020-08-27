@@ -23,25 +23,17 @@
  */
 package org.jls.sod;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
-import org.jls.sod.core.cmd.AbstractCommandCaller;
-import org.jls.sod.core.cmd.Command;
-import org.jls.sod.core.cmd.CommandController;
-import org.jls.sod.core.cmd.ParsedCommand;
+import org.jls.sod.core.cmd.*;
 import org.jls.sod.util.ResourceManager;
 import org.jls.sod.util.Settings;
-import picocli.CommandLine;
-import picocli.CommandLine.ParseResult;
+
+import java.awt.*;
 
 public class ApplicationController {
 
@@ -52,29 +44,20 @@ public class ApplicationController {
     private final Logger logger;
     private final ResourceManager props;
     private final Settings settings;
+    private final CommandParser commandParser;
 
-    public ApplicationController(final ApplicationModel model) throws Exception {
+    public ApplicationController(final ApplicationModel model) {
         this.model = model;
-        this.view = new ApplicationView(model, this);
-        this.settings = new Settings();
-        this.gameController = new GameController(new GameModel(), this, settings);
-        this.commandController = new CommandController(this.getGameController().getModel(), this.gameController);
-        this.logger = LogManager.getLogger();
-        this.props = ResourceManager.getInstance();
+        view = new ApplicationView(model, this);
+        settings = new Settings();
+        gameController = new GameController(new GameModel(), this, settings);
+        commandController = new CommandController(this.getGameController().getModel(),
+                gameController);
+        logger = LogManager.getLogger();
+        props = ResourceManager.getInstance();
+        commandParser = new CommandParser();
     }
 
-    /**
-     * Show a pop-up animation with the specified message.
-     *
-     * @param title
-     *                Title of the pop-up.
-     * @param msg
-     *                The pop-up message.
-     * @param msgType
-     *                Specify the pop-up message type (see
-     *                {@link JOptionPane#setMessageType(int) for the available
-     *                options}.
-     */
     public synchronized void pop(final String title, final String msg, final int msgType) {
         this.view.pop(title, msg, msgType);
     }
@@ -85,222 +68,171 @@ public class ApplicationController {
 
     public void startGame() {
         if (settings.isLastPlayedGameAutoloadEnabled()) {
-            autoloadLastPlayedGame();
+            loadLastPlayedGame();
         }
     }
 
-    private void autoloadLastPlayedGame() {
+    private void loadLastPlayedGame() {
         String lastPlayedGame = settings.getLastPlayedGame();
 
         if (!lastPlayedGame.isBlank()) {
             try {
                 gameController.loadGame(lastPlayedGame);
             } catch (Exception e) {
-                gameController.getDisplayController().printError("Cannot load the game instance: " + lastPlayedGame);
+                gameController.getDisplayController().printError("Cannot load the game instance: "
+                        + lastPlayedGame);
                 gameController.getDisplayController().printError(e.getMessage());
-                this.logger.error(e);
+                logger.error(e);
             }
-        }
-        else {
+        } else {
             this.logger.info("Tried to load last played game but lastPlayedGame was blank");
         }
     }
 
     public void exitApplication() {
-        this.logger.info("Exiting application");
+        logger.info("Exiting application");
         Runtime.getRuntime().exit(0);
     }
 
-    /**
-     * Process the command given by the user in the console view.
-     *
-     * @param cmd
-     *            The user command as a string.
-     */
-    public void processUserCommand(final String cmd) {
-        if (cmd == null) {
+    public void processUserCommand(final String userInput) {
+        if (userInput == null) {
             throw new NullPointerException("Command cannot be null");
         }
-        if (cmd.isEmpty()) {
+        if (userInput.isEmpty()) {
             throw new IllegalArgumentException("Command is empty");
         }
-        Command command = new Command(cmd);
+        printCommandInConsole(userInput);
+        model.pushNewCommandToHistory(userInput);
+        logger.info("Process user command : {}", userInput);
 
-        printCommandInConsole(command.toString());
-        model.putHistory(command.toString());
-        this.logger.info("Processing command : {}", command.toString());
-        executeUserCommand(command);
+        Command command = parseUserCommand(userInput);
+        if (command != null) {
+            executeUserCommand(command);
+        }
     }
 
-    /**
-     * Find the executor associated with the command ID, parse the command and
-     * execute it.
-     *
-     * @param cmd
-     *            The command object.
-     */
-    private void executeUserCommand(final Command cmd) {
-        AbstractCommandCaller cmdExecutor = findCommandExecutorInExecutors(cmd.getCommandId());
+    private Command parseUserCommand(final String userInput) {
+        try {
+            Namespace commandNamespace = commandParser.parseCommand(userInput);
+            return new Command(userInput, commandNamespace);
+        } catch (ArgumentParserException e) {
+            logger.error("Failed to parse user command input", e);
+            printError("\t" + props.getString("command.error.invalidCommand"));
+            printError("ERROR: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private void executeUserCommand(final Command command) {
+        AbstractCommandExecutor cmdExecutor =
+                findCommandExecutorInExecutors(command.getCommandId());
+        logger.info("Execute user command: " + command);
 
         if (cmdExecutor == null) {
-            this.logger.warn("Unknown command : {}", cmd);
-            printError("\t" + this.props.getString("command.error.unknownCommand"));
+            logger.warn("Unknown command : {}", command);
+            printError("\t" + props.getString("command.error.unknownCommand"));
             return;
         }
+        logger.debug("Found command executor: " + cmdExecutor);
 
         try {
-            CommandLine cmdLine = new CommandLine(cmdExecutor);
-            ParseResult parsed = cmdLine.parseArgs(cmd.getArguments());
-            cmdExecutor.apply(new ParsedCommand(cmdLine, parsed));
+            cmdExecutor.apply(command);
         } catch (Exception exception) {
-            printError("\t" + this.props.getString("command.error.invalidCommand"));
+            printError("\t" + props.getString("command.error.invalidCommand"));
             printError("ERROR: " + exception.getMessage());
-            this.logger.error(exception.getMessage());
+            logger.error(exception.getMessage());
         }
     }
 
-    private AbstractCommandCaller findCommandExecutorInExecutors(final String commandId) {
-        if (this.commandController.getCommandExecutorList().containsKey(commandId)) {
-            return this.commandController.getCommandExecutorList().get(commandId);
+    private AbstractCommandExecutor findCommandExecutorInExecutors(final String commandId) {
+        if (commandController.getCommandExecutorList().containsKey(commandId)) {
+            return commandController.getCommandExecutorList().get(commandId);
         }
         return null;
     }
 
     public void setApplicationIcon(final Image icon) {
-        this.view.setIconImage(icon);
-    }
-
-    /**
-     * Select the Look&Feel. If the L&F exists then the skin is updated using
-     * the {@link UIManager}.
-     *
-     * @param lafName
-     *                Identifier of the Look & Feel.
-     */
-    public void setSkin(final String lafName) {
-        // System L&F
-        if (lafName.equals("System")) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                SwingUtilities.updateComponentTreeUI(this.view);
-                this.logger.info("Selected Look&Feel {}", lafName);
-            } catch (Exception e) {
-                this.logger.error("Failed to set java Look&Feel {}", lafName, e);
-            }
-            // Default L&F
-        }
-        else if (lafName.equals("Default")) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                SwingUtilities.updateComponentTreeUI(this.view);
-                this.logger.info("Selected Look&Feel {}", lafName);
-            } catch (Exception e) {
-                this.logger.error("Failed to set java Look&Feel {}", lafName, e);
-            }
-        }
-        // pre-installed L&F
-        else {
-            for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
-                if (laf.getName().equals(lafName)) {
-                    try {
-                        UIManager.setLookAndFeel(laf.getClassName());
-                        SwingUtilities.updateComponentTreeUI(this.view);
-                        this.logger.info("Selected Look&Feel {}", lafName);
-                    } catch (Exception e) {
-                        this.logger.error("Failed to set java Look&Feel {}", lafName, e);
-                    }
-                    return;
-                }
-            }
-            throw new IllegalArgumentException("Look&Feel not found : " + lafName);
-        }
+        view.setIconImage(icon);
     }
 
     public void showNewGamePanel() {
-        this.view.showNewGamePanel();
+        view.showNewGamePanel();
     }
 
     public void showLoadGamePanel() {
-        this.view.showLoadGamePanel();
+        view.showLoadGamePanel();
     }
 
     public void showUserMap() {
-        this.view.showUserMap();
+        view.showUserMap();
     }
 
     public void hideUserMap() {
-        this.view.hideUserMap();
+        view.hideUserMap();
     }
 
-    /**
-     * Get the previous history from the current history's position.
-     *
-     * @return Previous history value.
-     */
-    public String previousHistory() {
-        this.model.decrementHistoryPosition();
-        this.logger.debug("Showing previous history (history position = {}, size = {})",
-                this.model.getCurrentHistoryPosition(), this.model.getHistory().size());
-        return this.model.getHistory(this.model.getCurrentHistoryPosition());
+    public String getPreviousCommandHistory() {
+        model.decrementCommandHistoryIndex();
+        logger.debug("Showing previous history (history position = {}, size = {})",
+                model.getCurrentCommandHistoryIndex(), model.getCommandHistory().size());
+        return model.getCommandHistoryAt(model.getCurrentCommandHistoryIndex());
     }
 
-    /**
-     * Get the next history from the current history's position.
-     *
-     * @return Next history value.
-     */
-    public String nextHistory() {
-        this.model.incrementHistoryPosition();
-        this.logger.debug("Showing next history (history position = {}, size = {})",
-                this.model.getCurrentHistoryPosition(), this.model.getHistory().size());
-        return this.model.getHistory(this.model.getCurrentHistoryPosition());
+    public String getNextCommandHistory() {
+        model.incrementCommandHistoryIndex();
+        logger.debug("Showing next history (history position = {}, size = {})",
+                model.getCurrentCommandHistoryIndex(), model.getCommandHistory().size());
+        return model.getCommandHistoryAt(model.getCurrentCommandHistoryIndex());
     }
 
     public void printCommandInConsole(final String cmd) {
-        this.view.printConsole(">", this.props.getColor("console.color.command.executed.cursor"), Font.BOLD);
-        this.view.printConsole("  ");
-        this.view.printConsole(cmd + "\n", this.props.getColor("console.color.command.executed"), Font.PLAIN);
+        view.printConsole(">", props.getColor("console.color.command.executed.cursor"), Font.BOLD);
+        view.printConsole("  ");
+        view.printConsole(cmd + "\n", props.getColor("console.color.command.executed"), Font.PLAIN);
     }
 
     public void printError(final String msg) {
-        Color color = this.props.getColor("console.color.error");
-        this.view.printConsole(msg + "\n", color, Font.PLAIN);
+        Color color = props.getColor("console.color.error");
+        view.printConsole(msg + "\n", color, Font.PLAIN);
     }
 
     public void printConsole(final String text) {
-        this.view.printConsole(text);
+        view.printConsole(text);
     }
 
     public void printConsole(final String text, final int fontStyle) {
-        this.view.printConsole(text, fontStyle);
+        view.printConsole(text, fontStyle);
     }
 
     public void printConsole(final String text, final int fontStyle, final int size) {
-        this.view.printConsole(text, fontStyle, size);
+        view.printConsole(text, fontStyle, size);
     }
 
     public void printConsole(final String text, final Color textColor) {
-        this.view.printConsole(text, textColor);
+        view.printConsole(text, textColor);
     }
 
     public void printConsole(final String text, final Color textColor, final int fontStyle) {
-        this.view.printConsole(text, textColor, fontStyle);
+        view.printConsole(text, textColor, fontStyle);
     }
 
-    public void printConsole(final String text, final Color textColor, final int fontStyle, final int size) {
-        this.view.printConsole(text, textColor, fontStyle, size);
+    public void printConsole(final String text, final Color textColor, final int fontStyle,
+                             final int size) {
+        view.printConsole(text, textColor, fontStyle, size);
     }
 
-    public void printConsole(final String text, final Color textColor, final Color bgColor, final int fontStyle) {
-        this.view.printConsole(text, textColor, bgColor, fontStyle);
+    public void printConsole(final String text, final Color textColor, final Color bgColor,
+                             final int fontStyle) {
+        view.printConsole(text, textColor, bgColor, fontStyle);
     }
 
-    public void printConsole(final String text, final Color textColor, final Color bgColor, final int fontStyle,
-            final int size) {
-        this.view.printConsole(text, textColor, bgColor, fontStyle, size);
+    public void printConsole(final String text, final Color textColor, final Color bgColor,
+                             final int fontStyle,
+                             final int size) {
+        view.printConsole(text, textColor, bgColor, fontStyle, size);
     }
 
     public GameController getGameController() {
-        return this.gameController;
+        return gameController;
     }
 }

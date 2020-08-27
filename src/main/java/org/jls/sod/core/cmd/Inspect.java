@@ -25,34 +25,23 @@ package org.jls.sod.core.cmd;
 
 import org.jls.sod.core.model.Sense;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "inspect", description = "Inspect the current room, to a direction or at an object to get more information if possible")
 public class Inspect extends SenseBase {
 
-    @Parameters(paramLabel = "target", arity = "0..1", defaultValue = "null", description = "The direction or the object to inspect")
-    protected String target;
-
-    public Inspect(CommandController commandController) {
+    public Inspect(final CommandController commandController) {
         super(commandController);
-        this.sense = Sense.INSPECT;
+        sense = Sense.INSPECT;
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
+    public String apply(final Command command) {
+        String target = command.getNamespace().getString("target");
 
-        if (noArgSpecified()) {
-            printSenseDescription(this.sense);
-            displayController.printItems(this.model.getRoom().getInventory());
-            return "";
-        }
-        else {
-            return applyCommandWith(this.sense, command);
+        if (target == null || target.isEmpty()) {
+            printSenseDescription(sense);
+            displayController.printItems(model.getRoom().getInventory());
+            return null;
+        } else {
+            return applyCommandWith(sense, command);
         }
     }
 }

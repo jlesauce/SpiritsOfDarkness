@@ -35,108 +35,63 @@ public class ApplicationModel extends AbstractModel {
 
     private final String appName;
     private final String appVersion;
-
-    private final LinkedList<String> history;
-
-    private int currentHistoryPosition;
+    private final LinkedList<String> commandHistory;
+    private int currentCommandHistoryIndex;
 
     public ApplicationModel() {
         ResourceManager props = ResourceManager.getInstance();
         this.appName = props.getString("name");
         this.appVersion = props.getString("version");
-        this.history = new LinkedList<>();
-        this.currentHistoryPosition = 0;
+        this.commandHistory = new LinkedList<>();
+        this.currentCommandHistoryIndex = 0;
     }
 
-    /**
-     * Returns the application's name.
-     *
-     * @return Application's name.
-     */
     public String getAppName() {
         return this.appName;
     }
 
-    /**
-     * Returns the application's version.
-     *
-     * @return Application's version.
-     */
     public String getAppVersion() {
         return this.appVersion;
     }
 
-    /**
-     * Returns the command history.
-     *
-     * @return The command history.
-     */
-    public LinkedList<String> getHistory() {
-        return this.history;
+    public LinkedList<String> getCommandHistory() {
+        return this.commandHistory;
     }
 
-    /**
-     * Returns the command history at the specified index. If the index is out of bounds, an empty string is returned.
-     *
-     * @param index The index of the history.
-     * @return The command history at the specified index or an empty string if index is out of bounds.
-     */
-    public String getHistory(final int index) {
-        if (index >= 0 && index < this.history.size()) {
-            return this.history.get(index);
-        } else {
-            return "";
+    public String getCommandHistoryAt(final int historyIndex) {
+        if (historyIndex >= 0 && historyIndex < this.commandHistory.size()) {
+            return this.commandHistory.get(historyIndex);
+        }
+        return "";
+    }
+
+    public void pushNewCommandToHistory(final String command) {
+        this.commandHistory.addLast(command);
+        if (this.commandHistory.size() > HISTORY_MAX_SIZE) {
+            this.commandHistory.poll();
+        }
+        setCurrentCommandHistoryIndex(this.commandHistory.size());
+    }
+
+    public int getCurrentCommandHistoryIndex() {
+        return this.currentCommandHistoryIndex;
+    }
+
+    protected void setCurrentCommandHistoryIndex(final int historyIndex) {
+        this.currentCommandHistoryIndex = historyIndex;
+    }
+
+    public void incrementCommandHistoryIndex() {
+        this.currentCommandHistoryIndex++;
+        if (this.currentCommandHistoryIndex > this.commandHistory.size()) {
+            this.currentCommandHistoryIndex = this.commandHistory.size();
         }
     }
 
-    /**
-     * Updates the current history with a new entry.
-     *
-     * @param cmd New command to put in the history.
-     */
-    public void putHistory(final String cmd) {
-        this.history.addLast(cmd);
-        if (this.history.size() > HISTORY_MAX_SIZE) {
-            this.history.poll();
-        }
-        setCurrentHistoryPosition(this.history.size());
-    }
-
-    /**
-     * Returns the current history position.
-     *
-     * @return The current history position.
-     */
-    public int getCurrentHistoryPosition() {
-        return this.currentHistoryPosition;
-    }
-
-    /**
-     * Sets the current history position.
-     *
-     * @param position The current history position.
-     */
-    protected void setCurrentHistoryPosition(final int position) {
-        this.currentHistoryPosition = position;
-    }
-
-    /**
-     * Increments the history position.
-     */
-    public void incrementHistoryPosition() {
-        this.currentHistoryPosition++;
-        if (this.currentHistoryPosition > this.history.size()) {
-            this.currentHistoryPosition = this.history.size();
-        }
-    }
-
-    /**
-     * Decrements the history position.
-     */
-    public void decrementHistoryPosition() {
-        this.currentHistoryPosition--;
-        if (this.currentHistoryPosition < 0) {
-            this.currentHistoryPosition = 0;
+    public void decrementCommandHistoryIndex() {
+        this.currentCommandHistoryIndex--;
+        if (this.currentCommandHistoryIndex < 0) {
+            this.currentCommandHistoryIndex = 0;
         }
     }
 }

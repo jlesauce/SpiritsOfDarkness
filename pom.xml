@@ -24,7 +24,7 @@
         <junit.version>4.13</junit.version>
         <log4j.version>2.13.3</log4j.version>
         <jdom.version>2.0.6</jdom.version>
-        <picocli.version>4.5.0</picocli.version>
+        <argparse4j.version>0.8.1</argparse4j.version>
         <miglayout.version>3.7.4</miglayout.version>
         <commons-configuration2.version>2.7</commons-configuration2.version>
         <commons-collections.version>3.2.2</commons-collections.version>
@@ -87,11 +87,11 @@
             <version>${jdom.version}</version>
         </dependency>
 
-        <!-- Picocli -->
+        <!-- Argparse4j -->
         <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>${picocli.version}</version>
+            <groupId>net.sourceforge.argparse4j</groupId>
+            <artifactId>argparse4j</artifactId>
+            <version>${argparse4j.version}</version>
         </dependency>
 
         <!-- MigLayout -->

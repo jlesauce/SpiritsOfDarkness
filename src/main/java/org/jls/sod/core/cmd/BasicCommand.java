@@ -27,19 +27,10 @@ import org.jls.sod.core.loader.Loader;
 import org.jls.sod.core.model.Direction;
 import org.jls.sod.core.model.world.Room;
 
-import picocli.CommandLine.Option;
+public abstract class BasicCommand extends AbstractCommandExecutor {
 
-public abstract class BasicCommand extends AbstractCommandCaller {
-
-    @Option(names = { "-h", "--help" }, usageHelp = true, description = "Display help for this command")
-    boolean help;
-
-    public BasicCommand(CommandController commandController) {
+    public BasicCommand(final CommandController commandController) {
         super(commandController);
-    }
-
-    protected void printHelp(final ParsedCommand command) {
-        this.displayController.printCommandResult(command.getCommandLine().getUsageMessage());
     }
 
     protected boolean playerCanGoInThis(final Direction direction) {
@@ -56,7 +47,7 @@ public abstract class BasicCommand extends AbstractCommandCaller {
     }
 
     protected boolean isValidItem(final String item) {
-        return Loader.getInstance().itemExists(item);
+        return Loader.getInstance().itemExists(item.toLowerCase());
     }
 
     protected void printItemDoesNotExist(final String itemId) {

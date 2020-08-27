@@ -25,26 +25,15 @@ package org.jls.sod.core.cmd;
 
 import org.jls.sod.core.model.Sense;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "listen", description = "Listen for sounds in the room, from a direction or from an object to get more information if possible")
 public class Listen extends SenseBase {
 
-    @Parameters(paramLabel = "target", arity = "0..1", defaultValue = "null", description = "The direction or the object from which sounds could come")
-    protected String target;
-
-    public Listen(CommandController commandController) {
+    public Listen(final CommandController commandController) {
         super(commandController);
-        this.sense = Sense.LISTEN;
+        sense = Sense.LISTEN;
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-        return applyCommandWith(this.sense, command);
+    public String apply(final Command command) {
+        return applyCommandWith(sense, command);
     }
 }

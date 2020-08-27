@@ -24,6 +24,7 @@
 package org.jls.sod.core.cmd;
 
 import java.util.HashMap;
+
 import org.jls.sod.core.GameController;
 import org.jls.sod.core.GameModel;
 import org.jls.sod.core.model.Direction;
@@ -32,7 +33,7 @@ public class CommandController {
 
     private final GameModel gameModel;
     private final GameController gameController;
-    private final HashMap<String, AbstractCommandCaller> commandExecutorMap;
+    private final HashMap<String, AbstractCommandExecutor> commandExecutorMap;
 
     public CommandController(final GameModel gameModel, final GameController gameController) {
         this.gameModel = gameModel;
@@ -71,7 +72,7 @@ public class CommandController {
         this.commandExecutorMap.put("drop", new Drop(this));
     }
 
-    public HashMap<String, AbstractCommandCaller> getCommandExecutorList() {
+    public HashMap<String, AbstractCommandExecutor> getCommandExecutorList() {
         return commandExecutorMap;
     }
 

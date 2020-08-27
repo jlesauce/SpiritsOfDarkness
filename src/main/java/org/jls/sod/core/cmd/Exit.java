@@ -23,23 +23,15 @@
  */
 package org.jls.sod.core.cmd;
 
-import picocli.CommandLine.Command;
-
-@Command(name = "exit", description = "Exit the game")
 public class Exit extends BasicCommand {
 
-    public Exit(CommandController commandController) {
+    public Exit(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-        this.controller.exitApplication();
-        return "";
+    public String apply(final Command command) {
+        controller.exitApplication();
+        return null;
     }
-
 }

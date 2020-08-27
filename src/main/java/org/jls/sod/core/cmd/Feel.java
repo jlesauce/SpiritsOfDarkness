@@ -25,26 +25,15 @@ package org.jls.sod.core.cmd;
 
 import org.jls.sod.core.model.Sense;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "feel", description = "Use your feeling in the current room, for a direction or for an object to get more information if possible")
 public class Feel extends SenseBase {
 
-    @Parameters(paramLabel = "target", arity = "0..1", defaultValue = "null", description = "The direction or the object for which you have a feeling")
-    protected String target;
-
-    public Feel(CommandController commandController) {
+    public Feel(final CommandController commandController) {
         super(commandController);
-        this.sense = Sense.FEEL;
+        sense = Sense.FEEL;
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-        return applyCommandWith(this.sense, command);
+    public String apply(final Command command) {
+        return applyCommandWith(sense, command);
     }
 }

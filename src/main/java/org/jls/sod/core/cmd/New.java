@@ -23,22 +23,15 @@
  */
 package org.jls.sod.core.cmd;
 
-import picocli.CommandLine.Command;
-
-@Command(name = "new", description = "Show the new game creation panel")
 public class New extends BasicCommand {
 
-    public New(CommandController commandController) {
+    public New(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-        this.controller.showNewGamePanel();
-        return "";
+    public String apply(final Command command) {
+        controller.showNewGamePanel();
+        return null;
     }
 }

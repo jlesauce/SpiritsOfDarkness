@@ -23,7 +23,6 @@
  */
 package org.jls.sod.core.cmd;
 
-import org.jls.sod.core.loader.Loader;
 import org.jls.sod.core.model.Direction;
 import org.jls.sod.core.model.Sense;
 import org.jls.sod.core.model.inventory.Inventory;
@@ -31,64 +30,56 @@ import org.jls.sod.core.model.inventory.ItemSlot;
 import org.jls.sod.core.model.item.Item;
 import org.jls.sod.core.model.world.Room;
 
-import picocli.CommandLine.Parameters;
-
 public abstract class SenseBase extends BasicCommand {
-
-    @Parameters(paramLabel = "target", arity = "0..1", defaultValue = "null")
-    protected String target;
 
     protected Sense sense;
 
-    public SenseBase(CommandController commandController) {
+    public SenseBase(final CommandController commandController) {
         super(commandController);
-        this.sense = null;
+        sense = null;
     }
 
-    protected String applyCommandWith(final Sense sense, final ParsedCommand command) {
-        if (noArgSpecified()) {
-            printSenseDescription(this.sense);
-            return "";
+    protected String applyCommandWith(final Sense sense, final Command command) {
+        String target = command.getNamespace().getString("target");
+
+        if (target == null || target.isEmpty()) {
+            printSenseDescription(sense);
+            return null;
         }
 
-        if (argumentIsADirection(this.target)) {
-            Direction direction = Direction.parseValue(this.target);
-            printSenseDescription(this.sense, direction);
-            return "";
-        }
-        else if (argumentIsAnItem(this.target)) {
-            String itemId = this.target;
-            printItemSenseDescription(itemId, this.sense);
-            return "";
-        }
-        else {
+        if (isADirection(target)) {
+            Direction direction = Direction.parseValue(target);
+            printSenseDescription(sense, direction);
+            return null;
+        } else if (isValidItem(target)) {
+            printItemSenseDescription(target, sense);
+            return null;
+        } else {
             throw new IllegalArgumentException("User argument is neither a direction nor an item");
         }
     }
 
     protected void printSenseDescription(final Sense sense) {
-        this.displayController.printSenseDescription(this.model.getRoom(), sense);
+        displayController.printSenseDescription(model.getRoom(), sense);
     }
 
     protected void printSenseDescription(final Sense sense, final Direction direction) {
         if (playerCanGoInThis(direction)) {
             Room nextRoom = nextRoomInThis(direction);
-            this.displayController.printSenseDescription(nextRoom, sense);
-            this.logger.info("Using sense {} to {} : room {}", sense, direction, nextRoom.getName());
-        }
-        else {
+            displayController.printSenseDescription(nextRoom, sense);
+            logger.info("Using sense {} to {} : room {}", sense, direction, nextRoom.getName());
+        } else {
             printYouCannotGoInThis(direction);
         }
     }
 
     protected void printItemSenseDescription(final String itemId, final Sense sense) {
         if (doesCurrentRoomContainsItem(itemId)) {
-            ItemSlot slot = this.model.getRoom().getInventory().getItemSlot(itemId);
+            ItemSlot slot = model.getRoom().getInventory().getItemSlot(itemId);
             Item item = slot.getItem();
-            this.displayController.printSenseDescription(item, sense);
-        }
-        else {
-            this.displayController.printError(this.props.getString("command.look.error.noItemInRoom"));
+            displayController.printSenseDescription(item, sense);
+        } else {
+            displayController.printError(props.getString("command.look.error.noItemInRoom"));
         }
     }
 
@@ -97,18 +88,10 @@ public abstract class SenseBase extends BasicCommand {
     }
 
     protected Inventory getCurrentRoomInventory() {
-        return this.model.getRoom().getInventory();
+        return model.getRoom().getInventory();
     }
 
-    protected boolean noArgSpecified() {
-        return this.target.equals("null");
-    }
-
-    protected boolean argumentIsADirection(final String arg) {
+    protected boolean isADirection(final String arg) {
         return Direction.matchDirection(arg.toLowerCase());
-    }
-
-    protected boolean argumentIsAnItem(final String arg) {
-        return Loader.getInstance().itemExists(arg.toLowerCase());
     }
 }

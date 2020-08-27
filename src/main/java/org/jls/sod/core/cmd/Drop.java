@@ -30,72 +30,51 @@ import org.jls.sod.core.model.inventory.NotCarriableException;
 import org.jls.sod.core.model.item.Item;
 import org.jls.sod.core.model.world.Room;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "drop", description = "Drop an item from your inventory")
 public class Drop extends BasicCommand {
 
-    @Parameters(paramLabel = "item", index = "0", description = "Identifier of the item to drop")
-    private String itemId;
-
-    @Parameters(paramLabel = "quantity", index = "1", defaultValue = "1", description = "Quantity of items to drop (Default: 1)")
-    private int quantity;
-
-    public Drop(CommandController commandController) {
+    public Drop(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
+    public String apply(final Command command) {
+        String item = command.getNamespace().getString("item");
+        int quantity = command.getNamespace().getInt("quantity");
 
-        if (isValidItem(itemId)) {
+        if (item == null || item.isEmpty()) {
+            displayController.printError(props.getString("command.take.error.noItemSpecified"));
+            return null;
+        } else if (isValidItem(item)) {
             try {
-                dropItem(itemId, quantity);
+                dropItem(item, quantity);
             } catch (ItemNotFoundException e) {
-                this.logger.warn("Item not found in inventory : {}", itemId);
-                this.displayController.printError(this.props.getString("command.take.error.itemNotFound"));
+                logger.warn("Item not found in inventory : {}", item);
+                displayController.printError(props.getString("command.take.error.itemNotFound"));
             } catch (InventoryQuantityException e) {
-                this.logger.warn("Not enough {} items in inventory", itemId);
-                this.displayController.printError(this.props.getString("command.take.error.notEnoughItems"));
+                logger.warn("Not enough {} items in inventory", item);
+                displayController.printError(
+                        this.props.getString("command.take.error.notEnoughItems"));
             }
+        } else {
+            printItemDoesNotExist(item);
         }
-        else {
-            printItemDoesNotExist(itemId);
-        }
-
         return null;
     }
 
-    /**
-     * Drop the specified item and put it in the current room.
-     *
-     * @param itemId
-     *                 Unique item identifier.
-     * @param quantity
-     *                 Quantity of items to drop.
-     * @throws ItemNotFoundException
-     *                                    If the specified item is not contained
-     *                                    in the character's inventory.
-     * @throws InventoryQuantityException
-     *                                    If the quantity is inconsistent with
-     *                                    content of inventory.
-     */
     private void dropItem(final String itemId, final int quantity)
             throws ItemNotFoundException, InventoryQuantityException {
-        Room room = this.model.getRoom();
-        Inventory inventory = this.model.getCharacter().getInventory();
+        Room room = model.getRoom();
+        Inventory inventory = model.getCharacter().getInventory();
 
-        this.logger.info("Dropping item(s) [{}] x{} in the room {}", itemId, quantity, room.getId());
         Item item = inventory.removeItem(itemId, quantity);
         try {
+            logger.info("Dropping item(s) [{}] x{} in the room {}", itemId, quantity,
+                    room.getId());
+            displayController.printCommandResult(
+                    props.getString("command.drop.item") + " [" + itemId + "] x" + quantity);
             room.getInventory().addItem(item, quantity);
         } catch (NotCarriableException e) {
-            this.logger.error("Trying to add a not carriable item : {}", item.getId(), e);
+            logger.error("Trying to add a not transportable item : {}", item.getId(), e);
         }
     }
 }

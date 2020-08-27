@@ -24,68 +24,42 @@
 
 package org.jls.sod.core.cmd;
 
+import net.sourceforge.argparse4j.inf.Namespace;
+
 import java.util.StringTokenizer;
 
 public class Command {
 
+    private final String userInput;
     private final String commandId;
-    private final String[] arguments;
+    private final Namespace commandNamespace;
 
-    public Command(final String cmdStr) {
-        if (cmdStr == null) {
+    public Command(final String userInput, final Namespace namespace) {
+        if (userInput == null) {
             throw new NullPointerException("Command can't be null");
         }
-        if (cmdStr.isEmpty()) {
+        if (userInput.isEmpty()) {
             throw new IllegalArgumentException("Command can't be empty");
         }
-
-        StringTokenizer tokenizer = new StringTokenizer(cmdStr);
-        int nbTokens = tokenizer.countTokens();
-        if (nbTokens == 1) {
-            this.commandId = tokenizer.nextToken();
-            this.arguments = new String[0];
-        } else {
-            this.commandId = tokenizer.nextToken();
-            this.arguments = new String[nbTokens - 1];
-            int i = 0;
-            while (tokenizer.hasMoreTokens()) {
-                this.arguments[i] = tokenizer.nextToken();
-                i++;
-            }
-        }
+        this.userInput = userInput;
+        commandId = new StringTokenizer(userInput).nextToken();
+        commandNamespace = namespace;
     }
 
-    public String getCommandId () {
+    public String getCommandId() {
         return this.commandId;
     }
 
-    public String[] getArguments () {
-        return this.arguments;
+    public String getUserInput() {
+        return userInput;
     }
 
-    public String getArgument (final int index) {
-        if (index >= 0 && index < getArgumentCount()) {
-            return this.arguments[index];
-        } else {
-            throw new IllegalArgumentException("Index out of bounds : " + index + " (size=" + getArgumentCount() + ")");
-        }
-    }
-
-    public int getArgumentCount () {
-        return this.arguments != null ? this.arguments.length : 0;
-    }
-
-    public boolean hasArguments () {
-        return getArgumentCount() > 0;
+    public Namespace getNamespace() {
+        return commandNamespace;
     }
 
     @Override
-    public String toString () {
-        StringBuilder builder = new StringBuilder();
-        builder.append(this.commandId + " ");
-        for (String str : this.arguments) {
-            builder.append(str + " ");
-        }
-        return builder.toString().trim();
+    public String toString() {
+        return "Command{" + userInput + "}";
     }
 }

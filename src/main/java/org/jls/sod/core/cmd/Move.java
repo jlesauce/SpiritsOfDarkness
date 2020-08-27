@@ -27,70 +27,63 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.jls.sod.core.model.Direction;
 import org.jls.sod.core.model.world.Room;
 
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
-
-@Command(name = "move", description = "Move the player in the specified direction")
 public class Move extends BasicCommand {
 
-    @Parameters(paramLabel = "direction", arity = "0..1", defaultValue = "CENTER", description = "The direction where to move")
-    private String givenDirection;
+    private final Direction direction;
 
-    private Direction direction;
-
-    public Move(CommandController commandController) {
-        super(commandController);
-        this.direction = null;
+    public Move(final CommandController commandController) {
+        this(commandController, Direction.CENTER);
     }
 
-    public Move(CommandController commandController, Direction direction) {
+    public Move(final CommandController commandController, final Direction direction) {
         super(commandController);
         this.direction = direction;
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-
+    public String apply(final Command command) {
         try {
-            goInDirection(getUserDirection());
+            goInDirection(getUserDirection(command));
         } catch (ConfigurationException e) {
-            this.logger.error("An error occurred updating current position", e);
+            logger.error("An error occurred updating current position", e);
             throw new RuntimeException("Cannot update current position", e);
         }
-        return "";
+        return null;
     }
 
-    private Direction getUserDirection() {
-        return this.direction != null ? this.direction : Direction.parseValue(this.givenDirection);
+    private Direction getUserDirection(final Command command) {
+        if (direction != Direction.CENTER) {
+            return direction;
+        }
+
+        String directionAsString = command.getNamespace().getString("direction");
+        if (directionAsString == null || directionAsString.isEmpty()) {
+            return Direction.CENTER;
+        } else {
+            return Direction.parseValue(directionAsString);
+        }
     }
 
-    /**
-     * Move the player in the specified direction.
-     *
-     * @param direction The direction where to go.
-     * @throws ConfigurationException If an error occurred updating the current
-     *                                position.
-     */
     public void goInDirection(final Direction direction) throws ConfigurationException {
+        if (direction == Direction.CENTER) {
+            logger.warn("Player is moving nowhere");
+            this.displayController.printError(props.getString("command.navigate.error.nowhere"));
+            return;
+        }
+
         if (playerCanGoInThis(direction)) {
             Room nextRoom = nextRoomInThis(direction);
-
             printGoingInThis(direction);
-            this.displayController.printRoomDescription(nextRoom);
-            this.controller.updateCurrentPosition(nextRoom);
-        }
-        else {
+            displayController.printRoomDescription(nextRoom);
+            controller.updateCurrentPosition(nextRoom);
+        } else {
             printYouCannotGoInThis(direction);
         }
     }
 
     private void printGoingInThis(final Direction direction) {
-        this.logger.info("Going {} in room {}", direction, nextRoomInThis(direction).getName());
-        this.displayController.printCommandResult(
-                this.props.getString("command.navigate.text.goingInTheDirection") + " " + direction + ".\n");
+        logger.info("Going {} in room {}", direction, nextRoomInThis(direction).getName());
+        displayController.printCommandResult(props.getString("command.navigate.text" +
+                ".goingInTheDirection") + " " + direction + ".\n");
     }
 }

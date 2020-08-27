@@ -23,23 +23,16 @@
  */
 package org.jls.sod.core.cmd;
 
-import picocli.CommandLine.Command;
-
-@Command(name = "inventory", description = "Show the content of your inventory")
 public class Inventory extends BasicCommand {
 
-    public Inventory(CommandController commandController) {
+    public Inventory(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-        org.jls.sod.core.model.inventory.Inventory inventory = this.model.getCharacter().getInventory();
-        this.displayController.printItems(inventory);
-        return "";
+    public String apply(final Command command) {
+        org.jls.sod.core.model.inventory.Inventory inventory = model.getCharacter().getInventory();
+        displayController.printItems(inventory);
+        return null;
     }
 }

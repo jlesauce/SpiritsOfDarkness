@@ -23,23 +23,15 @@
  */
 package org.jls.sod.core.cmd;
 
-import picocli.CommandLine.Command;
-
-@Command(name = "map", description = "Show the map of the explored zone")
 public class Map extends BasicCommand {
 
-    public Map(CommandController commandController) {
+    public Map(final CommandController commandController) {
         super(commandController);
     }
 
     @Override
-    public String apply(ParsedCommand command) {
-        if (command.getContext().isUsageHelpRequested()) {
-            printHelp(command);
-            return "";
-        }
-
-        this.controller.showMap();
+    public String apply(final Command command) {
+        controller.showMap();
         return null;
     }
 }
