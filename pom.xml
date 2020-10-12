@@ -21,7 +21,7 @@
 
         <!-- Libraries Version -->
         <toolbox.version>1.1</toolbox.version>
-        <junit.version>4.13</junit.version>
+        <junit.version>4.13.1</junit.version>
         <log4j.version>2.13.3</log4j.version>
         <jdom.version>2.0.6</jdom.version>
         <argparse4j.version>0.8.1</argparse4j.version>
